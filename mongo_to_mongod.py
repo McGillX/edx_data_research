@@ -63,8 +63,7 @@ def edxmongo_to_mongodb():
       #print line in document that causes error
       #print [...]
 
-#    for doc in cursor:
-#        print doc
+  mongo_file.close()
 
 # function call
 edxmongo_to_mongodb()
