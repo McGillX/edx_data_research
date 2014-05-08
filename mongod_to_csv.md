@@ -4,9 +4,10 @@
 
 There are two different types of document structures. They differ by _type ``Comment`` or ``Comment_Thread``
 
-See edX docs on .mongo format https://github.com/edx/edx-platform/blob/master/docs/en_us/data/source/internal_data_formats/discussion_data.rst
+See edX docs on .mongo format:
+https://github.com/edx/edx-platform/blob/master/docs/en_us/data/source/internal_data_formats/discussion_data.rst
 
-This command export a .csv file with all fields of both type of document.
+This command exports a .csv file with all fields of both types of document.
 
 Run this on a UNIX SHELL not the mongo shell
 ```
