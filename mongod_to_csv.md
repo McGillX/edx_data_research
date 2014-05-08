@@ -1,8 +1,8 @@
 # mongod_to_csv
 
-### Convert the .mongo discussion database from a hosted mongod to .csv for analysis
+### Convert the .mongo discussion database from a hosted mongo database to .csv for analysis
 
-There are two different types of document structures. They differ by _type ``Comment`` or ``Comment_Thread``
+There are two different types of document structures in a .mongo file. They differ by _type ``Comment`` or ``Comment_Thread``
 
 See edX docs on .mongo format:
 https://github.com/edx/edx-platform/blob/master/docs/en_us/data/source/internal_data_formats/discussion_data.rst
