@@ -10,6 +10,5 @@ db=connection.edx
 # specify collection
 forum = db.forum
 
-print forum.aggregate([
-            {"$group": {"_id": "$author_id", "count": {"$sum": 1}}}
-          ])
+# Output in JSON
+obj = forum.aggregate([{"$group": {"_id": {"Username":"$author_username","Type":"$_type"}, "count": {"$sum": 1}}}])
