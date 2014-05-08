@@ -3,6 +3,9 @@ import sys
 import traceback
 import json
 
+# Official doc of the edx .mongo format
+# https://github.com/edx/edx-platform/blob/master/docs/en_us/data/source/internal_data_formats/discussion_data.rst
+
 # 1. Start mongod
 # 2. Start mongo shell
 # 3. In mongo shell, create "edX" database by typing "use edx"
@@ -67,3 +70,5 @@ def edxmongo_to_mongodb():
 
 # function call
 edxmongo_to_mongodb()
+
+
