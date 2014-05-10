@@ -1,13 +1,15 @@
-# Convert the edx .mongo format to a conventional .json format
+'''
+Convert the edx .mongo format to a conventional .json format
+'''
 
-# SPECIFY input .mongo file name
+# SPECIFY input .mongo filename
 mongo_filename = 'McGillX-CHEM181x-1T2014-prod.mongo'
+
+# SPECIFY output .json filename
+json_filename = mongo_filename.replace('.mongo','.json')
 
 # input file handler
 mongo_file = open(mongo_filename,"r")
-
-# output file name which is the same name but .json
-json_filename = mongo_filename.replace('.mongo','.json')
 
 # output file handler
 json_file = open(json_filename,"w+")

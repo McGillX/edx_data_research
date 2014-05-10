@@ -1,3 +1,7 @@
+'''
+Export the collection of .log dicussion data from mongodb to csv
+'''
+
 import pymongo
 import json
 import csv
@@ -27,7 +31,7 @@ def query_to_csv():
                 "_type":1,
                 "_id":0}
 
-  # SPECIFY output filename with extension .csv
+  # SPECIFY output .csv filename
   output_csv_filename = 'output.csv'
 
   # Output file handler

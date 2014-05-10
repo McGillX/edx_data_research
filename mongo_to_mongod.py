@@ -1,3 +1,7 @@
+'''
+Insert .mongo files into mongodb database
+'''
+
 import pymongo
 import sys
 import traceback
@@ -17,7 +21,12 @@ connection = pymongo.Connection("mongodb://localhost", safe=True)
 
 # get a handle to the edx database
 db=connection.edx
+
+# SPECIFY database
 forum = db.forum
+
+# SPECIFY .mongo file
+filename = 'McGillX-CHEM181x-1T2014-prod.mongo'
 
 # Filter the .json object to a format accepted by mongodb
 def remove_dollar_sign(obj):
@@ -43,9 +52,6 @@ def remove_dollar_sign(obj):
   return obj
 
 def edxmongo_to_mongodb():
-
-  # specify file
-  filename = 'McGillX-CHEM181x-1T2014-prod.mongo'
 
   # file handler
   mongo_file = open(filename,'r')
