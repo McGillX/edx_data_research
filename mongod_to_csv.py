@@ -64,6 +64,12 @@ def check_dict(mydict):
       mydict[key] = check_dict(mydict[key])
   return mydict
 
+# def unicode_list_to_ascii(mylist):
+#   for s in mylist:
+#     if type(s) is unicode:
+#       s.encode('utf-8','ignore')
+#   return mylist
+
 # def numerate_dict(mydict):
 #   count = 0
 #   for key in mydict.keys():
@@ -114,14 +120,7 @@ for obj in cursor:
       for sub_key in obj[key]:
         if sub_key not in schema[key]:
           schema[key][sub_key] = {}
-        try:
-          obj[key][sub_key] = json.loads(obj[key][sub_key])
-          if type(obj[key][sub_key]) is dict:
-            for sub_sub_key in obj[key][sub_key]:
-              if sub_sub_key not in schema[key][sub_key]:
-                schema[key][sub_key][sub_sub_key] = {}
-        except:
-          continue
+
 # output file handler
 csv_file = open(CSV_FILENAME,'w+')
 csv_writer = csv.writer(csv_file)
@@ -133,29 +132,24 @@ header_array = dict_keys_to_array(schema)
 csv_writer.writerow(header_array)
 
 # initialize cursor to entire collection
-cursor = collection.find().limit(1)
+cursor = collection.find({'username':'Vicky_M','event_type':'problem_check'})
 
-print 'schema ================================='
-print schema
+count_error = 0
+
 # write the rest
 for obj in cursor:
-  print 'obj ================================='
-  print obj
-  print type(obj['event']['POST'])
-  print 'modified obj ================================='
-  obj = check_dict(obj)
-  print obj
-  print type(obj['event']['POST'])
-  print 'gen_obj ===================================='
   gen_obj = match_dict_to_generic_dict(obj,copy.deepcopy(schema))
-  print gen_obj
-  print 'arr_obj ===================================='
-  arr_obj = dict_values_to_array(gen_obj)
-  print arr_obj
-  csv_writer.writerow(arr_obj)
+  arr_obj = dict_values_to_array(copy.deepcopy(gen_obj))
+  # arr_obj = unicode_list_to_ascii(arr_obj)
+  try:
+    csv_writer.writerow(arr_obj)
+  except:
+    count_error += 1
+    continue
+
+print count_error
 
 csv_file.close()
-
     # elif:
     #   try:
     #     fake_dict = json.loads(mydict[key])
