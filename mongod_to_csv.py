@@ -6,6 +6,7 @@ Works for non-uniform collections
 import pymongo
 import json
 import csv
+import copy
 
 # SPECIFY connection details
 DATABASE_ADDRESS = "mongodb://localhost"
@@ -13,6 +14,8 @@ DATABASE_NAME = "edx"
 DATABASE_COLLECTION = "logs_by_user"
 
 CSV_FILENAME = DATABASE_NAME + "_" + DATABASE_COLLECTION + ".csv"
+
+# CSV_FILENAME = 'single_use.csv'
 
 # establish a connection to the database
 connection = pymongo.Connection(DATABASE_ADDRESS, safe=True)
@@ -35,13 +38,53 @@ event_type_match_event = {}
 dict_event_types = []
 non_dict_event_types = []
 
-def dict_to_array(mydict):
+def dict_keys_to_array(mydict):
   myarray = []
-  for key in mydict:
+  for key in mydict.keys():
     myarray.append(key)
-    if type(mydict[key]) is dict:
-      myarray.extend(dict_to_array(mydict[key]))
+    if type(mydict[key]) is dict and len(mydict[key])>1:
+      myarray.extend(dict_keys_to_array(mydict[key]))
   return myarray
+
+def dict_values_to_array(mydict):
+  myarray = []
+  for key in mydict.keys():
+    myarray.append(mydict[key])
+    if type(mydict[key]) is dict and len(mydict[key])>1:
+      myarray.extend(dict_values_to_array(mydict[key]))
+  return myarray
+
+def check_dict(mydict):
+  for key in mydict.keys():
+    try:
+      mydict[key] = json.loads(mydict[key])
+    except:
+      continue
+    if type(mydict[key]) is dict:
+      mydict[key] = check_dict(mydict[key])
+  return mydict
+
+# def numerate_dict(mydict):
+#   count = 0
+#   for key in mydict.keys():
+#     mydict[key]['index'] = count
+#     count += 1
+#     if type(mydict[key]) is dict and len(mydict[key]) > 1:
+#       for sub_key in mydict[key].keys():
+#         if sub_key!='index':
+#           mydict[key][sub_key]['index'] = count
+#           count += 1
+
+def match_dict_to_generic_dict(mydict,gen_dict):
+  for key in mydict.keys():
+    try:
+      if type(mydict[key]) is dict and len(mydict[key])!=1:
+        gen_dict[key] = match_dict_to_generic_dict(mydict[key], gen_dict[key])
+      else:
+        gen_dict[key] = mydict[key]
+    except:
+      gen_dict[key] = mydict[key]
+  return gen_dict
 
 # def number_dict(mydict,count):
 #   for key in mydict.keys():
@@ -71,28 +114,54 @@ for obj in cursor:
       for sub_key in obj[key]:
         if sub_key not in schema[key]:
           schema[key][sub_key] = {}
-
+        try:
+          obj[key][sub_key] = json.loads(obj[key][sub_key])
+          if type(obj[key][sub_key]) is dict:
+            for sub_sub_key in obj[key][sub_key]:
+              if sub_sub_key not in schema[key][sub_key]:
+                schema[key][sub_key][sub_sub_key] = {}
+        except:
+          continue
 # output file handler
 csv_file = open(CSV_FILENAME,'w+')
 csv_writer = csv.writer(csv_file)
 
 # produce an array for the header
-header_array = dict_to_array(schema)
-
-header_dict = number_dict(schema,0)
+header_array = dict_keys_to_array(schema)
 
 # write the title line
 csv_writer.writerow(header_array)
 
 # initialize cursor to entire collection
-cursor = collection.find()
+cursor = collection.find().limit(1)
 
+print 'schema ================================='
+print schema
 # write the rest
 for obj in cursor:
-  for key in obj.keys():
-    pass
+  print 'obj ================================='
+  print obj
+  print type(obj['event']['POST'])
+  print 'modified obj ================================='
+  obj = check_dict(obj)
+  print obj
+  print type(obj['event']['POST'])
+  print 'gen_obj ===================================='
+  gen_obj = match_dict_to_generic_dict(obj,copy.deepcopy(schema))
+  print gen_obj
+  print 'arr_obj ===================================='
+  arr_obj = dict_values_to_array(gen_obj)
+  print arr_obj
+  csv_writer.writerow(arr_obj)
 
 csv_file.close()
+
+    # elif:
+    #   try:
+    #     fake_dict = json.loads(mydict[key])
+    #     myarray.extend(dict_keys_to_array(fake_dict))
+    #   except:
+    #     continue
 
 
 
