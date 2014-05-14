@@ -1,12 +1,14 @@
 import csv, json, collections
 
+# SPECIFY csv input file
+CSV_FILENAME = "ExitPage2.csv"
 
-CSV_FILENAME = "EntrancePage1.csv"
-
+# SPECIFY csv output file
 CSV_OUTPUT_FILENAME = CSV_FILENAME.replace(".csv","_PARSED.csv")
 
 # file hander
 csv_read = csv.reader(open(CSV_FILENAME,'rb'))
+
 # skip header
 next(csv_read, None)
 
@@ -57,8 +59,8 @@ print str(error_count) + ' errors'
 
 def number_sort_dict_to_array(mydict,myarray,count):
   for key in sorted(mydict):
-    myarray.append(key)
     count+=1
+    myarray.append(key)
     if type(mydict[key]) is dict and len(mydict[key])>0:
       mydict[key],myarray,count = number_sort_dict_to_array(mydict[key],myarray,count)
     else:
@@ -79,7 +81,7 @@ def number_sort_dict_to_array(mydict,myarray,count):
 #   return myarray
 
 header_array = ['username']
-header_dict,header_array,count = number_sort_dict_to_array(header_dict,header_array,len(header_array))
+header_dict,header_array,count = number_sort_dict_to_array(header_dict,header_array,len(header_array)-1)
 
 # file handers
 csv_read = csv.reader(open(CSV_FILENAME,'rb'))
@@ -90,7 +92,8 @@ next(csv_read, None)
 # write header
 csv_writer.writerow(header_array)
 
-template_array = [0 for x in range(len(header_array)+1)]
+template_array = [None for x in range(len(header_array)+1)]
+
 for line in csv_read:
   try:
     state_dict = json.loads(line[1])
@@ -98,20 +101,18 @@ for line in csv_read:
     continue
   if 'student_answers' in state_dict:
     write_array = template_array[:]
+    write_array[0] = line[0]
     for key in state_dict['student_answers']:
       # case sentence not choice
-      if type(state_dict['student_answers'][key]) is not list and type(header_dict[key]) is int:
-        write_array[header_dict[key]] = state_dict['student_answers'][key]
+      if type(header_dict[key]) is int:
+        write_array[header_dict[key]] = state_dict['student_answers'][key].encode('utf-8','ignore')
       # case list of choices
       elif type(state_dict['student_answers'][key]) is list and type(header_dict[key]) is dict:
         for s in state_dict['student_answers'][key]:
           write_array[header_dict[key][s]] = 1
-      elif type(header_dict[key]) is int: 
-        write_array[header_dict[state_dict['student_answers'][key]]] = 1
+      # case one choice not list
+      elif type(state_dict['student_answers'][key]) is unicode and type(header_dict[key]) is dict:
+        write_array[header_dict[key][state_dict['student_answers'][key]]] = 1
+    csv_writer.writerow(write_array)
 
-  csv_writer.writerow(write_array)
-
-print header_array
 print header_dict
-
-
