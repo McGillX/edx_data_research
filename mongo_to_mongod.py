@@ -52,25 +52,19 @@ def remove_dollar_sign(obj):
   return obj
 
 def edxmongo_to_mongodb():
-
   # file handler
   mongo_file = open(filename,'r')
-
   try:
     for line in mongo_file:
       obj = json.loads(line)
       obj = remove_dollar_sign(obj)
       forum.insert(obj)
-
   except:
     # print "Unexpected error:", sys.exc_info()[0],sys.exc_info()[1],sys.exc_info()[2]
     for frame in traceback.extract_tb(sys.exc_info()[2]):
       fname,lineno,fn,text = frame
       print "Error in %s on line %d" % (fname, lineno)
       print sys.exc_info()[0],sys.exc_info()[1]
-
-      #print line in document that causes error
-      #print [...]
 
   mongo_file.close()
 

@@ -1,5 +1,5 @@
 '''
-Export the collection of .log dicussion data from mongodb to csv
+Export the collection of .mongo dicussion data from mongodb to csv
 '''
 
 import pymongo

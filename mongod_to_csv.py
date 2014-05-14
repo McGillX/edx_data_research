@@ -1,18 +1,17 @@
 '''
 Generic script to convert a Mongodb collection to CSV
 Works for non-uniform collections
+Designed for edX .mongo log documents inserted into MongoDB by mongo_to_mongod.py
 '''
 
-import pymongo
-import json
-import csv
-import copy
+import pymongo,json,csv,copy
 
 # SPECIFY connection details
 DATABASE_ADDRESS = "mongodb://localhost"
 DATABASE_NAME = "edx"
 DATABASE_COLLECTION = "logs_by_user"
 
+# SPECIFY output csv file
 CSV_FILENAME = DATABASE_NAME + "_" + DATABASE_COLLECTION + ".csv"
 
 # CSV_FILENAME = 'single_use.csv'
@@ -84,7 +83,7 @@ def check_dict(mydict):
 def match_dict_to_generic_dict(mydict,gen_dict):
   for key in mydict.keys():
     try:
-      if type(mydict[key]) is dict and len(mydict[key])!=1:
+      if type(mydict[key]) is dict and len(mydict[key])>1:
         gen_dict[key] = match_dict_to_generic_dict(mydict[key], gen_dict[key])
       else:
         gen_dict[key] = mydict[key]
@@ -132,7 +131,8 @@ header_array = dict_keys_to_array(schema)
 csv_writer.writerow(header_array)
 
 # initialize cursor to entire collection
-cursor = collection.find({'username':'Vicky_M','event_type':'problem_check'})
+cursor = collection.find()
+cursor = collection.find( {'$or' : [{'username':'sbradfor'}, {'username':'Carlo1989'}, {'username':'NataschaH'}] } )
 
 count_error = 0
 
@@ -150,13 +150,6 @@ for obj in cursor:
 print count_error
 
 csv_file.close()
-    # elif:
-    #   try:
-    #     fake_dict = json.loads(mydict[key])
-    #     myarray.extend(dict_keys_to_array(fake_dict))
-    #   except:
-    #     continue
-
 
 
 

@@ -1,3 +1,7 @@
+'''
+Parse the edX csv entrance and exit surveys into a more readable csv format
+'''
+
 import csv, json, collections
 
 # SPECIFY csv input file
