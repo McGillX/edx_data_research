@@ -1,5 +1,5 @@
 '''
-Insert .mongo files into mongodb database
+Insert the edx discussion board .mongo files into mongodb database
 '''
 
 import pymongo

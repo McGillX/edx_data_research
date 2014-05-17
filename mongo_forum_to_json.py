@@ -1,5 +1,5 @@
 '''
-Convert the edx .mongo format to a conventional .json format
+Convert the edx discussion board .mongo format to a conventional .json format
 '''
 
 # SPECIFY input .mongo filename

@@ -63,23 +63,6 @@ def check_dict(mydict):
       mydict[key] = check_dict(mydict[key])
   return mydict
 
-# def unicode_list_to_ascii(mylist):
-#   for s in mylist:
-#     if type(s) is unicode:
-#       s.encode('utf-8','ignore')
-#   return mylist
-
-# def numerate_dict(mydict):
-#   count = 0
-#   for key in mydict.keys():
-#     mydict[key]['index'] = count
-#     count += 1
-#     if type(mydict[key]) is dict and len(mydict[key]) > 1:
-#       for sub_key in mydict[key].keys():
-#         if sub_key!='index':
-#           mydict[key][sub_key]['index'] = count
-#           count += 1
-
 def match_dict_to_generic_dict(mydict,gen_dict):
   for key in mydict.keys():
     try:
@@ -131,7 +114,6 @@ header_array = dict_keys_to_array(schema)
 csv_writer.writerow(header_array)
 
 # initialize cursor to entire collection
-cursor = collection.find()
 cursor = collection.find( {'$or' : [{'username':'sbradfor'}, {'username':'Carlo1989'}, {'username':'NataschaH'}] } )
 
 count_error = 0
@@ -140,12 +122,12 @@ count_error = 0
 for obj in cursor:
   gen_obj = match_dict_to_generic_dict(obj,copy.deepcopy(schema))
   arr_obj = dict_values_to_array(copy.deepcopy(gen_obj))
-  # arr_obj = unicode_list_to_ascii(arr_obj)
-  try:
-    csv_writer.writerow(arr_obj)
-  except:
-    count_error += 1
-    continue
+  csv_writer.writerow(arr_obj)
+  # try:
+  #   csv_writer.writerow(arr_obj)
+  # except:
+  #   count_error += 1
+  #   continue
 
 print count_error
 
