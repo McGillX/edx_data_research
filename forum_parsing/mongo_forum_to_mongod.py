@@ -60,6 +60,7 @@ def edxmongo_to_mongodb():
       obj = remove_dollar_sign(obj)
       forum.insert(obj)
   except:
+    print 'error'
     # print "Unexpected error:", sys.exc_info()[0],sys.exc_info()[1],sys.exc_info()[2]
     for frame in traceback.extract_tb(sys.exc_info()[2]):
       fname,lineno,fn,text = frame
