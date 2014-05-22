@@ -3,7 +3,7 @@ Insert the edx course_structure-prod-analytics .json file into mongodb database 
 The single JSON object will be split into sub JSON objects, in which all the first level keys will become 
 the _id of its object value
 
-For instance the single document,
+For instance, the single document:
 
 ```json
 {
@@ -36,7 +36,7 @@ For instance the single document,
 }
 ```
 
-will become many documents in mongodb,
+will become many documents in mongodb:
 
 ```json
 {
