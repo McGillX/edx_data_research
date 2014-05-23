@@ -72,3 +72,15 @@ will become many documents in mongodb:
 ```
 ...
 ```
+
+### Categories
+
+# course
+## chapter
+### sequential (lesson)
+#### vertical (activity)
+##### html problem dicussion video poll_question word_cloud wrapper conditional
+
+
+
+
