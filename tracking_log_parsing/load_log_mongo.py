@@ -82,6 +82,22 @@ imported_coll = db[collection_name+"_imported"]
 total_error = 0
 total_success = 0
 
+# Connect to course_structure database
+STRUCTURE_COLLECTION_NAME = 'course_structure'
+struct_coll = db[STRUCTURE_COLLECTION_NAME]
+
+# Append course structure info to record dict
+def append_course_struct(id):
+    try:
+        data = struct_coll.find({"_id":id})[0]
+        if 'parent_data' in data.keys():
+            record['parent_data'] = data['parent_data']
+        if 'metadata' in data.keys():
+            record['metadata'] = data['metadata']
+    except:
+        print "Structure not found for", id
+        pass
+
 # collect all files from command line
 files = []
 for i in sys.argv[3::]:     # all remaining arguments are lists of files to process
@@ -156,6 +172,34 @@ for logfile_path in sorted(files):
                 imp['courses'][course_id] += 1
         record['load_date'] = datetime.datetime.utcnow()
         record['load_file'] = canonical_name(event_source)
+        # Parse IDs
+        if type(record['event']) is dict:
+            if 'id' in record['event'].keys():
+                splitted = record['event']['id'].split('-')
+                if len(splitted) > 3:
+                    record['event']['id'] = splitted[-1]
+                else:
+                    splitted = record['event']['id'].split('/')
+                    if len(splitted) > 3:
+                        record['event']['id'] = splitted[-1]
+        if record['page']: 
+            splitted = record['page'].split('/')
+            if len(splitted) > 1:
+                record['page'] = splitted[-2]
+        # Append parent_data
+        if type(record['event']) is dict:
+            if 'id' in record['event'].keys():
+                if len(record['event']['id']) == 32:
+                    append_course_struct(record['event']['id'])
+                else:
+                    print 'length error'
+                    print record['event']['id']
+        if record['page']: 
+            if len(record['page']) == 32:
+                append_course_struct(record['page'])
+            else:
+                print 'no structure found'
+                print record['page']
         try:
             res = events_coll.insert(record)
         except pymongo.errors.InvalidDocument as e:
@@ -190,4 +234,3 @@ for logfile_path in sorted(files):
 print "Total events read:  ", (total_error + total_success)
 print "Inserted events:    ", total_success
 print "Not loaded:         ", total_error
-
