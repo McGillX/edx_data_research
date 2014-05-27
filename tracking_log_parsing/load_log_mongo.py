@@ -86,7 +86,7 @@ total_success = 0
 STRUCTURE_COLLECTION_NAME = 'course_structure'
 struct_coll = db[STRUCTURE_COLLECTION_NAME]
 
-# Append course structure info to record dict
+# Append course_structure info to record dict
 def append_course_struct(id):
     try:
         data = struct_coll.find({"_id":id})[0]
@@ -172,34 +172,33 @@ for logfile_path in sorted(files):
                 imp['courses'][course_id] += 1
         record['load_date'] = datetime.datetime.utcnow()
         record['load_file'] = canonical_name(event_source)
-        # Parse IDs
-        if type(record['event']) is dict:
-            if 'id' in record['event'].keys():
-                splitted = record['event']['id'].split('-')
-                if len(splitted) > 3:
-                    record['event']['id'] = splitted[-1]
-                else:
+
+        '''Bind parent_data and metadata from course_structure to every tracking document'''
+        bound = False
+        # Parse IDs and bind parent_data/
+        if record['event']:
+            if type(record['event']) is dict:
+                if 'id' in record['event'].keys():
+                    splitted = record['event']['id'].split('-')
+                    if len(splitted) > 3:
+                        record['event']['id'] = splitted[-1]
+                        if not bound:
+                            append_course_struct(record['event']['id'])
+                            bound = True
                     splitted = record['event']['id'].split('/')
                     if len(splitted) > 3:
                         record['event']['id'] = splitted[-1]
-        if record['page']: 
+                        if not bound:
+                            append_course_struct(record['event']['id'])
+                            bound = True
+        if record['page']:
             splitted = record['page'].split('/')
-            if len(splitted) > 1:
+            if len(splitted) > 2:
                 record['page'] = splitted[-2]
-        # Append parent_data
-        if type(record['event']) is dict:
-            if 'id' in record['event'].keys():
-                if len(record['event']['id']) == 32:
-                    append_course_struct(record['event']['id'])
-                else:
-                    print 'length error'
-                    print record['event']['id']
-        if record['page']: 
-            if len(record['page']) == 32:
-                append_course_struct(record['page'])
-            else:
-                print 'no structure found'
-                print record['page']
+                if not bound:
+                    append_course_struct(record['page'])
+                    bound = True
+        '''End of binding'''
         try:
             res = events_coll.insert(record)
         except pymongo.errors.InvalidDocument as e:
