@@ -1,6 +1,11 @@
 #!/usr/bin/env python -u
 
 '''
+Credits to jm from HarvardX, edx.org
+Added some stuff to link to course_structure by michaelchum
+
+DO NOT EXECUTE THIS DIRECTLY USE WITH load_log_mongod.sh
+    
 Load tracking logs into mongo using pymongo driver.  Correctly
 handles the "event" fields (unjson-ifying it) and creates the course_id
     Created on Nov 8, 2012
