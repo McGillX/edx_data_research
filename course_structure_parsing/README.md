@@ -1,3 +1,13 @@
+# course_structure_parsing
+
+### Usage
+
+1. Have MongoDB setup on localhost
+2. Specify the path of `COURSE-NAME-course_structure-prod-analytics.json` in the header of the script
+3. Run `python course_structure_to_mongod.py` in terminal
+
+### What it does
+
 Insert the edx course_structure-prod-analytics .json file into mongodb database for aggregation
 
 The single JSON object will be split into sub JSON objects, in which all the first level keys will become 
@@ -73,13 +83,7 @@ will become many documents in mongodb:
 ...
 ```
 
-### Categories
 
-# course
-## chapter
-### sequential (lesson)
-#### vertical (activity)
-##### html problem dicussion video poll_question word_cloud wrapper conditional
 
 
 
