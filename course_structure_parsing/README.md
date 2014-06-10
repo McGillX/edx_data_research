@@ -46,7 +46,7 @@ For instance, the single document:
 }
 ```
 
-will become many documents in mongodb:
+will become multiple documents in mongodb:
 
 ```json
 {
