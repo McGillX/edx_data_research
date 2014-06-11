@@ -1,5 +1,4 @@
-# Parse SQL files
+# Load SQL files to mongoDB
 
-### Usage
+### Run on UNIX terminal
 
-### What it does

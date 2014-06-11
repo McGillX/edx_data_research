@@ -1,10 +1,21 @@
 # course_structure_parsing
 
-### Usage
+### Setup
 
-1. Have MongoDB setup on localhost
-2. Specify the path of `COURSE-NAME-course_structure-prod-analytics.json` in the header of the script
-3. Run `python course_structure_to_mongod.py` in terminal
+```python
+
+# SPECIFY .mongo file
+filename = 'COURSE-NAME-course_structure-prod-analytics.json'
+
+# SPECIFY connection details
+DATABASE_ADDRESS = "mongodb://localhost"
+DATABASE_NAME = "edx"
+DATABASE_COLLECTION = "course_structure"
+```
+
+### Run
+
+`python course_structure_to_mongod.py`
 
 ### What it does
 

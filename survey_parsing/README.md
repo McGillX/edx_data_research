@@ -1,12 +1,12 @@
 # survey_csv_to_mongod.py 
 
-### Usage
+### Setup
 
-### What it does
+### Run
 
 # survey_csv_to_csv.py
 
-### Usage
+### Setup
 
-### What it does
+### Run
 
