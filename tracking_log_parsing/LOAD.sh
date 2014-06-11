@@ -11,4 +11,4 @@ do
 filelist="$filelist $f"
 done
 
-echo filelist
+python load_log_mongo.py $DATABASE $COLLECTION $filelist
