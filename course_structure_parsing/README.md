@@ -1,5 +1,7 @@
 # course_structure_parsing
 
+Load the course structure provided by edX to MongoDB
+
 ### Setup
 
 ```python
@@ -15,7 +17,9 @@ DATABASE_COLLECTION = "course_structure"
 
 ### Run
 
-`python course_structure_to_mongod.py`
+```
+python course_structure_to_mongod.py
+```
 
 ### What it does
 

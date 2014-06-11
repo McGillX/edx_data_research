@@ -12,14 +12,22 @@ import csv
 # 4. Specify output_csv_filename with a name ending in .csv
 # 5. Run query_to_csv()
 
+# SPECIFY connection details
+DATABASE_ADDRESS = "mongodb://localhost"
+DATABASE_NAME = "edx"
+DATABASE_FORUM_COLLECTION = "forum"
+
+# SPECIFY output filename
+OUTPUT_FILENAME = DATABASE_NAME + "_" + DATABASE_FORUM_COLLECTION + ".csv"
+
 # establish a connection to the database
-connection = pymongo.Connection("mongodb://localhost", safe=True)
+connection = pymongo.Connection(DATABASE_ADDRESS)
 
 # get a handle to the edx database
-db=connection.edx
+db = connection[DATABASE_NAME]
 
 # specify collection
-forum = db.forum
+forum = db[DATABASE_FORUM_COLLECTION]
 
 def query_to_csv():
 
@@ -32,7 +40,7 @@ def query_to_csv():
                 "_id":0}
 
   # SPECIFY output .csv filename
-  output_csv_filename = 'output.csv'
+  output_csv_filename = OUTPUT_FILENAME
 
   # Output file handler
   csv_file = open(output_csv_filename,'w+')
