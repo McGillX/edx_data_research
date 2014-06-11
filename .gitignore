@@ -3,3 +3,5 @@
 *.json
 *.bson
 *.csv
+*.sql
+data/
