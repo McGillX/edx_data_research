@@ -1,8 +1,6 @@
 # Load multiple tracking logs to MongoDB
 
-Load the edX tracking logs to MongoDB
-
-Use LOAD.sh to target a folder (recursively)
+Load the edX tracking logs to MongoDB, targets a folder (recursively)
 
 ### Setup
 
@@ -32,7 +30,7 @@ python load_log_mongo.py DB COLL f1 f2
 
 # mongod_log_to_csv.py
 
-Export the tracking logs form MongoDB to csv. 
+Export the tracking logs from MongoDB to csv. 
 
 WARNING: Only attempt on a small collection of tracking logs (less than 1 million documents). DO NOT run on the entire course. 
 
