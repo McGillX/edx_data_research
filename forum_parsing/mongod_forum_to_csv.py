@@ -20,13 +20,18 @@ DATABASE_FORUM_COLLECTION = "forum"
 # SPECIFY output filename
 OUTPUT_FILENAME = DATABASE_NAME + "_" + DATABASE_FORUM_COLLECTION + ".csv"
 
-# establish a connection to the database
+# SPECIFY key fields to read
+KEYS = {"author_username":1,
+              "_type":1,
+              "_id":0}
+
+# establish a connection
 connection = pymongo.Connection(DATABASE_ADDRESS)
 
-# get a handle to the edx database
+# database
 db = connection[DATABASE_NAME]
 
-# specify collection
+# collection
 forum = db[DATABASE_FORUM_COLLECTION]
 
 def query_to_csv():
@@ -35,9 +40,7 @@ def query_to_csv():
   query_dict = {}
 
   # SPECIFY keys of values to project
-  proj_dict = {"author_username":1,
-                "_type":1,
-                "_id":0}
+  proj_dict = KEYS
 
   # SPECIFY output .csv filename
   output_csv_filename = OUTPUT_FILENAME

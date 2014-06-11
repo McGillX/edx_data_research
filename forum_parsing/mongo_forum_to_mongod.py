@@ -16,17 +16,22 @@ import json
 # 4. Run this script specifying the .mongo filename in edxmongo_to_mongodb() function 
 # 5. Enjoy a clean database
 
-# establish a connection to the database
-connection = pymongo.Connection("mongodb://localhost", safe=True)
+# SPECIFY connection details
+DATABASE_ADDRESS = "mongodb://localhost"
+DATABASE_NAME = "edx"
+DATABASE_FORUM_COLLECTION = "forum"
 
-# get a handle to the edx database
-db=connection.edx
+# SPECIFY input .mongo filename
+FILENAME = 'McGillX-CHEM181x-1T2014-prod.mongo'
 
-# SPECIFY database
-forum = db.forum
+# establish a connection
+connection = pymongo.Connection(DATABASE_ADDRESS)
 
-# SPECIFY .mongo file
-filename = 'McGillX-CHEM181x-1T2014-prod.mongo'
+# database
+db = connection[DATABASE_NAME]
+
+# database
+forum = db[DATABASE_FORUM_COLLECTION]
 
 # Filter the .json object to a format accepted by mongodb
 def remove_dollar_sign(obj):
@@ -53,7 +58,7 @@ def remove_dollar_sign(obj):
 
 def edxmongo_to_mongodb():
   # file handler
-  mongo_file = open(filename,'r')
+  mongo_file = open(FILENAME,'r')
   try:
     for line in mongo_file:
       obj = json.loads(line)
