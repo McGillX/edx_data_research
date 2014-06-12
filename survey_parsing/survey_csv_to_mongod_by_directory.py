@@ -1,37 +1,27 @@
 '''
 InsertedX csv entrance and exit surveys into mongodb
 
-***USAGE***
-
-./survey_csv_to_mongod.py DB COLL SURVEY1 SURVEY2 ...
-
 '''
 
 import csv, json, collections, pymongo, os, sys
 
-# SPECIFY database address
+# SPECIFY database info to insert/create
 DATABASE_ADDRESS = "mongodb://localhost"
+DATABASE_NAME = "edx"
+DATABASE_COLLECTION = "exit_survey"
 
-if len(sys.argv) < 4:
-  print "Arguments missing..."
-  print "Usage: ./survey_csv_to_mongod.py DB COLL SURVEY1 SURVEY2 ..."
-  print "Exiting..."
+# DEFAULT directory path
+DATA_DIRECTORY = "data"
 
-DATABASE_NAME = sys.argv[1]
-DATABASE_COLLECTION = sys.argv[2]
-FILE_LIST = []
+file_list = []
 
-# build FILE_LIST
-for arg in sys.argv[3:]:
-  if os.path.isfile(arg): # if file
-    FILE_LIST.append(arg)
-  elif os.path.isdir(arg): # if directory
-    rootdir = arg
-    for root, subFolders, files in os.walk(rootdir):
-      for file in files:
-        FILE_LIST.append(os.path.join(root,file))
-
-# filter for CSV files
+# Check for argument
+rootdir = sys.argv[1]
+for root, subFolders, files in os.walk(rootdir):
+    for file in files:
+        fileList.append(os.path.join(root,file))
+print "Files found in folder:"
+print file_list
 
 # establish connection to the database
 connection = pymongo.Connection(DATABASE_ADDRESS)
@@ -40,7 +30,7 @@ collection = db[DATABASE_COLLECTION]
 
 error_count = 0
 
-for csv_file in FILE_LIST:
+for csv_file in file_list:
   # file hander
   csv_read = open(csv_file,'rb')
 
@@ -48,12 +38,11 @@ for csv_file in FILE_LIST:
   try:
     # Perform various checks on the dialect (e.g., lineseparator,
     # delimiter) to make sure it's sane
-    dialect = csv.Sniffer().sniff(csv_read.read(1024))
+    dialect = csv.Sniffer().sniff(csv_fileh.read(1024))
     # Reset the read position back to the start of the file before reading any entries.
-    csv_read.seek(0)
+    csv_fileh.seek(0)
   except csv.Error:
     # File appears not to be in CSV format
-    print csv_file + " is not a valid CSV file"
     continue
 
   # file reader

@@ -9,8 +9,8 @@ import pymongo
 import json
 import copy
 
-# SPECIFY .mongo file
-filename = 'McGillX-CHEM181x-1T2014-course_structure-prod-analytics.json'
+# SPECIFY .mongo filepath
+filename = 'data/McGillX-CHEM181x-1T2014-course_structure-prod-analytics.json'
 
 # SPECIFY connection details
 DATABASE_ADDRESS = "mongodb://localhost"
@@ -18,7 +18,7 @@ DATABASE_NAME = "edx"
 DATABASE_COLLECTION = "course_structure"
 
 # establish a connection to the database
-connection = pymongo.Connection(DATABASE_ADDRESS, safe=True)
+connection = pymongo.Connection(DATABASE_ADDRESS)
 
 # choose database
 db = connection[DATABASE_NAME]

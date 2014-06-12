@@ -16,13 +16,13 @@ import json
 # 4. Run this script specifying the .mongo filename in edxmongo_to_mongodb() function 
 # 5. Enjoy a clean database
 
+# SPECIFY input .mongo filepath
+FILENAME = 'data/McGillX-CHEM181x-1T2014-prod.mongo'
+
 # SPECIFY connection details
 DATABASE_ADDRESS = "mongodb://localhost"
 DATABASE_NAME = "edx"
 DATABASE_FORUM_COLLECTION = "forum"
-
-# SPECIFY input .mongo filename
-FILENAME = 'McGillX-CHEM181x-1T2014-prod.mongo'
 
 # establish a connection
 connection = pymongo.Connection(DATABASE_ADDRESS)

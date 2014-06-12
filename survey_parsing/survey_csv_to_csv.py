@@ -4,8 +4,8 @@ Parse the edX csv entrance and exit surveys into a more readable csv format
 
 import csv, json, collections
 
-# SPECIFY csv input file
-CSV_FILENAME = "ExitPage2.csv"
+# SPECIFY csv input filepath
+CSV_FILENAME = "data/ExitPage2.csv"
 
 # SPECIFY csv output file
 CSV_OUTPUT_FILENAME = CSV_FILENAME.replace(".csv","_PARSED.csv")

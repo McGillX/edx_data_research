@@ -5,8 +5,8 @@ Load the edx entrance and exit surveys to MongoDB
 ### Setup
 
 ```python
-# SPECIFY csv input file
-CSV_FILENAME = "ExitPage2.csv"
+# SPECIFY csv input filepath
+CSV_FILENAME = "data/ExitPage2.csv"
 
 # SPECIFY database info to insert/create
 DATABASE_ADDRESS = "mongodb://localhost"
@@ -27,8 +27,8 @@ Parse the survey .csv into a more readable .csv by filtering all the JSON bracke
 ### Setup
 
 ```python
-# SPECIFY csv input file
-CSV_FILENAME = "ExitPage2.csv"
+# SPECIFY csv input filepath
+CSV_FILENAME = "data/ExitPage2.csv"
 
 # SPECIFY csv output file
 CSV_OUTPUT_FILENAME = CSV_FILENAME.replace(".csv","_PARSED.csv")
