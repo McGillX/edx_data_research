@@ -1,0 +1,1 @@
+[{$match:{$or:[{"event_type":{$not:"edx.course.enrollment.deactivated"}},{"event_type":{$not:"edx.course.enrollment.activated"}}]}},{$group:{"_id":"$username","event_count":{$sum:1}}},{$out:"number_events_per_user"}]
