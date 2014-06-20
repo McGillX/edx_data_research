@@ -4,13 +4,11 @@
 
 ```
 mongoimport -d DATABASE -c COLLECTION --type tsv --file SQL_FILENAME --headerline
-
 ```
 
 For instance,
 
 ```
-
 mongoimport -d edx -c auth_userprofile --type tsv --file McGillX-CHEM181x-1T2014-auth_userprofile-prod-analytics.sql --headerline
 
 mongoimport -d edx -c certificates_generatedcertificate --type tsv --file McGillX-CHEM181x-1T2014-certificates_generatedcertificate-prod-analytics.sql --headerline
