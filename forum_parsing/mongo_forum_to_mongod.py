@@ -17,7 +17,11 @@ import json
 # 5. Enjoy a clean database
 
 # SPECIFY input .mongo filepath
-FILENAME = 'data/McGillX-CHEM181x-1T2014-prod.mongo'
+FILENAME = 'data/McGillX-CHEM181x-1T2014-prod.mongo' 
+
+# If user wants to pass path to file via command line arguments. then user can do the following:
+# FILENAME = sys.argv[1] # On the command line, user can run the command: python mongo_forum_to_mongod.py path_to_file
+
 
 # SPECIFY connection details
 DATABASE_ADDRESS = "mongodb://localhost"
