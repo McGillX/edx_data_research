@@ -13,9 +13,6 @@ from generate_csv_report import CSV
 # data should be in the format of 2D array or list of lists
 output = CSV(data, ['Header 1', 'Header 2', 'Header 3', 'Header 4'], output_file='name_of_output_file.csv')
 output.generate_csv()
-
-
-
 '''
 
 import csv
