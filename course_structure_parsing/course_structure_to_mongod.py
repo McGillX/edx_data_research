@@ -12,6 +12,10 @@ import copy
 # SPECIFY .mongo filepath
 filename = 'data/McGillX-CHEM181x-1T2014-course_structure-prod-analytics.json'
 
+# If user wants to pass path to file via command line arguments. then user can do the following:
+# filename = sys.argv[1] # On the command line, user can run the command: python course_structure_to_mongod.py path_to_file
+
+
 # SPECIFY connection details
 DATABASE_ADDRESS = "mongodb://localhost"
 DATABASE_NAME = "edx"
