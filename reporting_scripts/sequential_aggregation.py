@@ -1,6 +1,11 @@
 '''
 This module gathers the number of various categories under each sequential including
 the number of html, videos, verticals etc.
+
+Usage:
+
+python sequential_aggregation.py
+
 '''
 from collections import defaultdict
 
@@ -10,7 +15,6 @@ from generate_csv_report import CSV
 connection = EdXConnection('course_structure')
 collection = connection.get_access_to_collection()
 cursor = collection['course_structure'].find({'category' : 'sequential'})
-#print cursor.count()
 result = []
 for index, item in enumerate(cursor):
     children = item['children']
@@ -24,7 +28,7 @@ for index, item in enumerate(cursor):
             for _id in vertical['children']:
                 child = collection['course_structure'].find_one({'_id' : _id})
                 aggregate_category[child['category']] += 1
-            except Exception:
+        except Exception:
            pass
     temp_result.extend([aggregate_category['video'], aggregate_category['html'], aggregate_category['problem'],aggregate_category['discussion'],aggregate_category['poll_question'],aggregate_category['word_cloud']])
     result.append(temp_result)
