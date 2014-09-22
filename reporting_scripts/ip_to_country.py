@@ -22,6 +22,8 @@ from generate_csv_report import CSV
 connection = EdXConnection('tracking_atoc185x' )
 collection = connection.get_access_to_collection()
 
+# The csv file country_code_to_country.csv was retrieved from http://dev.maxmind.com/geoip/legacy/geolite/
+# This was used to get a mapping of a country code to a country
 with open('country_code_to_country.csv') as f:
     reader = csv.reader(f)
     country_code_to_country = dict(reader)
