@@ -40,4 +40,13 @@ from collections import defaultdict
 from base_edx import EdXConnection
 from generate_csv_report import CSV
 
+# Modify key-value pairs in survey_ids to the name of the survey pages and to 
+# the problem ids that maps to the survey pages E.g. if a course have a 
+survey_ids = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x/problem/e60f566b9a9342ac9b8dd3f92296af41', 
+'demographics_background' : 'i4x://McGillX/ATOC185x/problem/e60f566b9a9342ac9b8dd3f92296af41' , 
+'aspirations_motivation' : None}, 'exit_survey' : {'part_1' : None, 'part_2': None}}
+
+cursor_courseware_studentmodule = collection['courseware_studentmodule'].find()
+cursor_student = collection['auth_user'].find()
+
 
