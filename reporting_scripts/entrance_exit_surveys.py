@@ -40,15 +40,29 @@ from collections import defaultdict
 from base_edx import EdXConnection
 from generate_csv_report import CSV
 
-# Modify key-value pairs in survey_ids to the name of the survey pages and to 
+connection = EdXConnection('courseware_studentmodule', 'auth_user')
+collection = connection.get_access_to_collection()
+
+# Modify key-value pairs in survey_pages to the name of the survey pages and to 
 # the problem ids that maps to the survey pages E.g. if a course have a 
-survey_ids = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x/problem/e60f566b9a9342ac9b8dd3f92296af41', 
-'demographics_background' : 'i4x://McGillX/ATOC185x/problem/8781ed8818064bf08722ee3175c2f356' , 
-'aspirations_motivation' : 'i4x://McGillX/ATOC185x/problem/ca3486d4d1ef49ea8c6aa38534bab855'}, 
-'exit_survey' : {'part_1' : 'i4x://McGillX/ATOC185x/problem/7620c0262e3d44049d73ba5fed62edfd', 
-'part_2': 'i4x://McGillX/ATOC185x/problem/c993861c76e5484d8233e702af2e4b3d'}}
+survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x/problem/e60f566b9a9342ac9b8dd3f92296af41', 
+'demographics_background' : 'i4x://McGillX/ATOC185x/problem/e60f566b9a9342ac9b8dd3f92296af41' , 
+'aspirations_motivation' : None}, 'exit_survey' : {'part_1' : None, 'part_2': None}}
+
+survey_ids = [_id for page in survey_pages.values() for _id in page.values()]
 
 cursor_courseware_studentmodule = collection['courseware_studentmodule'].find()
-cursor_student = collection['auth_user'].find()
+cursor_student = collection['auth_user']
+
+result = defaultdict(list)
+survey_questions = set()
+for document in cursor_courseware_studentmodule:
+	if document['module_id'] in survey_ids:
+		username = cursor_student.find({'_id' : document['_id']})
+		student_answers = document['state']['student_answers'].iteritems()
+		result[username].append(student_answers)
+
+
+
 
 
