@@ -54,15 +54,12 @@ survey_ids = [_id for page in survey_pages.values() for _id in page.values()]
 cursor_courseware_studentmodule = collection['courseware_studentmodule'].find()
 cursor_student = collection['auth_user']
 
+# For each student, get the values filled in a survey page and store the results
+# in a dictionary where the key is the username. The username is extracted from
+# the auth_user collection using the student id stored in the courseware_studentmodule collection
 result = defaultdict(list)
-survey_questions = set()
 for document in cursor_courseware_studentmodule:
 	if document['module_id'] in survey_ids:
 		username = cursor_student.find({'_id' : document['_id']})
 		student_answers = document['state']['student_answers'].iteritems()
 		result[username].append(student_answers)
-
-
-
-
-
