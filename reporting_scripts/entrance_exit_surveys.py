@@ -70,11 +70,12 @@ for document in cursor_courseware_studentmodule:
                 result[username].append(doc_json['student_answers'])
         except:
             not_in_auth_user.add(document['student_id'])
-
 for value in result.values():
     if len(value) == 5:
         survey_question_ids = {key for item in value for key in item.keys()}
+        print survey_question_ids
         break
+#print survey_question_ids
 survey_question_ids = sorted(list(survey_question_ids))
 csv_data = []
 for username, survey_info in result.iteritems():
@@ -89,5 +90,5 @@ for username, survey_info in result.iteritems():
     temp.insert(0, username)
     csv_data.append(temp)
 
-output = CSV(csv_data, survey_question_ids, output_file='entrance_exit_surveys.csv')
+output = CSV(csv_data, ['Username'] +  survey_question_ids, output_file='entrance_exit_surveys.csv')
 output.generate_csv()

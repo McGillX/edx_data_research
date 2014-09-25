@@ -13,7 +13,7 @@ collection = connection.get_access_to_collection()
 from pymongo import MongoClient
 
 DATABASE_ADDRESS = "mongodb://localhost"
-DATABASE_NAME = 'edx'
+DATABASE_NAME = 'atoc185x'
 
 class EdXConnection(object):
     
