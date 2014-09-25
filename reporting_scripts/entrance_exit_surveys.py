@@ -36,6 +36,7 @@ python entrance_exit_surveys.py
 '''
 
 from collections import defaultdict
+import json
 
 from base_edx import EdXConnection
 from generate_csv_report import CSV
@@ -52,7 +53,6 @@ survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x/pr
 'part_2': 'i4x://McGillX/ATOC185x/problem/c993861c76e5484d8233e702af2e4b3d'}}
 
 survey_ids = [_id for page in survey_pages.values() for _id in page.values()]
-
 cursor_courseware_studentmodule = collection['courseware_studentmodule'].find()
 cursor_student = collection['auth_user']
 
@@ -60,8 +60,34 @@ cursor_student = collection['auth_user']
 # in a dictionary where the key is the username. The username is extracted from
 # the auth_user collection using the student id stored in the courseware_studentmodule collection
 result = defaultdict(list)
+not_in_auth_user = set()
 for document in cursor_courseware_studentmodule:
-	if document['module_id'] in survey_ids:
-		username = cursor_student.find({'_id' : document['_id']})
-		student_answers = document['state']['student_answers'].iteritems()
-		result[username].append(student_answers)
+    if document['module_id'] in survey_ids:
+        try:
+            username = cursor_student.find_one({'id' : document['student_id']})['username']
+            doc_json = json.loads(document['state'])
+            if 'student_answers' in doc_json:
+                result[username].append(doc_json['student_answers'])
+        except:
+            not_in_auth_user.add(document['student_id'])
+
+for value in result.values():
+    if len(value) == 5:
+        survey_question_ids = {key for item in value for key in item.keys()}
+        break
+survey_question_ids = sorted(list(survey_question_ids))
+csv_data = []
+for username, survey_info in result.iteritems():
+    temp = [''] * len(survey_question_ids) #survey_question_ids[:]
+    for item in survey_info:
+        for key,value in item.iteritems():
+            index = survey_question_ids.index(key)
+            if key in survey_question_ids:
+                temp[index] = value
+            #else:
+            #    temp[index] = ''
+    temp.insert(0, username)
+    csv_data.append(temp)
+
+output = CSV(csv_data, survey_question_ids, output_file='entrance_exit_surveys.csv')
+output.generate_csv()
