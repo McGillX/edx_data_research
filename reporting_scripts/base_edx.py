@@ -13,6 +13,7 @@ collection = connection.get_access_to_collection()
 from pymongo import MongoClient
 
 DATABASE_ADDRESS = "mongodb://localhost"
+# Make sure to change name of database before running the reporting scripts
 DATABASE_NAME = 'atoc185x'
 
 class EdXConnection(object):
