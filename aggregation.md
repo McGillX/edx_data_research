@@ -1,4 +1,4 @@
-# Useful commands for aggregation
+# Useful commands for aggregation on MongoDB database
 
 Count number of tracking events per user
 
