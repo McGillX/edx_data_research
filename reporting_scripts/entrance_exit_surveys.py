@@ -70,23 +70,25 @@ for document in cursor_courseware_studentmodule:
                 result[username].append(doc_json['student_answers'])
         except:
             not_in_auth_user.add(document['student_id'])
+
+# For loop to retrieve the names of all the survey pages. Since a student may
+# not have filled all pages, we look for the longest list and use the values
+# to retrieve the survey pages
 for value in result.values():
     if len(value) == 5:
         survey_question_ids = {key for item in value for key in item.keys()}
         print survey_question_ids
         break
-#print survey_question_ids
+
 survey_question_ids = sorted(list(survey_question_ids))
 csv_data = []
 for username, survey_info in result.iteritems():
-    temp = [''] * len(survey_question_ids) #survey_question_ids[:]
+    temp = [''] * len(survey_question_ids) 
     for item in survey_info:
         for key,value in item.iteritems():
             index = survey_question_ids.index(key)
             if key in survey_question_ids:
                 temp[index] = value
-            #else:
-            #    temp[index] = ''
     temp.insert(0, username)
     csv_data.append(temp)
 
