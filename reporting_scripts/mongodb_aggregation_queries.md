@@ -29,3 +29,6 @@ db.tracking_atoc185x.aggregate([{$match : {"event_type" : "problem_check", "even
 db.tracking_atoc185x.aggregate([{$group : {_id : {"username" : "$username"}, event : {$addToSet : "$event_type"}}}, {$out : 'students_never_accessed'}], {allowDiskUse : true})
 
 db.students_never_accessed.aggregate([{$match : {$or : [{$and : [{event : {$size : 1}}, {event : {$in : ["edx.course.enrollment.activated","edx.course.enrollment.deactivated"]}}]},{$and : [{event : {$size : 2}}, {event : {$all : ["edx.course.enrollment.activated","edx.course.enrollment.deactivated"]}}]} ]}}, {$out : "students_never_accessed_number"}])
+
+### 10 - Attempts by a student per problem id
+db.tracking_atoc185x.aggregate([{$match : {event_type : 'problem_check', 'event_source': 'server'}}, {$group : {_id : {"username" : "$username", "problem_id" : "$event.problem_id"}, attempts : {$push : "$event.success"}}}, {$out : "user_attempts_per_problem_id"}])
