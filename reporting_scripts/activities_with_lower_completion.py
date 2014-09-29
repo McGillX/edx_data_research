@@ -34,8 +34,6 @@ for index,document in enumerate(cursor):
     else:
         result[document['_id']['problem_id']]['incorrect'] += 1
 
-# Convert result to a 2D result to pass to CSV constructor from the module generate_csv_report
 csv_result = [[item, result[item]['correct'], result[item]['incorrect']] for item in result]
-#csv_result = [[item, result[item]['correct'], result['item']['incorrect']] for item in result]
 output = CSV(csv_result, ['Problem Id', 'Correct Count', 'Incorrect Count'], output_file='activities_with_lower_completion.csv')
 output.generate_csv()
