@@ -17,13 +17,13 @@ For example, McGill offered two courses this year, CHEM181x and ATOC181x. And th
    
    db.tracking.distinct('event.course_id')
    
-The above query would give a result similar to:
+   The above query would give a result similar to:
 
    [
 	"McGillX/ATOC185x/2T2014",
 	"McGillX/CHEM181x/1T2014",
 	"McGillX/CHEM181x_2/3T2014"
-]
+   ]
    
 2. Use the following aggregation query to retrieve only those documents from the tracking collection that have the course ids of the required course:
 
@@ -31,3 +31,16 @@ The above query would give a result similar to:
    
 ### Running a script
 The description of a script and its usage is document at the top of each script. If you are having difficulty running a script or not able to run a script, please do not hesitate to contact us for help. 
+
+## Contact
+===
+You can contact the following people for any help in running the scripts, setting up or just an explanation about a specific script:
+
+* Usman Ehtesham Gul - uehtesham90@gmail.com
+* Alexander Steeves-Fuentes - alexander.steeves-fuentes@mcgill.ca
+
+## Contribute
+===
+
+If you want to add any new scripts, or improve existing scripts, or you found an error in the script feel free to send a pull request or raise an issue
+
