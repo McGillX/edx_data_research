@@ -34,7 +34,7 @@ The description of a script and its usage is documented at the top of each scrip
 
 Most of the scripts in the reporting scripts folder make use of the modules based_edx and generate_csv_report. The purpose of base_edx is to remove the need to repeat steps of creating a connection to the MongoDB databse and getting access to different collections. Since this part is repeated on all scripts, I decided to make it a separate module and all the user has to do when creating an object of base_edx is to provide the require collections for data analysis
 
-generate_csv_report is to remove the steps if remembering  how to open a csv file and not forget to close a csv file. It also take cares of the case where if the csv file is too big, for example bigger than 2 million and hence cannot be opened as an Excel file, the module will take of splitting the output in multiple csv files. The default value for the maximum number of rows of a csv file is chosen to be 100,000 but that can be modified in the constructor. 
+generate_csv_report is to remove the steps of remembering  how to open a csv file and not forget to close a csv file. It also take cares of the case where if the csv file is too big, for example bigger than 2 million and hence cannot be opened as an Excel file, the module will take care of splitting the output into multiple csv files. The default value for the maximum number of rows of a csv file is chosen to be 100,000 but that can be modified in the constructor. An important point to note when using the generate_csv_report module is that it expects the data (that needs to be written in a csv file) to be in the form of a 2D array or a list of lists. 
 
 ## Contact
 
