@@ -1,12 +1,10 @@
 ## Overview
-===
 
 The reporting_scripts folder contains scripts that were used for various data analysis tasks on data of students that took a McGill online course with the edX platform. The data was provided by edX in various formats: sql, mongo and json. All such data was migrated to a local MongoDB database using scripts under the edX-data-research folder. 
 
 The reporting_scripts folder also contains a file, mongodb_aggregation_queries.md, which contains a list of aggregation queries used directly on the mongo shell. The output of the aggregation queries were usually directed to a new Mongo collection and later migrated to a csv file. 
 
 ## Getting Started
-===
 
 ### Tracking Logs
 The tracking logs provided by edX are structured such that the logs for each day are accumulated. This may result in the logs of various courses under the same source to be combined. 
@@ -39,13 +37,12 @@ Most of the scripts in the reporting scripts folder make use of the modules base
 generate_csv_report is to remove the steps if remembering  how to open a csv file and not forget to close a csv file. It also take cares of the case where if the csv file is too big, for example bigger than 2 million and hence cannot be opened as an Excel file, the module will take of splitting the output in multiple csv files. The default value for the maximum number of rows of a csv file is chosen to be 100,000 but that can be modified in the constructor. 
 
 ## Contact
-===
+
 You can contact the following people for any help in running the scripts, setting up or just an explanation about a specific script:
 
 * Usman Ehtesham Gul - uehtesham90@gmail.com
 * Alexander Steeves-Fuentes - alexander.steeves-fuentes@mcgill.ca
 
 ## Contribute
-===
 
 If you want to add any new scripts, or improve existing scripts, or you found an error in the script feel free to send a pull request or raise an issue
