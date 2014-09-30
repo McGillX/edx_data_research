@@ -30,7 +30,13 @@ For example, McGill offered two courses this year, CHEM181x and ATOC181x. And th
    db.tracking.aggregate([{$match :{ 'event.course_id' : '' }}, {$out : 'tracking_atoc185x'}])   
    
 ### Running a script
-The description of a script and its usage is document at the top of each script. If you are having difficulty running a script or not able to run a script, please do not hesitate to contact us for help. 
+The description of a script and its usage is documented at the top of each script. If you are having difficulty running a script, please do not hesitate to contact us for help.
+
+### What is base_edx.py and generate_csv_report.py? 
+
+Most of the scripts in the reporting scripts folder make use of the modules based_edx and generate_csv_report. The purpose of base_edx is to remove the need to repeat steps of creating a connection to the MongoDB databse and getting access to different collections. Since this part is repeated on all scripts, I decided to make it a separate module and all the user has to do when creating an object of base_edx is to provide the require collections for data analysis
+
+generate_csv_report is to remove the steps if remembering  how to open a csv file and not forget to close a csv file. It also take cares of the case where if the csv file is too big, for example bigger than 2 million and hence cannot be opened as an Excel file, the module will take of splitting the output in multiple csv files. The default value for the maximum number of rows of a csv file is chosen to be 100,000 but that can be modified in the constructor. 
 
 ## Contact
 ===
@@ -43,4 +49,3 @@ You can contact the following people for any help in running the scripts, settin
 ===
 
 If you want to add any new scripts, or improve existing scripts, or you found an error in the script feel free to send a pull request or raise an issue
-
