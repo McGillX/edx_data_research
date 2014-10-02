@@ -11,3 +11,7 @@ You can contact the following people for any help in running the scripts, settin
 ## Contribute
 
 If you want to add any new scripts, or improve existing scripts, or you found an error in the script feel free to send a pull request or raise an issue
+
+##Contents
+
+parsing - contains the scripts and procedures used to convert the raw data (json, sql, mongodb) from edx to MongoDB 
