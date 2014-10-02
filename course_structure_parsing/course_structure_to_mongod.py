@@ -54,40 +54,6 @@ for key in json_data:
   new_json_data[new_key] = json_data[key]
 json_data = new_json_data
 
-# # delete conditionals
-# keys_to_delete = []
-# new_json_data = copy.deep(json_data)
-# for key in json_data:
-#   if json_data[key]['category'] == 'conditional':
-#     for key1 in json_data:
-#       if json_data[key1]['children']:
-#         for index, child in enumerate(json_data[key1]['children']):
-#           if child = key:
-#             new_json_data[key1]['children'][index] = child.
-
-
-# # delete conditionals
-# keys_to_delete = []
-# for key in json_data:
-#   if json_data[key]['category'] == 'conditional':
-#     for key1 in json_data:
-#       if key in json_data['children']:
-#         parent_ids = json_data[key]['parent_data']['wrapper_id']
-#         json_data[parent_id]['children'].extend(json_data[key]['children'])
-#         keys_to_delete.append(key)
-# for key in keys_to_delete:
-#   del json_data[key]
-
-# # delete wrappers
-# keys_to_delete = []
-# for key in json_data:
-#   if json_data[key]['category'] == 'wrapper':
-#     parent_id = json_data[key]['parent_data']['vertical_id']
-#     json_data[parent_id]['children'].extend(json_data[key]['children'])
-#     keys_to_delete.append(key)
-# for key in keys_to_delete:
-#   del json_data[key]
-
 # delete conditional
 keys_to_delete = []
 for key in json_data:
