@@ -14,4 +14,4 @@ If you want to add any new scripts, or improve existing scripts, or you found an
 
 ##Contents
 
-parsing - contains the scripts and procedures used to convert the raw data (json, sql, mongodb) from edx to MongoDB 
+parsing - contains the scripts and procedures used to convert the raw data (json, sql, csv, mongodb) from edx to MongoDB 
