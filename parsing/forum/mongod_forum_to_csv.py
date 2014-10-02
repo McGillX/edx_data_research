@@ -3,7 +3,6 @@ Export the collection of .mongo dicussion data from mongodb to csv
 '''
 
 import pymongo
-import json
 import csv
 
 # 1. Assume we have a working mongo database, if not, see mongo_to_mongod.py to insert .mongo files into mongodb
@@ -68,4 +67,5 @@ def query_to_csv():
 
   csv_file.close()
 
-query_to_csv()
+if __name__ == '__main__':
+    query_to_csv()
