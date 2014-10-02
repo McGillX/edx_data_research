@@ -19,6 +19,12 @@ Might require sudo
 ```
 sh LOAD.sh
 ```
+OR
+
+```
+chmod 700 LOAD.sh
+./LOAD.sh
+```
 
 # load_log_mongo.py
 
