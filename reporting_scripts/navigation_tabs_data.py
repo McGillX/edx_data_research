@@ -2,7 +2,7 @@
 This module gets the number of users who access each navigation tab
 '''
 
-import csv
+#import csv
 from datetime import datetime
 from collections import defaultdict
 import sys
@@ -43,3 +43,4 @@ for key in unique_users_per_tab:
     result.append(key, NAVIGATION_TABS[key], len(unique_users_per_tab[key]))
     
 output = CSV(result, ['Navigation Tab','Tab', 'Number of Unique Users'], output_file='number_of_unique_users_per_navigation_tab.csv')
+output.generate_csv()
