@@ -13,7 +13,7 @@ For example, McGill offered two courses this year, CHEM181x and ATOC181x. And th
 
 Get all unique course_ids in the tracking logs collections. The following query can be used:
    
-    db.tracking.distinct('event.course_id')
+    db.tracking.distinct('context.course_id')
    
    The above query would give a result similar to:
 
@@ -23,7 +23,7 @@ Get all unique course_ids in the tracking logs collections. The following query 
    
 Use the following aggregation query to retrieve only those documents from the tracking collection that have the course ids of the required course:
 
-    db.tracking.aggregate([{$match :{ 'event.course_id' : 'McGillX/ATOC185x/2T2014' }}, {$out : 'tracking_atoc185x'}])   
+    db.tracking.aggregate([{$match :{ 'context.course_id' : 'McGillX/ATOC185x/2T2014' }}, {$out : 'tracking_atoc185x'}])   
    
 ### Running a script
 The description of a script and its usage is documented at the top of each script. If you are having difficulty running a script, please do not hesitate to contact us for help.
