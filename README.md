@@ -7,8 +7,6 @@ This is a public repository for the tools developed and used by the McGillX rese
 |:------:|----------
 |parsing | Contains the scripts and procedures used to migrate the raw data (json, sql, csv, mongodb) from edx to MongoDB
 |reporting_scripts | Contains scripts that were used for extracting and aggregating data for analysis 
-|test| testing
-
 
 ## Contact
 
