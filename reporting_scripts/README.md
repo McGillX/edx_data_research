@@ -17,9 +17,14 @@ Get all unique course_ids in the tracking logs collections. The following query 
    
    The above query would give a result similar to:
 
-    [ "McGillX/ATOC185x/2T2014",
+    [
+	"McGillX/ATOC185x/2T2014",
 	"McGillX/CHEM181x/1T2014",
-	"McGillX/CHEM181x_2/3T2014" ]
+	"McGillX/ATOC185x/asset",
+	"",
+	"McGillX/you/2T2014",
+	"McGillX/CHEM181x_2/3T2014"
+    ]
    
 Use the following aggregation query to retrieve only those documents from the tracking collection that have the course ids of the required course:
 
