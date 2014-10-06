@@ -22,7 +22,7 @@ completers = collection['certificates_generatedcertificate'].find({'status' : 'd
 result = []
 for document in completers:
     user_document = collection['auth_user'].find_one({"id" : document['user_id']})
-    result.append([user_document['username'], document['name'], document['grade']])
+    result.append([user_document['id'],user_document['username'], document['name'], document['grade']])
 
-output = CSV(result, ['Username', 'Name', 'Grade'], output_file='course_completers.csv')
+output = CSV(result, ['User ID','Username', 'Name', 'Grade'], output_file='course_completers.csv')
 output.generate_csv()
