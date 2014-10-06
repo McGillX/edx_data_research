@@ -47,4 +47,6 @@ In this script, all you have to do is replace the values in the object survey_pa
 
 	    survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x/problem/e60f566b9a9342ac9b8dd3f92296af41', 'demographics_background' : 'i4x://McGillX/ATOC185x/problem/8781ed8818064bf08722ee3175c2f356' , 'aspirations_motivation' : 'i4x://McGillX/ATOC185x/problem/ca3486d4d1ef49ea8c6aa38534bab855'}, 'exit_survey' : {'part_1' : 'i4x://McGillX/ATOC185x/problem/7620c0262e3d44049d73ba5fed62edfd','part_2': 'i4x://McGillX/ATOC185x/problem/c993861c76e5484d8233e702af2e4b3d'}}
 	    
-Once you have updated the values of the survey pages with the correct problem_ids, run the following command to extract the surveys
+Once you have updated the values of the survey pages with the correct problem_ids, run the following command to extract the surveys:
+     
+    python entrance_exit_surveys.py 
