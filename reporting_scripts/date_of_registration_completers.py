@@ -13,7 +13,7 @@ from datetime import datetime
 from base_edx import EdXConnection
 from generate_csv_report import CSV
 
-connection = EdXConnection('tracking_atoc185x')
+connection = EdXConnection('student_courseenrollment')
 collection = connection.get_access_to_collection()
 
 # Can replace csv file with any csv file that contains the list of usernames 
@@ -22,15 +22,14 @@ collection = connection.get_access_to_collection()
 with open('atoc185x/course_completers.csv') as csv_file:
     reader = csv.reader(csv_file)
     reader.next()
-    usernames = { row[0] for row in reader }
-
+    users = { row[0] : row[1] for row in reader }
 result = []
-tracking = collection['tracking_atoc185x'].find({'event_type' : 'edx.course.enrollment.activated'})
+student_courseenrollment = collection['student_courseenrollment'].find()
 seen = set()
-for document in  tracking:
-    if document['username'] in usernames and document['username'] not in seen:
-        seen.add(document['username'])
-        result.append([document['username'],datetime.strptime(document['time'].split('T')[0], "%Y-%m-%d").date()])
+for document in  student_courseenrollment:
+    if str(document['user_id']) in users and document['user_id'] not in seen:
+        seen.add(document['user_id'])
+        result.append([document['user_id'], users[str(document['user_id'])],document['created'].split()[0]]) 
 
 output = CSV(result, ['Username', 'Date of Registration'], output_file='date_of_registration_completers.csv')
 output.generate_csv()
