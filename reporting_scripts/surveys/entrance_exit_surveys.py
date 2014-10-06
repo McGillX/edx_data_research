@@ -38,6 +38,8 @@ python entrance_exit_surveys.py
 from collections import defaultdict
 import json
 
+# These modules can be found under reporting scripts. You will have to add them
+# in the same directory as this script
 from base_edx import EdXConnection
 from generate_csv_report import CSV
 
