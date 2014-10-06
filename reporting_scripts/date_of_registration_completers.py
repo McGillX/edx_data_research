@@ -23,6 +23,7 @@ with open('atoc185x/course_completers.csv') as csv_file:
     reader = csv.reader(csv_file)
     reader.next()
     users = { row[0] : row[1] for row in reader }
+
 result = []
 student_courseenrollment = collection['student_courseenrollment'].find()
 seen = set()
