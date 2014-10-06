@@ -1,6 +1,6 @@
-DATABASE="edx"
-COLLECTION="tracking_before_jan22"
-DIRECTORY="before_jan22"
+DATABASE="atoc185x"
+COLLECTION="tracking_atoc185x_before_may_27"
+DIRECTORY="/data/tracking_logs_before_may_27"
 
 FILES=$(find $DIRECTORY -type f -name *.log)
 
