@@ -10,10 +10,9 @@ This is a public repository for the tools developed and used by the McGillX rese
 
 ## Contact
 
-You can contact the following people for any help in running the scripts, setting up or just an explanation about a specific script:
+You can contact McGillX for any help in running the scripts, setting up or just an explanation about a specific script:
 
-* Usman Ehtesham Gul - uehtesham90@gmail.com
-* Alexander Steeves-Fuentes - alexander.steeves-fuentes@mcgill.ca
+McGillX - <mcgillx.tls@mcgill.ca>
 
 ## Contribute
 
