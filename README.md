@@ -16,4 +16,4 @@ McGillX - <mcgillx.tls@mcgill.ca>
 
 ## Contribute
 
-If you want to add any new scripts, or improve existing scripts, or you found an error in the script feel free to send a pull request or raise an issue
+If you would like to add new scripts, improve existing scripts, or you found an error in the script feel free to send a pull request or raise an issue.
