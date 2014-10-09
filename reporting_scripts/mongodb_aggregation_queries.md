@@ -32,3 +32,12 @@ Mongo Aggregation Queries used on the mongo shell to output new collections with
 
 ### 10 - Attempts by a student per problem id
     db.tracking_atoc185x.aggregate([{$match : {event_type : 'problem_check', 'event_source': 'server'}}, {$group : {_id : {"username" : "$username", "problem_id" : "$event.problem_id"}, attempts : {$push : "$event.success"}}}, {$out : "user_attempts_per_problem_id"}])
+    
+### 11 - Number of unique users in tracking logs
+    db.tracking_atoc185x.aggregate([{$group:{"_id":"$username","event_count":{$sum:1}}},{$out:"unregistration_user_count"}])
+
+### 12 - Number of unique users who did something else than registering/unregistering
+    db.tracking_atoc185x.aggregate([{$match:{"event_type":{$not:/edx\.course\.enrollment.*/}}},{$group:{"_id":"$username","event_count":{$sum:1}}},{$out:"number_did_something"}])
+
+### 13 - Last event of every unique user
+    db.tracking_atoc185x.aggregate([{ $sort: { "time": 1 } }, { $group: { "_id":"$username", "date":{ $last:"$time" }, "last_event_type": { $last:"$event_type" }, "metadata": { $last:"$metadata" }, "parent_data": { $last:"$parent_data" } } }, {$out:"last_event_by_user"} ])
