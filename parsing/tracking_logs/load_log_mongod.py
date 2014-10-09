@@ -100,7 +100,7 @@ def append_course_struct(id):
         if 'metadata' in data.keys():
             record['metadata'] = data['metadata']
     except:
-        print "Structure not found for", id
+        #print "Structure not found for", id
         pass
 
 # collect all files from command line
@@ -113,6 +113,7 @@ skipped = 0;
 first_skipped = None
 last_skipped = None
 for logfile_path in sorted(files):
+    print logfile_path
     # if this file has already been imported, or an error file, skip
     logfile_path_canonical = canonical_name(logfile_path)
     if imported_coll.find({'_id':logfile_path_canonical}).count() or \

@@ -11,4 +11,4 @@ do
 filelist="$filelist $f"
 done
 
-python load_log_mongod.py $DATABASE $COLLECTION $filelist
+python load_log_mongod.py $DATABASE $COLLECTION $filelist > output.txt
