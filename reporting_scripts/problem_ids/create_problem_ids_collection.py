@@ -18,10 +18,16 @@ Make sure the module base_edx is in the same directory as this script so that it
 can be imported
 
 '''
+import json
 
 from base_edx import EdXConnection
 
-connection = EdXConnection('courseware_studentmodule', 'tracking_atoc185x')
+# The third argument in line 25 is the name of the new collection which will 
+# contain the results of this script. Each new document will be inserted into
+# this new collection. The name of the resulting collection could be anything;
+# preferrably relevant to the course
+connection = EdXConnection('courseware_studentmodule', 'tracking_atoc185x', 
+            'atoc185x_problem_ids')
 collection = connection.get_access_to_collection()
 
 cursor = collection['courseware_studentmodule'].find({'module_type' : 'problem'})
@@ -30,3 +36,13 @@ for document in cursor:
     problem_ids.add(document['module_id'])
 
 cursor = collection['tracking_atoc185x'].find({'event_type' : 'problem_check', 'event_source' : 'server'})
+for index, document in enumerate(cursor):
+   doc_result = {}
+   doc_result['username'] = document['username']
+   doc_result['problem_id'] = document['event']['problem_id']
+   doc_result['course_id'] = document['context']['course_id']
+   doc_result['module'] = document['context']['module']
+   doc_result['session'] = document['context']['session']
+   doc_result['time'] = document['time']
+   doc_result['event'] = document['event']
+   collection['atoc185x_problem_ids'].insert(doc_result)
