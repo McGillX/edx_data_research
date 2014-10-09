@@ -17,13 +17,13 @@ DIRECTORY="CHEM181x_logs_decrypted"
 Might require sudo
 
 ```
-sh LOAD.sh
+sh LOAD_LOGS.sh
 ```
 OR
 
 ```
-chmod 700 LOAD.sh
-./LOAD.sh
+chmod 700 LOAD_LOGS.sh
+./LOAD_LOGS.sh
 ```
 
 # load_log_mongo.py
