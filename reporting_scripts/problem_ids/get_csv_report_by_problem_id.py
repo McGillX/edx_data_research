@@ -36,7 +36,7 @@ def _generate_name_from_problem_id(problem_id):
     '''
     Generate name of csv output file from problem id
     '''
-    return '_'.join(problem_id.split('/')[3:])
+    return '_'.join(problem_id.split('/')[3:]) + '.csv'
 
 cursor = collection['atoc185x_problem_ids'].find({'event.problem_id':sys.argv[1]})
 #cursor = collection['atoc185x_problem_ids'].aggregate([{'$match' : 
@@ -50,6 +50,6 @@ for document in cursor:
     document['event']['grade'], document['event']['max_grade'], document['event']['answers']])
 
 csv_report_name = _generate_name_from_problem_id(sys.argv[1])
-output = CSV(result, [], output_file=csv_report_name)
+output = CSV(result, ['Username', 'Attempt Number', 'Module', 'Time', 'Success', 'Grade Achieved', 'Max Grade', 'Answers'], output_file=csv_report_name)
 output.generate_csv()
 
