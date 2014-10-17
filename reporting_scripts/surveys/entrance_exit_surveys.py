@@ -88,9 +88,16 @@ for username, survey_info in result.iteritems():
     temp = [''] * len(survey_question_ids) 
     for item in survey_info:
         for key,value in item.iteritems():
-            index = survey_question_ids.index(key)
-            if key in survey_question_ids:
-                temp[index] = value
+            #index = survey_question_ids.index(key)
+            #if key in survey_question_ids:
+            #    temp[index] = value
+            try:
+                index = survey_question_ids.index(key)
+                if key in survey_question_ids:
+                    temp[index] = value
+            except:
+                # Skip or do something if key not in list of survey question ids
+                pass
     temp.insert(0, username)
     csv_data.append(temp)
 
