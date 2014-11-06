@@ -43,24 +43,17 @@ import json
 from base_edx import EdXConnection
 from generate_csv_report import CSV
 
-connection = EdXConnection('a_courseware_studentmodule', 'a_auth_user')
-#connection = EdXConnection('courseware_studentmodule', 'auth_user')
+connection = EdXConnection('courseware_studentmodule', 'auth_user')
 collection = connection.get_access_to_collection()
 
 # Modify key-value pairs in survey_pages to the name of the survey pages and to 
 # the problem ids that maps to the survey pages E.g. if a course have a 
 
-#survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x/problem/e60f566b9a9342ac9b8dd3f92296af41', 
-#'demographics_background' : 'i4x://McGillX/ATOC185x/problem/8781ed8818064bf08722ee3175c2f356' , 
-#'aspirations_motivation' : 'i4x://McGillX/ATOC185x/problem/ca3486d4d1ef49ea8c6aa38534bab855'}, 
-#'exit_survey' : {'part_1' : 'i4x://McGillX/ATOC185x/problem/7620c0262e3d44049d73ba5fed62edfd',
-#'part_2': 'i4x://McGillX/ATOC185x/problem/c993861c76e5484d8233e702af2e4b3d'}}
-
-survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/CHEM181x/problem/c9d2efffbdf043e68789bd60cd4954e3', 
-'demographics_background' : 'i4x://McGillX/CHEM181x/problem/134cfc9efb2b400bab2ee1505cc9e4a9' , 
-'aspirations_motivation' : 'i4x://McGillX/CHEM181x/problem/579ae070227c4f5c973eb02affdcba2a'}, 
-'exit_survey' : {'part_1' : 'i4x://McGillX/CHEM181x/problem/72c6a513dae945779520c3a93bb5bc49',
-'part_2': 'i4x://McGillX/CHEM181x/problem/0ec10c7420a040f6beb2be520fe1eb50'}}
+survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x/problem/e60f566b9a9342ac9b8dd3f92296af41', 
+'demographics_background' : 'i4x://McGillX/ATOC185x/problem/8781ed8818064bf08722ee3175c2f356' , 
+'aspirations_motivation' : 'i4x://McGillX/ATOC185x/problem/ca3486d4d1ef49ea8c6aa38534bab855'}, 
+'exit_survey' : {'part_1' : 'i4x://McGillX/ATOC185x/problem/7620c0262e3d44049d73ba5fed62edfd',
+'part_2': 'i4x://McGillX/ATOC185x/problem/c993861c76e5484d8233e702af2e4b3d'}}
 
 survey_ids = [_id for page in survey_pages.values() for _id in page.values()]
 cursor_courseware_studentmodule = collection['a_courseware_studentmodule'].find()
@@ -90,8 +83,7 @@ for value in result.values():
         temp = {key for item in value for key in item.keys()}
         if len(temp) > len(survey_question_ids):
             survey_question_ids = temp
-        #break
-print survey_question_ids
+
 survey_question_ids = sorted(list(survey_question_ids))
 csv_data = []
 for username, survey_info in result.iteritems():
@@ -101,14 +93,6 @@ for username, survey_info in result.iteritems():
             index = survey_question_ids.index(key)
             if key in survey_question_ids:
                 temp[index] = value
-            #try:
-            #    index = survey_question_ids.index(key)
-            #    if key in survey_question_ids:
-            #        temp[index] = value
-            #except:
-                # Skip or do something if key not in list of survey question ids
-                #print key
-            #    pass
     temp.insert(0, username)
     csv_data.append(temp)
 
