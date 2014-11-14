@@ -125,7 +125,7 @@ for logfile_path in sorted(files):
         continue
 
     if skipped > 0:
-        print "skipped %d files, %s ... %s" % (skipped, first_skipped, last_skipped)
+        #print "skipped %d files, %s ... %s" % (skipped, first_skipped, last_skipped)
         skipped = 0
         first_skipped = None
         last_skipped = None

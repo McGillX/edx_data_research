@@ -1,6 +1,6 @@
-DATABASE="atoc185x"
-COLLECTION="tracking_atoc185x_before_may_27"
-DIRECTORY="/data/tracking_logs_before_may_27"
+DATABASE="tracking_logs"
+COLLECTION="tracking"
+DIRECTORY="/data/tracking"
 
 FILES=$(find $DIRECTORY -type f -name *.log)
 
@@ -11,4 +11,4 @@ do
 filelist="$filelist $f"
 done
 
-python load_log_mongod.py $DATABASE $COLLECTION $filelist > output.txt
+python edx_data_research/parsing/tracking_logs/load_log_mongod.py $DATABASE $COLLECTION $filelist >> output.txt
