@@ -59,3 +59,6 @@ target/
 *.bson
 *.csv
 *.sql
+parsing/tracking_logs/extract_course_tracking_logs.py
+parsing/tracking_logs/remove_tracking_logs_date.py
+
