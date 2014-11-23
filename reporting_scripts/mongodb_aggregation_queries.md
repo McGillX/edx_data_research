@@ -44,3 +44,6 @@ Mongo Aggregation Queries used on the mongo shell to output new collections with
 
 ### 14 - Number of tracking events per user
     db.tracking.aggregate([{$group : { _id : "$username", count : {$sum : 1}}},{$out : "tracking_count_per_user"}])
+
+### 15 - Number of accesses to Course Info Page per user
+    db.tracking.aggregate([{$match : {event_type : "/courses/McGillX/CHEM181X/1T2014/info"}},{$group : {_id :     "$username", count : {"$sum" : 1}}},{"$out" : "course_info_access_count_per_user"}])
