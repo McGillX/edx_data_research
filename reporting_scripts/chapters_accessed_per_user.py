@@ -15,5 +15,6 @@ from generate_csv_report import CSV
 connection = EdXConnection('tracking', 'course_structure')
 collection = connection.get_access_to_collection()
 
+# Get all chapters
 chapters = collection['course_structure'].distinct('parent_data.chapter_display_name')
 
