@@ -7,18 +7,15 @@ python user_info.py
 
 '''
 
-from collections import defaultdict
 
 from base_edx import EdXConnection
 from generate_csv_report import CSV 
 
 connection = EdXConnection('certificates_generatedcertificate', 'auth_userprofile')
 collection = connection.get_access_to_collection()
-
 documents = collection['auth_userprofile'].find()
 
 result = []
-
 for document in documents:
     user_id = document['user_id']
     try:
