@@ -63,11 +63,21 @@ def canonical_name(filepath):
         fname = fname[:-3]
     return fname
 
-def migrate_tracking_logs_to_mongo():
+def migrate_tracking_logs_to_mongo(tracking, tracking_imported):
     pass
 
 def main():
-    pass
+    if len(sys.argv) < 4:
+        usage_message = """usage: %s db coll f1 [f2] [f3...]
+            For one or more files containing edx tracking logs, insert into the
+            collection given. Files ending .gz they are decompressed on the fly.
+            Files successfully loaded are tracked in coll_incremental. If already
+            loaded, skip.
+            """
+        sys.stderr.write(usage_message % sys.argv[0])
+        sys.exit(1)
+        
+    tracking, tracking_imported = connect_to_db_collection(sys.argv[1], sys.arv[2])
 
 if __name__ == '__main__':
     main()
