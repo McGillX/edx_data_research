@@ -26,9 +26,9 @@ def connect_to_db_collection(db, collection):
     # Get database connection and collections
     connection = pymongo.Connection('localhost', 27017)
     db = connection[db_name]
-    tracking_collection = db[collection_name]
-    imported_collection = db[collection_name + "_imported"]
-    return tracking_collection, imported_collection
+    tracking = db[collection_name]
+    tracking_imported = db[collection_name + "_imported"]
+    return tracking, tracking_imported
 
 def get_course_id(event):
     """
@@ -58,11 +58,27 @@ def canonical_name(filepath):
     Save only the filename and the subdirectory it is in, strip off all prior 
     paths.  If the file ends in .gz, remove that too.  Convert to lower case.
     """
-    fname = '/'.join(filepath.lower().split('/')[-2:])
+    fname = '/'.join(filepath.lower().split('/')[-1:])
     if len(fname) > 3 and fname[-3:] == ".gz":
         fname = fname[:-3]
     return fname
 
+def get_tracking_logs(path_to_logs):
+    '''
+    Retrieve all logs files from command line whether they were passed directly
+    as files or directory
+
+    '''
+
+    logs = []
+    for item in path_to_logs: 
+        if os.path.isfile(item):
+            logs.append(item)
+        elif os.path.isdir(item):
+            for (dir_path, dir_names, file_names) in os.walk(item):
+                logs.extend(file_names)
+    return logs
+    
 def migrate_tracking_logs_to_mongo(tracking, tracking_imported):
     pass
 
