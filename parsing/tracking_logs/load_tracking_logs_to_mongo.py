@@ -1,11 +1,11 @@
 '''
-Load tracking logs to mongodb. Since tracking logs will be generated daily, we
-will load all logs to a master tracking_logs database in a master collection
-In this way, there will only one main collection of all tracking logs and this
-will be used to extract course specific tracking logs to the coure specific 
-tracking log collection in the course specific database
+This script loads tracking logs to mongodb
+Tracking logs are generated daily
+we will load all logs to a master tracking_logs collection within our master database
+From the master tracking logs collection we extract course specific tracking logs
+Course specific tracking logs are loaded to a course specific database in collection called tracking
 
-Tracking logs will have an extention of either .log or .log.gz
+Note, this script works with both decompressed (.log) and compressed (.log.gz) tracking logs
 
 '''
 
