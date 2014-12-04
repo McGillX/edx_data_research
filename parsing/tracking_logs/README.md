@@ -4,7 +4,7 @@ Load the edX tracking logs to MongoDB, targets a folder (recursively)
 
 ### Setup
 
-MongoDB instance has to be local
+MongoDB instance has to be local (on the same machine that contains the load_log.py script and tracking logs for import)
 
 ```bash
 DATABASE="edx"
@@ -31,7 +31,7 @@ chmod 700 LOAD_LOGS.sh
 ### Usage
 
 ```
-python load_log_mongo.py DB COLL f1 f2
+python load_log_mongo.py NameOfDatabase Collection f1 f2
 ```
 
 # mongod_log_to_csv.py
