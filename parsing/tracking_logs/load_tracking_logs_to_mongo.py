@@ -10,12 +10,12 @@ Tracking logs will have an extention of either .log or .log.gz
 '''
 
 import pymongo
-import json
-import glob
 import sys
+import json
 import gzip
 import datetime
 import os
+from collections import defaultdict
 
 ERROR_FILE_SUFFIX = "-errors"
 
@@ -94,8 +94,53 @@ def load_log_content(log):
             log_content = file_handler.readlines()
     return log_content
 
-def migrate_tracking_logs_to_mongo(tracking, tracking_imported):
-    pass
+def migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log_file_name):
+    '''
+    Migrate tracking logs to the tracking collection in the database
+
+    '''
+    errors = []
+    log_to_be_imported = {}
+    log_to_be_imported['_id'] = log_file_name
+    log_to_be_imported['date'] = datetime.datetime.utcnow()
+    log_to_be_imported['error'] = 0
+    log_to_be_imported['good'] = 0
+    log_to_be_imported['courses'] = defaultdict(int)
+    for record in log_content:
+        try:
+            data = json.loads(record)
+        except ValueError:
+            log_to_be_imported['error'] += 1
+            errors.append("PARSE: " + record )
+
+        if 'event' in data and not instance(data['event'], dict):
+            try:
+                event_dict = json.loads(record['event'])
+                data['event'] = event_dict
+            except ValueError:
+                pass
+        course_id = get_course_id(data)
+        data['course_id'] = course_id
+        log_to_be_imported['courses'][course_id] += 1
+        data['load_date'] = datetime.datetime.utcnow()
+        data['load_file'] = log_file_name
+        try:
+            tracking.insert(data)
+        except pymongo.errors.InvalidDocument as e:
+            errors.append("INVALID_DOC: " + data)
+            log_to_be_imported['error'] += 1
+            continue
+        except Exception as e:
+            errors.append("ERROR: " + data)
+            log_to_be_imported['error'] += 1
+            continue
+        log_to_be_imported['good'] += 1
+    try:
+        tracking_imported.insert(log_to_be_imported)
+    except Exception as e:
+        errors.append("Error inserting into tracking_imported: " + log_to_be_imported)
+    return errors, log_to_be_imported['error'], log_to_be_imported['good']
+            
 
 def main():
     if len(sys.argv) < 4:
@@ -109,6 +154,8 @@ def main():
         sys.exit(1)
         
     tracking, tracking_imported = connect_to_db_collection(sys.argv[1], sys.argv[2])
+    total_success = 0
+    total_errors = 0
     log_files = get_tracking_logs(sys.argv[3:]) 
     for log in sorted(log_files):
         if not log.endswith(ERROR_FILE_SUFFIX):
@@ -119,7 +166,15 @@ def main():
             print "Loading log file {0}".format(log)
             log_content = load_log_content(log)
             error_file_name = log_file_name + ERROR_FILE_SUFFIX
+            errors, error_count, success_count  = migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log_file_name)
+            total_success += success_count
+            total_errors += error_count
+            with open(error_file_name, 'w'):
+                '\n'.join(errors)
 
+    print "Total events read: ", (total_success + total_errors)
+    print "Inserted events: ", total_success
+    print "Not loaded: ", total_errors
 
 if __name__ == '__main__':
     main()
