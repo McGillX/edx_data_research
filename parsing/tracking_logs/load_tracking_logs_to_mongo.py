@@ -80,6 +80,20 @@ def get_tracking_logs(path_to_logs):
                     logs.append(os.path.join(dir_path, name))
     return logs
     
+def load_log_content(log):
+    '''
+    Return log content 
+
+    '''
+    if log.endswith('.gz'):
+        file_handler = gzip.open(log)
+        log_content = file_handler.readlines()
+        file_handler.close()
+    else:
+        with open(log) as file_handler:
+            log_content = file_handler.readlines()
+    return log_content
+
 def migrate_tracking_logs_to_mongo(tracking, tracking_imported):
     pass
 
@@ -97,22 +111,15 @@ def main():
     tracking, tracking_imported = connect_to_db_collection(sys.argv[1], sys.argv[2])
     log_files = get_tracking_logs(sys.argv[3:]) 
     for log in sorted(log_files):
-        log_file_name = canonical_name(log)
-        if tracking_imported.find({'_id' : log_file_name}) or log_file_name.endswith(ERROR_FILE_SUFFIX): 
-            print "Log file {0} already loaded".format(log)
-            continue
-        print "Loading log file {0}".format(log)
-        if log.endswith('.gz'):
-            file_handler = gzip.open(log)
-            log_content = file_handler.readlines()
-            file_handler.close()
-            event_source = log_file_name[:-3]
-            error_file_name = event_source + ERROR_FILE_SUFFIX
-        else:
-            with open(log) as file_handler:
-                log_content = file_handler.readlines()
-            event_source = log_file_name
-            error_file_name = event_source + ERROR_FILE_SUFFIX
+        if not log.endswith(ERROR_FILE_SUFFIX):
+            log_file_name = canonical_name(log)
+            if tracking_imported.find({'_id' : log_file_name}): 
+                print "Log file {0} already loaded".format(log)
+                continue
+            print "Loading log file {0}".format(log)
+            log_content = load_log_content(log)
+            error_file_name = log_file_name + ERROR_FILE_SUFFIX
+
 
 if __name__ == '__main__':
     main()
