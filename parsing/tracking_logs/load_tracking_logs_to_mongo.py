@@ -53,15 +53,15 @@ def get_course_id(event):
                 course_id = "/".join(a[i+1:i+4]).encode('utf-8').replace('.','')
     return course_id
 
-def canonical_name(filepath):
+def get_log_file_name(file_path):
     """
     Save only the filename and the subdirectory it is in, strip off all prior
     paths.  If the file ends in .gz, remove that too.  Convert to lower case.
     """
-    fname = '/'.join(filepath.lower().split('/')[-1:])
-    if len(fname) > 3 and fname[-3:] == ".gz":
-        fname = fname[:-3]
-    return fname
+    file_name = '/'.join(file_path.lower().split('/')[-1:])
+    if len(file_name) > 3 and file_name[-3:] == ".gz":
+        file_name = file_name[:-3]
+    return file_name
 
 def get_tracking_logs(path_to_logs):
     '''
@@ -69,13 +69,12 @@ def get_tracking_logs(path_to_logs):
     as files or directory
 
     '''
-
     logs = []
-    for item in path_to_logs: 
-        if os.path.isfile(item):
-            logs.append(item)
-        elif os.path.isdir(item):
-            for (dir_path, dir_names, file_names) in os.walk(item):
+    for path in path_to_logs: 
+        if os.path.isfile(path):
+            logs.append(path)
+        elif os.path.isdir(path):
+            for (dir_path, dir_names, file_names) in os.walk(path):
                 for name in file_names:
                     logs.append(os.path.join(dir_path, name))
     return logs
@@ -104,7 +103,7 @@ def migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log
     log_to_be_imported['_id'] = log_file_name
     log_to_be_imported['date'] = datetime.datetime.utcnow()
     log_to_be_imported['error'] = 0
-    log_to_be_imported['good'] = 0
+    log_to_be_imported['success'] = 0
     log_to_be_imported['courses'] = defaultdict(int)
     for record in log_content:
         try:
@@ -134,12 +133,12 @@ def migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log
             errors.append("ERROR: " + data)
             log_to_be_imported['error'] += 1
             continue
-        log_to_be_imported['good'] += 1
+        log_to_be_imported['success'] += 1
     try:
         tracking_imported.insert(log_to_be_imported)
     except Exception as e:
         errors.append("Error inserting into tracking_imported: " + log_to_be_imported)
-    return errors, log_to_be_imported['error'], log_to_be_imported['good']
+    return errors, log_to_be_imported['error'], log_to_be_imported['success']
             
 
 def main():
@@ -159,7 +158,7 @@ def main():
     log_files = get_tracking_logs(sys.argv[3:]) 
     for log in sorted(log_files):
         if not log.endswith(ERROR_FILE_SUFFIX):
-            log_file_name = canonical_name(log)
+            log_file_name = get_log_file_name(log)
             if tracking_imported.find({'_id' : log_file_name}): 
                 print "Log file {0} already loaded".format(log)
                 continue
