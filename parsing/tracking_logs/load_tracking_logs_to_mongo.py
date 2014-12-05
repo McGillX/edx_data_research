@@ -17,7 +17,9 @@ import datetime
 import os
 from collections import defaultdict
 
+
 ERROR_FILE_SUFFIX = "-errors"
+
 
 def connect_to_db_collection(db, collection):
     db_name = db
@@ -30,28 +32,6 @@ def connect_to_db_collection(db, collection):
     tracking_imported = db[collection_name + "_imported"]
     return tracking, tracking_imported
 
-def get_course_id(event):
-    """
-    Try to harvest course_id from various parts of an event.  Assumes that
-    the "event" has already been parsed into a structure, not a json string.
-    The course_id should be of the format A/B/C and cannot contain dots.
-    """
-    course_id = None
-    if event['event_source'] == 'server':
-        # get course_id from event type
-        if event['event_type'] == '/accounts/login/':
-            s = event['event']['GET']['next'][0]
-        else:
-            s = event['event_type']
-    else:
-        s = event['page']
-    if s:
-        a = s.split('/')
-        if 'courses' in a:
-            i = a.index('courses')
-            if (len(a) >= i+4):
-                course_id = "/".join(a[i+1:i+4]).encode('utf-8').replace('.','')
-    return course_id
 
 def get_log_file_name(file_path):
     """
@@ -62,6 +42,7 @@ def get_log_file_name(file_path):
     if len(file_name) > 3 and file_name[-3:] == ".gz":
         file_name = file_name[:-3]
     return file_name
+
 
 def get_tracking_logs(path_to_logs):
     '''
@@ -78,7 +59,8 @@ def get_tracking_logs(path_to_logs):
                 for name in file_names:
                     logs.append(os.path.join(dir_path, name))
     return logs
-    
+
+
 def load_log_content(log):
     '''
     Return log content 
@@ -92,6 +74,7 @@ def load_log_content(log):
         with open(log) as file_handler:
             log_content = file_handler.readlines()
     return log_content
+
 
 def migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log_file_name):
     '''
@@ -112,32 +95,30 @@ def migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log
             log_to_be_imported['error'] += 1
             errors.append("PARSE: " + record )
 
-        if 'event' in data and not instance(data['event'], dict):
+        if 'event' in data and not isinstance(data['event'], dict):
             try:
-                event_dict = json.loads(record['event'])
+                event_dict = json.loads(data['event'])
                 data['event'] = event_dict
             except ValueError:
                 pass
-        course_id = get_course_id(data)
-        data['course_id'] = course_id
-        log_to_be_imported['courses'][course_id] += 1
+        log_to_be_imported['courses'][data['context']['course_id']] += 1
         data['load_date'] = datetime.datetime.utcnow()
         data['load_file'] = log_file_name
         try:
             tracking.insert(data)
         except pymongo.errors.InvalidDocument as e:
-            errors.append("INVALID_DOC: " + data)
+            errors.append("INVALID_DOC: " + str(data))
             log_to_be_imported['error'] += 1
             continue
         except Exception as e:
-            errors.append("ERROR: " + data)
+            errors.append("ERROR: " + str(data))
             log_to_be_imported['error'] += 1
             continue
         log_to_be_imported['success'] += 1
     try:
         tracking_imported.insert(log_to_be_imported)
     except Exception as e:
-        errors.append("Error inserting into tracking_imported: " + log_to_be_imported)
+        errors.append("Error inserting into tracking_imported: " + str(log_to_be_imported))
     return errors, log_to_be_imported['error'], log_to_be_imported['success']
             
 
@@ -159,12 +140,12 @@ def main():
     for log in sorted(log_files):
         if not log.endswith(ERROR_FILE_SUFFIX):
             log_file_name = get_log_file_name(log)
-            if tracking_imported.find({'_id' : log_file_name}): 
+            if tracking_imported.find_one({'_id' : log_file_name}): 
                 print "Log file {0} already loaded".format(log)
                 continue
             print "Loading log file {0}".format(log)
             log_content = load_log_content(log)
-            error_file_name = log_file_name + ERROR_FILE_SUFFIX
+            error_file_name = log + ERROR_FILE_SUFFIX
             errors, error_count, success_count  = migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log_file_name)
             total_success += success_count
             total_errors += error_count
