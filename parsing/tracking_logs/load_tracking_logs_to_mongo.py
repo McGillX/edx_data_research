@@ -149,8 +149,8 @@ def main():
             errors, error_count, success_count  = migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log_file_name)
             total_success += success_count
             total_errors += error_count
-            with open(error_file_name, 'w'):
-                '\n'.join(errors)
+            with open(error_file_name, 'w') as file_handler:
+                file_handler.write('\n'.join(errors))
 
     print "Total events read: ", (total_success + total_errors)
     print "Inserted events: ", total_success
