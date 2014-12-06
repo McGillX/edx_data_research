@@ -150,7 +150,8 @@ def main():
             total_success += success_count
             total_errors += error_count
             with open(error_file_name, 'w') as file_handler:
-                file_handler.write('\n'.join(errors))
+                for error in errors:
+                    file_handler.write("{0}\n".format(error))
 
     print "Total events read: ", (total_success + total_errors)
     print "Inserted events: ", total_success
