@@ -41,13 +41,16 @@ def load_config(config_file):
     return data['course_ids'], data['date_of_course_enrollment'], data['date_of_course_completion']
 
 
-def extract_tracking_logs(course_ids, start_date, end_date):
+def extract_tracking_logs(source_collection, target_collection, course_ids, start_date, end_date):
     '''
     Return all trackings logs that contain given ids and that contain dates
     within the given range
 
     '''
-    pass
+    documents = source_collection.find({'context.course_id' : { '$in' : course_ids }})
+    for document in documents:
+        if start_date <= datetime.strptime(document['time'].split('T')[0], "%Y-%m-%d").date() <= end_date:
+            target_collection.insert(document)
 
 def main():
     if len(sys.argv) !=  3:
@@ -57,9 +60,11 @@ def main():
             """
         sys.stderr.write(usage_message % sys.argv[0])
         sys.exit(1)
-    print load_config(sys.argv[2])
-    #tracking = connect_to_db_collection('tracking_logs', 'tracking') 
+    source_collection = connect_to_db_collection('tracking_logs', 'tracking') 
+    target_collection = connect_to_db_collection(sys.argv[1], 'tracking') 
+    course_ids, start_date, end_date = load_config(sys.argv[2])
+    extract_tracking_logs(source_collection, target_collection, course_ids, start_date, end_date)
+    
 
 if __name__ == '__main__':
     main()
-
