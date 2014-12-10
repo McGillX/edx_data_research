@@ -2,7 +2,7 @@
 "edx_id" : "",
 "edx_course_name" : "",
 "course_ids" : [],
-"date_of_enrollment" : "",
-"date_of_course_completion" : ""
+"date_of_course_enrollment" : "YYYY-MM-DD",
+"date_of_course_completion" : "YYYY-MM-DD"
 
 }

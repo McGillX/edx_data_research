@@ -29,7 +29,16 @@ def load_config(config_file):
     logs will be extracted
 
     '''
-    pass
+    with open(config_file) as file_handler:
+        data = json.load(file_handler)
+        if not isinstance(data['course_ids'], list):
+            raise ValueError('Expecting list of course ids')
+        try:
+            datetime.strptime(data['date_of_course_enrollment'], '%Y-%m-%d')
+            datetime.strptime(data['date_of_course_completion'], '%Y-%m-%d')
+        except ValueError:
+            raise ValueError('Incorrect data format, should be YYYY-MM-DD')
+    return data['course_ids'], data['date_of_course_enrollment'], data['date_of_course_completion']
 
 
 def extract_tracking_logs(course_ids, start_date, end_date):
@@ -41,15 +50,15 @@ def extract_tracking_logs(course_ids, start_date, end_date):
     pass
 
 def main():
-    if len(sys.argv) !=  2:
-        usage_message = """usage: python course_db_name course_config_file 
+    if len(sys.argv) !=  3:
+        usage_message = """usage: %s course_db_name course_config_file 
             Provide name of course database to insert tracking logs to and 
-            config file to load configurations
+            config file to load configurations\n
             """
-            sys.stderr.write(usage_message % sys.argv[0])
-            sys.exit(1)
-
-    tracking = connect_to_db_collection('tracking_logs', 'tracking') 
+        sys.stderr.write(usage_message % sys.argv[0])
+        sys.exit(1)
+    print load_config(sys.argv[2])
+    #tracking = connect_to_db_collection('tracking_logs', 'tracking') 
 
 if __name__ == '__main__':
     main()
