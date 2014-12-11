@@ -4,7 +4,6 @@ between when course enrollment start and when the course ended. For each log,
 the parent_data and meta_data from the course_structure collection will be 
 appended to the log based on the event key in the log
 
-
 '''
 
 import pymongo
@@ -41,6 +40,21 @@ def load_config(config_file):
     return data['course_ids'], data['date_of_course_enrollment'], data['date_of_course_completion']
 
 
+def append_course_structure_data(course_structure_collection, _id, document):
+    '''
+    Append parent_data and metadata (if exists) from course structure to 
+    tracking log
+
+    '''
+    try:
+        data = course_structure_collection.find({"_id" : _id})[0]
+        if 'parent_data' in data:
+            document['parent_data'] = data['parent_data']
+        if 'metadata' in data:
+            document['metadata'] = data['metadata']
+    except:
+        pass    
+
 def extract_tracking_logs(source_collection, target_collection, course_ids, start_date, end_date):
     '''
     Return all trackings logs that contain given ids and that contain dates
@@ -50,7 +64,26 @@ def extract_tracking_logs(source_collection, target_collection, course_ids, star
     documents = source_collection.find({'context.course_id' : { '$in' : course_ids }})
     for document in documents:
         if start_date <= datetime.strptime(document['time'].split('T')[0], "%Y-%m-%d").date() <= end_date:
+            # Bind parent_data and metadata from course_structure to tracking document
+            bound = False
+            if document['event']:
+                if isinstance(document['event'], dict):
+                    if 'id' in document['event']:
+                        splitted = document['event']['id'].split('-')
+                        if len(splitted) > 3:
+                            document['event']['id'] = splitted[-1]
+                            if not bound:
+                                append_course_structure_data(course_structure_collection, document['event']['id'], document)
+                                bound = True
+            if document['page']:
+                splitted = document['page'].split('/')
+                if len(splitted) > 2:
+                    document['page'] = splitted[-2]
+                    if not bound:
+                        append_course_structure_data(course_structure_collection, document['page'], document)
+            # End of binding, now insert document into collection
             target_collection.insert(document)
+
 
 def main():
     if len(sys.argv) !=  3:
@@ -62,6 +95,7 @@ def main():
         sys.exit(1)
     source_collection = connect_to_db_collection('tracking_logs', 'tracking') 
     target_collection = connect_to_db_collection(sys.argv[1], 'tracking') 
+    course_structure_collection = connect_to_db_collection(sys.argv[1], 'course_structure')
     course_ids, start_date, end_date = load_config(sys.argv[2])
     extract_tracking_logs(source_collection, target_collection, course_ids, start_date, end_date)
     
