@@ -1,22 +1,25 @@
 '''
-In this module, we insert the course structure provided by edX as a json file
-into the mongodb database
-The one JSON object will be split into sub objects, in which all the first level
-keys will become the _id of its object value
+Insert the edx course_structure-prod-analytics .json file into mongodb database for aggregation, see README.md
+
+The one JSON object will be split into sub objects, in which all the first level keys will become the _id of its object value
 
 '''
 
 import pymongo
 import json
-import sys 
+import copy
 
 # SPECIFY .mongo filepath
-filename = sys.argv[3]  #'data/McGillX-CHEM181x-1T2014-course_structure-prod-analytics.json'
+filename = 'data/McGillX-CHEM181x-1T2014-course_structure-prod-analytics.json'
+
+# If user wants to pass path to file via command line arguments. then user can do the following:
+# filename = sys.argv[1] # On the command line, user can run the command: python course_structure_to_mongod.py path_to_file
+
 
 # SPECIFY connection details
 DATABASE_ADDRESS = "mongodb://localhost"
-DATABASE_NAME = sys.argv[1] #"edx"
-DATABASE_COLLECTION = sys.argv[2]  #"course_structure"
+DATABASE_NAME = "edx"
+DATABASE_COLLECTION = "course_structure"
 
 # establish a connection to the database
 connection = pymongo.Connection(DATABASE_ADDRESS)
@@ -28,13 +31,10 @@ db = connection[DATABASE_NAME]
 collection = db[DATABASE_COLLECTION]
 
 # open the json file
-#json_file=open(filename)
+json_file=open(filename)
 
 # load the json data
-#json_data = json.load(json_file)
-
-with open(filename) as file_handler:
-    json_data = json.load(file_handler)
+json_data = json.load(json_file)
 
 # find the categories (optional)
 categories = []
