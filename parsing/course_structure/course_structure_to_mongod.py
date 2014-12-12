@@ -117,6 +117,7 @@ def connect_to_db_collection(db_name, collection_name):
     collection = db[collection_name]
     return collection
 
+
 def get_json_data(file_name):
     '''
     Retrieve data from the json file
@@ -125,6 +126,7 @@ def get_json_data(file_name):
     with open(file_name) as file_handler:
         json_data = json.load(file_handler)
     return json_data
+
 
 def parse_key_names(json_data):
     '''
@@ -140,6 +142,7 @@ def parse_key_names(json_data):
                 json_data[key]['children'][index] = child.split('/')[-1]
         new_json_data[new_key] = json_data[key]
     return new_json_data
+
 
 def delete_category(json_data, category):
     '''
@@ -158,8 +161,30 @@ def delete_category(json_data, category):
             del json_data[key]
     return json_data
 
-def build_parent_data():
-    pass
+
+def build_parent_data(json_data):
+    '''
+    Build parent data
+
+    '''
+    error_count = 0
+    for key in json_data:
+        if json_data[key]['children']:
+            for index, child_key in enumerate(json_data[key]['children']):
+                try:
+                    json_data[child_key]['parent_data'] = {}
+                except:
+                    error_count += 1
+                    continue
+                parent_category = json_data[key]['category']
+                parent_order_key = parent_category + '_order'
+                parent_id_key = parent_category + '_id'
+                parent_display_name_key = parent_category + '_display_name'
+                json_data[child_key]['parent_data'][parent_order_key] = index
+                json_data[child_key]['parent_data'][parent_id_key] = json_data[key]['_id']
+                json_data[child_key]['parent_data'][parent_display_name_key] = json_data[key]['metadata']['display_name']
+    return json_data, errors
+
 
 def update_parent_data(category):
     pass
@@ -176,7 +201,7 @@ def main():
     json_data = parse_key_names(json_data)
     json_data = delete_category(json_data, 'conditional')
     json_data = delete_category(json_data, 'wrapper')
-
+    json_data, errors = build_parent_data(json_data)
 
 if __name__ == '__main__':
     main()
