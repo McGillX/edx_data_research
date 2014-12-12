@@ -1,38 +1,16 @@
-# Load multiple tracking logs to MongoDB
+# Load tracking logs to MongoDB
 
-Load the edX tracking logs to MongoDB, targets a folder (recursively)
+There are two main steps to load tracking logs provided by edX to MongoDB:
+
+1. Load all tracking logs provided by edX to a master collection, tracking, in a database, tracking_logs
+2. Extract course specific tracking logs from the tracking_logs database filtered by course ids of the course
+  and the range of dates between date of course enrollment and date of course completion
 
 ### Setup
 
-MongoDB instance has to be local (on the same machine that contains the load_log.py script and tracking logs for import)
-
-```bash
-DATABASE="edx"
-COLLECTION="tracking"
-DIRECTORY="CHEM181x_logs_decrypted"
-```
-
 ### Run
 
-Might require sudo
-
-```
-sh LOAD_LOGS.sh
-```
-OR
-
-```
-chmod 700 LOAD_LOGS.sh
-./LOAD_LOGS.sh
-```
-
-# load_log_mongo.py
-
 ### Usage
-
-```
-python load_log_mongo.py NameOfDatabase Collection f1 f2
-```
 
 # mongod_log_to_csv.py
 
