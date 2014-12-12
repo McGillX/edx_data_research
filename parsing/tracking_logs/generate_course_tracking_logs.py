@@ -55,7 +55,7 @@ def append_course_structure_data(course_structure_collection, _id, document):
     except:
         pass    
 
-def extract_tracking_logs(source_collection, target_collection, course_ids, start_date, end_date):
+def extract_tracking_logs(source_collection, target_collection, course_structure_collection, course_ids, start_date, end_date):
     '''
     Return all trackings logs that contain given ids and that contain dates
     within the given range
@@ -97,7 +97,7 @@ def main():
     target_collection = connect_to_db_collection(sys.argv[1], 'tracking') 
     course_structure_collection = connect_to_db_collection(sys.argv[1], 'course_structure')
     course_ids, start_date, end_date = load_config(sys.argv[2])
-    extract_tracking_logs(source_collection, target_collection, course_ids, start_date, end_date)
+    extract_tracking_logs(source_collection, target_collection, course_structure_collection, course_ids, start_date, end_date)
     
 
 if __name__ == '__main__':
