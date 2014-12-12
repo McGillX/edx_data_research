@@ -126,11 +126,37 @@ def get_json_data(file_name):
         json_data = json.load(file_handler)
     return json_data
 
-def parse_key_names():
-    pass
+def parse_key_names(json_data):
+    '''
+    Parse key names
 
-def _delete(category):
-    pass
+    '''
+    new_json_data = {}
+    for key in json_data:
+        new_key = key.split('/')[-1]
+        json_data[key]['_id'] = new_key
+        if json[key]['children']:
+            for index, child in enumerate(json_data[key]['children']):
+                json_data[key]['children'][index] = child.split('/')[-1]
+        new_json_data[new_key] = json_data[key]
+    return new_json_data
+
+def delete_category(json_data, category):
+    '''
+    Delete data with given category from json_data 
+
+    '''
+    key_to_delete = []
+    for key in json_data.keys():
+        if json_data[key]['category'] == category:
+            for item in json_data.keys():
+                if json_data[item]['children'] and key in json_data[item]['children']:
+                    parent_id = item
+            index_child = json[parent_id]['children'].index(key)
+            left_list = json_data[parent_id]['children'][:index_child]
+            right_list = json_data[parent_id]['children'] = left_list + json_data[key]['children'] + right_list
+            del json_data[key]
+    return json_data
 
 def build_parent_data():
     pass
@@ -147,6 +173,9 @@ def main():
 
     collection = connect_to_db_collection(sys.argv[1], sys.argv[2])
     json_data = get_json_data(sys.argv[3])
+    json_data = parse_key_names(json_data)
+    json_data = delete_category(json_data, 'conditional')
+    json_data = delete_category(json_data, 'wrapper')
 
 
 if __name__ == '__main__':
