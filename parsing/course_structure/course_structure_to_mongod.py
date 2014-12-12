@@ -10,38 +10,6 @@ import pymongo
 import json
 import sys 
 
-# SPECIFY .mongo filepath
-filename = sys.argv[3]  #'data/McGillX-CHEM181x-1T2014-course_structure-prod-analytics.json'
-
-# SPECIFY connection details
-DATABASE_ADDRESS = "mongodb://localhost"
-DATABASE_NAME = sys.argv[1] #"edx"
-DATABASE_COLLECTION = sys.argv[2]  #"course_structure"
-
-# establish a connection to the database
-connection = pymongo.Connection(DATABASE_ADDRESS)
-
-# choose database
-db = connection[DATABASE_NAME]
-
-# choose collection
-collection = db[DATABASE_COLLECTION]
-
-# open the json file
-#json_file=open(filename)
-
-# load the json data
-#json_data = json.load(json_file)
-
-with open(filename) as file_handler:
-    json_data = json.load(file_handler)
-
-# find the categories (optional)
-categories = []
-for key in json_data:
-  if json_data[key]['category'] and json_data[key]['category'] not in categories:
-    categories.append(json_data[key]['category'])
-print categories
 
 # parse the key names
 new_json_data = {}
@@ -138,3 +106,48 @@ for key in json_data:
 
 for key in json_data:
   collection.insert(json_data[key])
+
+def connect_to_db_collection(db_name, collection_name):
+    '''
+    Retrieve collection from given database name and collection name
+
+    '''
+    connection = pymongo.Connection('localhost', 27017)
+    db = connection[db_name]
+    collection = db[collection_name]
+    return collection
+
+def get_json_data(file_name):
+    '''
+    Retrieve data from the json file
+
+    '''
+    with open(file_name) as file_handler:
+        json_data = json.load(file_handler)
+    return json_data
+
+def parse_key_names():
+    pass
+
+def _delete(category):
+    pass
+
+def build_parent_data():
+    pass
+
+def update_parent_data(category):
+    pass
+
+
+def main():
+    if len(sys.argv) != 4:
+        usage_message = 'usage: %s db collection json_file'
+        sys.stderr.write(usage_message % sys.argv[0])
+        sys.exit(1)
+
+    collection = connect_to_db_collection(sys.argv[1], sys.argv[2])
+    json_data = get_json_data(sys.argv[3])
+
+
+if __name__ == '__main__':
+    main()
