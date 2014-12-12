@@ -2,23 +2,10 @@
 
 Load the course structure provided by edX to MongoDB
 
-### Setup
-
-```python
-
-# SPECIFY .mongo filepath
-filename = 'data/COURSE-NAME-course_structure-prod-analytics.json'
-
-# SPECIFY connection details
-DATABASE_ADDRESS = "mongodb://localhost"
-DATABASE_NAME = "edx"
-DATABASE_COLLECTION = "course_structure"
-```
-
 ### Run
 
 ```
-python course_structure_to_mongod.py
+python course_structure_to_mongod.py name_of_database name_of_collection <path_to_json_file>
 ```
 
 ### What it does
