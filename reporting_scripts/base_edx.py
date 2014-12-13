@@ -19,7 +19,7 @@ class EdXConnection(object):
     
     def __init__(self, db_name, *collections):
         client = MongoClient(DATABASE_ADDRESS)
-        self.db = client[db_name]
+        db = client[db_name]
         self.collections = {collection : db[collection] for collection in collections}
 
     def get_access_to_collection(self):
