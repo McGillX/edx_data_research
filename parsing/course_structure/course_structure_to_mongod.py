@@ -41,7 +41,7 @@ def parse_key_names(json_data):
     for key in json_data:
         new_key = key.split('/')[-1]
         json_data[key]['_id'] = new_key
-        if json[key]['children']:
+        if json_data[key]['children']:
             for index, child in enumerate(json_data[key]['children']):
                 json_data[key]['children'][index] = child.split('/')[-1]
         new_json_data[new_key] = json_data[key]
@@ -92,7 +92,7 @@ def build_parent_data(json_data):
 
 
 def update_parent_data(json_data):
-    for key in json_data[key]:
+    for key in json_data:
         if json_data[key]['category'] == 'sequential':
             chapter_id = json_data[key]['parent_data']['chapter_id']
             chapter_parent_data = json_data[chapter_id]['parent_data']
@@ -105,7 +105,7 @@ def update_parent_data(json_data):
             json_data[key]['parent_data'].update(sequential_parent_data)
 
     for key in json_data:
-        if json_data[key]['category'] not in set(['vertical', 'sequential', 'chapter', 'course'])
+        if json_data[key]['category'] not in set(['vertical', 'sequential', 'chapter', 'course']):
             try:
                 vertical_id = json_data[key]['parent_data']['vertical_id']
                 vertical_parent_data = json_data[vertical_id]['parent_data']
@@ -128,7 +128,8 @@ def main():
     json_data = build_parent_data(json_data)
     json_data = update_parent_data(json_data)
     collection = connect_to_db_collection(sys.argv[1], sys.argv[2])
-    collection.insert(json_data)
+    for key in json_data:
+        collection.insert(json_data[key])
 
 
 if __name__ == '__main__':
