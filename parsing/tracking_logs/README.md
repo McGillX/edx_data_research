@@ -1,4 +1,4 @@
-# Load tracking logs to MongoDB
+Load tracking logs to MongoDB
 ====
 
 There are two main steps to load tracking logs provided by edX to MongoDB:
@@ -41,7 +41,7 @@ Create config file for desired course. Follow the format in template_config.json
 
 ### Run
     python generate_course_tracking_logs.py course_db_name <path_to_config_file>
-# mongod_log_to_csv.py
+mongod_log_to_csv.py
 ====
 
 Export the tracking logs from MongoDB to csv. 
