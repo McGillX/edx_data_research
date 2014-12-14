@@ -28,6 +28,7 @@ You need to provide path to directory which contain all the log files or path to
 
 ### Seup
 1) Ensure the course_structure collection has been generated for the course. If not, then some information will not be added to tracking logs
+
 2) Create config file for desired course. Follow the format in template_config.json to create the course specific config file. For example for the the course CHEM181x, create file chem181x_config.json with the following configurations:
 
     {
