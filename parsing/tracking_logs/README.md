@@ -14,15 +14,15 @@ You need to provide path to directory which contain all the log files or path to
 ### Run
 1. Pass path to directory to logs
 
-        python db_name collection_name <path_to_directory>
+        $ python load_tracking_logs_to_mongo.py db_name collection_name <path_to_directory>
 
 2. Pass path to log files
 
-        python db_name collection_name <path_to_file_1> <path_to_file_2> ...
+        $ python load_tracking_logs_to_mongo.py db_name collection_name <path_to_file_1> <path_to_file_2> ...
 
 3. Pass path to log files and directory
 
-        python db_name collection_name <path_to_directory_1> <path_to_directory_2> <path_to_file_1> <path_to_file_2> ...
+        $ python load_tracking_logs_to_mongo.py db_name collection_name <path_to_directory_1> <path_to_directory_2> <path_to_file_1> <path_to_file_2> ...
 
 ## Load course specific tracking logs to course database
 

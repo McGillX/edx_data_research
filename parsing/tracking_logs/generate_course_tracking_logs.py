@@ -33,11 +33,11 @@ def load_config(config_file):
         if not isinstance(data['course_ids'], list):
             raise ValueError('Expecting list of course ids')
         try:
-            datetime.strptime(data['date_of_course_enrollment'], '%Y-%m-%d')
-            datetime.strptime(data['date_of_course_completion'], '%Y-%m-%d')
+            start_date = datetime.strptime(data['date_of_course_enrollment'], '%Y-%m-%d')
+            end_date = datetime.strptime(data['date_of_course_completion'], '%Y-%m-%d')
         except ValueError:
             raise ValueError('Incorrect data format, should be YYYY-MM-DD')
-    return data['course_ids'], data['date_of_course_enrollment'], data['date_of_course_completion']
+    return data['course_ids'], start_date.date(), end_date.date()
 
 
 def append_course_structure_data(course_structure_collection, _id, document):
@@ -93,7 +93,7 @@ def main():
             """
         sys.stderr.write(usage_message % sys.argv[0])
         sys.exit(1)
-    source_collection = connect_to_db_collection('tracking_logs', 'tracking') 
+    source_collection = connect_to_db_collection('tracking', 'tracking') 
     target_collection = connect_to_db_collection(sys.argv[1], 'tracking') 
     course_structure_collection = connect_to_db_collection(sys.argv[1], 'course_structure')
     course_ids, start_date, end_date = load_config(sys.argv[2])
