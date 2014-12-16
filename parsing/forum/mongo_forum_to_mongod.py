@@ -19,7 +19,29 @@ def connect_to_db_collection(db_name, collection_name):
 
 
 def remove_dollar_sign(json_object):
-    pass
+    '''
+    MongoDB does not accept '$' as key values. Loop through all the jeys and
+    remove the '$' symbol
+
+    '''
+    for key in json_object.keys():
+        if isinstance(json_object[key], dict):
+            for item in json_object[key].keys():
+                new_key = item.replace('$', '')
+                if new_key != item:
+                    json_object[key][new_key] = json_object[key][item]
+                    del json_data[key][item]
+        # Some values inside the object are 'parent_ids':[{'$oid': u'52e0082cfbd06391ba0000a4'}]
+        # The [{}] will trigger an error in MongoDB (not 100% sure)
+        # Here, [] and '$' are filtered out
+        if isinstance(json_data[key], list) and len(json_data[json_object[key]]) == 1 and isinstance(json_object[key][0], dict):
+            for item in json_data[key][0].keys():
+                new_key = item.replace('$', '')
+                if new_key != item:
+                    temp_value = json_data[key][0][item]
+                    del json_object[key]
+                    json_object[key] = {new_key : temp_value}
+    return json_object
 
 
 def migrate_form_to_mongodb(forum_mongo_file, collection):
