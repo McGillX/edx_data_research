@@ -23,7 +23,17 @@ def remove_dollar_sign(json_object):
 
 
 def migrate_form_to_mongodb(forum_mongo_file, collection):
-    pass
+    with open(forum_mongo_file) as file_handler:
+        try:
+            for line in file_handler:
+                data = json.loads(line)
+                data = remove_dollar_sign(data)
+                collection.insert(data)
+        except pymongo.errors.InvalidDocument as e:
+            print "INVALID_DOC: ", line
+        except Exception as e:
+            print "ERROR: ", line
+
 
 def main():
     if len(sys.argv) != 4:
