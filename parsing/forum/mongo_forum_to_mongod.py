@@ -1,5 +1,6 @@
 '''
 Insert the edx discussion board .mongo files into mongodb database
+
 '''
 
 import pymongo
@@ -18,7 +19,7 @@ def connect_to_db_collection(db_name, collection_name):
     return collection
 
 
-def remove_dollar_sign(json_object):
+def _remove_dollar_sign(json_object):
     '''
     MongoDB does not accept '$' as key values. Loop through all the jeys and
     remove the '$' symbol
@@ -30,31 +31,29 @@ def remove_dollar_sign(json_object):
                 new_key = item.replace('$', '')
                 if new_key != item:
                     json_object[key][new_key] = json_object[key][item]
-                    del json_data[key][item]
+                    del json_object[key][item]
         # Some values inside the object are 'parent_ids':[{'$oid': u'52e0082cfbd06391ba0000a4'}]
         # The [{}] will trigger an error in MongoDB (not 100% sure)
         # Here, [] and '$' are filtered out
-        if isinstance(json_data[key], list) and len(json_data[json_object[key]]) == 1 and isinstance(json_object[key][0], dict):
-            for item in json_data[key][0].keys():
+        if isinstance(json_object[key], list) and len(json_object[key]) == 1 and isinstance(json_object[key][0], dict):
+            for item in json_object[key][0].keys():
                 new_key = item.replace('$', '')
                 if new_key != item:
-                    temp_value = json_data[key][0][item]
-                    del json_object[key]
-                    json_object[key] = {new_key : temp_value}
+                    json_object[key] = {new_key : json_object[key][0][item]}
     return json_object
 
 
-def migrate_form_to_mongodb(forum_mongo_file, collection):
+def migrate_forum_to_mongodb(forum_mongo_file, collection):
     with open(forum_mongo_file) as file_handler:
-        for line in file_handler:
+        for row in file_handler:
             try:
-                data = json.loads(line)
-                data = remove_dollar_sign(data)
+                data = json.loads(row)
+                data = _remove_dollar_sign(data)
                 collection.insert(data)
             except pymongo.errors.InvalidDocument as e:
-                print "INVALID_DOC: ", line
+                print "INVALID_DOC: ", row
             except Exception as e:
-                print "ERROR: ", line
+                print "ERROR: ", row
 
 
 def main():
@@ -64,7 +63,7 @@ def main():
         sys.exit(1)
 
     collection = connect_to_db_collection(sys.argv[1], 'forum')
-    migrate_form_to_mongodb(syd.argv[2], collection)
+    migrate_forum_to_mongodb(syd.argv[2], collection)
 
 if __name__ == '__main__':
     main()
