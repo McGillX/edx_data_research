@@ -32,6 +32,28 @@ def connect_to_db_collection(db, collection):
     tracking_imported = db[collection_name + "_imported"]
     return tracking, tracking_imported
 
+def get_course_id(event):
+    """
+    Try to harvest course_id from various parts of an event.  Assumes that
+    the "event" has already been parsed into a structure, not a json string.
+    The course_id should be of the format A/B/C and cannot contain dots.
+    """
+    course_id = None
+    if event['event_source'] == 'server':
+        # get course_id from event type
+        if event['event_type'] == '/accounts/login/':
+            s = event['event']['GET']['next'][0]
+        else:
+            s = event['event_type']
+    else:
+        s = event['page']
+    if s:
+        a = s.split('/')
+        if 'courses' in a:
+            i = a.index('courses')
+            if (len(a) >= i+4):
+                course_id = "/".join(a[i+1:i+4]).encode('utf-8').replace('.','')
+    return course_id
 
 def get_log_file_name(file_path):
     """
