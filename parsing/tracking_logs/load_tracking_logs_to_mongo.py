@@ -123,7 +123,12 @@ def migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log
                 data['event'] = event_dict
             except ValueError:
                 pass
-        log_to_be_imported['courses'][data['context']['course_id']] += 1
+        try:
+            log_to_be_imported['courses'][data['context']['course_id']] += 1
+        except:
+            course_id = get_course_id(data)
+            if course_id:
+                log_to_be_imported['courses'][course_id] += 1
         data['load_date'] = datetime.datetime.utcnow()
         data['load_file'] = log_file_name
         try:
