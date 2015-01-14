@@ -125,10 +125,12 @@ def migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log
                 pass
         try:
             log_to_be_imported['courses'][data['context']['course_id']] += 1
+            data['course_id'] = data['context']['course_id']
         except:
             course_id = get_course_id(data)
             if course_id:
                 log_to_be_imported['courses'][course_id] += 1
+                data['course_id'] = course_id
         data['load_date'] = datetime.datetime.utcnow()
         data['load_file'] = log_file_name
         try:
