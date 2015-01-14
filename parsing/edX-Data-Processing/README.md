@@ -3,6 +3,40 @@ Data Analytics Platform
 
 A modularized system for managing data collected through McGill's online courses offered via the edX platform. 
 
+Overview
+---
+1. edX Data download and Decryption
+2. Server upload and extraction
+3. Creation of Master Collection for Tracking Logs
+4. Extraction of Course Specific Tracking Logs
+5. 
+
+edX Data Download and Decryption
+---
+
+	1. We use the file transfer client Cyberduck to access the amazon s3 server
+⋅⋅1. Click Open Connection
+		b. In the new window that opens:
+			i. Select S3 (Amazon Simple Storage Service) from the dropdown
+			ii. Enter the Access Key ID and Secret Access Key which has been provided to you by edX
+			iii. Click connect
+⋅⋅* Important note: do not try finding the 
+		c. To access the tracking logs click "Go" from the top menu bar
+		d. Select "Go to Folder"
+		e. In the new window that opens enter the file path /edx-course-data
+		f. Find the name of your institution in the directory
+		⋅⋅*You'll see folders with the following file structure:
+			\mcgillx
+				\edge
+					\events
+						\YEAR
+				\edx
+					\events
+						\YEAR
+							InstitutionName-ex-events-YYYY-MM-DD.log.gz.gpg
+⋅⋅*The trackings logs are contained in the encrypted .gpg files
+⋅⋅*Download your files of interest
+
 Populating Database
 ----
 We first need to populate databases with data from the edX data package. MongoDB is used to store the data. 
@@ -13,7 +47,7 @@ The following data is stored in the databases:
 * Forum
 * Student Course Enrollment
 * Certificates
-* User
+* Usernames and corresponding User IDs
 * User Profile
 
 Each course will have its own database and there is one master database which will contain all tracking log data. All data above, except for tracking logs, is course specific and will be stored in its own collection of the course database. Tracking log data will be first stored in the master database; from this data, course specifc tracking logs are extraced and stored in the course specific database. 
