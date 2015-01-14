@@ -1,10 +1,10 @@
 Data Analytics Platform
-====
+======
 
 A modularized system for managing data collected through McGill's online courses offered via the edX platform. 
 
 Overview
----
+------
 1. edX Data download and Decryption
 2. Server upload and extraction
 3. Creation of Master Collection for Tracking Logs
@@ -12,20 +12,21 @@ Overview
 5. 
 
 edX Data Download and Decryption
----
+------
 
-	1. We use the file transfer client Cyberduck to access the amazon s3 server
-⋅⋅1. Click Open Connection
-		b. In the new window that opens:
-			i. Select S3 (Amazon Simple Storage Service) from the dropdown
-			ii. Enter the Access Key ID and Secret Access Key which has been provided to you by edX
-			iii. Click connect
-⋅⋅* Important note: do not try finding the 
-		c. To access the tracking logs click "Go" from the top menu bar
-		d. Select "Go to Folder"
-		e. In the new window that opens enter the file path /edx-course-data
-		f. Find the name of your institution in the directory
-		⋅⋅*You'll see folders with the following file structure:
+We use the file transfer client Cyberduck to access the amazon s3 server
+
+1. Click Open Connection
+2. In the new window that opens:
+	a. Select S3 (Amazon Simple Storage Service) from the dropdown
+	b. Enter the Access Key ID and Secret Access Key which has been provided to you by edX
+	c. Click connect
+*Important note: do not try finding the tracking logs in the default course directory
+	d. To access the tracking logs click "Go" from the top menu bar
+	e. Select "Go to Folder"
+	f. In the new window that opens enter the file path /edx-course-data
+	g. Find the name of your institution in the directory
+		*You'll see folders with the following file structure:
 			\mcgillx
 				\edge
 					\events
@@ -34,8 +35,8 @@ edX Data Download and Decryption
 					\events
 						\YEAR
 							InstitutionName-ex-events-YYYY-MM-DD.log.gz.gpg
-⋅⋅*The trackings logs are contained in the encrypted .gpg files
-⋅⋅*Download your files of interest
+*The trackings logs are contained in the encrypted .gpg files
+	h. Download your files of interest
 
 Populating Database
 ----
