@@ -70,3 +70,11 @@ Before extracting the tracking logs of a course, make sure the course structure 
 
 ### Other Data
 Apart from the tracking logs, all other data provided by edX is course specific and is provided in any of the .json, .sql and .mongo data formats. 
+
+### Steps to generate course specific tracking logs collections
+1. Download tracking logs from edX server
+2. Run decryption following steps above
+3. Migrate tracking logs to master tracking collection of master tracking database (use the script parsing/tracking_logs/load_tracking_logs_to_mongo.py)
+4. Ensure the course_structure data for the given course has been migrated to its own collection under the course database. The data is provided in json format and can be migrated using the script parsing/course_structure/course_structure_to_mongod.py
+5. Setup config file for given course by following the template template_config.json. This config file will be used to extract course specific tracking logs betweeb the provided dates
+6. Run script generate_course_tracking_logs.py under parsing/tracking_logs to create collection that will contain tracking logs of given course along with some data from the course_structure collection
