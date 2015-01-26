@@ -75,12 +75,12 @@ There are two components to populating the course specific databases:
 1. For the Mongo and SQL files listed above the files are directly imported into each course's database
 2. The tracking logs are first imported into a Master Database and then extracted for course specific databases 
 
-###i. Creation of Course Specific Database (excluding tracking logs)
+####i. Creation of Course Specific Database (excluding tracking logs)
 
 Mongo and SQL files are directly imported into each course's database
 The course structure JSON file are migrated to mongo using the following script parsing/course_structure/course_structure_to_mongod.py
 
-###ii. Master Database for Tracking Logs
+####ii. Master Database for Tracking Logs
 
 All tracking logs are stored in the Master database. From this data set, course specifc tracking logs are extracted and stored in a course specific database. 
 
@@ -92,7 +92,7 @@ Database name: tracking_logs
 
 Migrate tracking logs to Master Database with the script parsing/tracking_logs/load_tracking_logs_to_mongo.py
 
-###iii. Course Specific Collection for Tracking Logs
+####iii. Course Specific Collection for Tracking Logs
 
 Course specific tracking log data is filtered by course ID as well as course enrollment start date and course end date.
 
