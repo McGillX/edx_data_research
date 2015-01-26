@@ -5,10 +5,11 @@ A modularized system for managing data collected through McGill's online courses
 
 Process Overview
 ------
-1. edX Data download and Decryption
-2. Server upload and extraction
-3. Creation of Master Collection for Tracking Logs
-4. Extraction of Course Specific Tracking Logs
+1. edX Data Download and Decryption
+2. Populating Mongo Databases
+3. Creation of Master Database for Tracking Logs
+4. Extraction of Course Specific for Tracking Logs
+5. Extraction of csv datasets
 
 1. edX Data Download and Decryption
 ------
