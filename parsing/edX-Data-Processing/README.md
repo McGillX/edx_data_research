@@ -72,9 +72,10 @@ All data packages except the tracking logs are course specific as provided by ed
 | {org}-{course}-{date}-course_structure-{site}-analytics.json     | course_structure |
 | Tracking Logs     | tracking |
 
-{site} always appears as "prod"
+*{site} always appears as "prod"*
 
 There are two components to populating the course specific databases:
+
 1. For the Mongo and SQL files listed above the files are directly imported into each course's database
 2. The tracking logs are first imported into a Master Database and then extracted for course specific databases 
 
