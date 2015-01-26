@@ -7,9 +7,10 @@ Process Overview
 ------
 1. edX Data Download and Decryption
 2. Populating Mongo Databases
-3. Creation of Master Database for Tracking Logs
-4. Extraction of Course Specific for Tracking Logs
-5. Extraction of csv datasets
+ 1. Import of SQL, Mongo and JSON files
+ 2. Creation of Master Database for Tracking Logs
+ 2. Extraction of Course Specific for Tracking Logs
+3. Extraction of csv datasets
 
 1. edX Data Download and Decryption
 ------
@@ -46,11 +47,9 @@ We use the file transfer client Cyberduck to access the amazon s3 server
    
 7. Download your files of interest
 
-2. Populating Database
+2. Populating Mongo Databases
 ----
 McGillX uses MongoDB 
-
-
 
 ####Course Specific Database Structure
 * Each McGillX course has one database with the following collections to store each dataset delivered by edx:
@@ -76,7 +75,12 @@ There are two components to populating the course specific databases:
 1. For the Mongo and SQL files listed above the files are directly imported into each course's database
 2. The tracking logs are first imported into a Master Database and then extracted for course specific databases 
 
-####Master Database for Tracking Logs
+###i. Creation of Course Specific Database (excluding tracking logs)
+
+Mongo and SQL files are directly imported into each course's database
+The course structure JSON file are migrated to mongo using the following script parsing/course_structure/course_structure_to_mongod.py
+
+###ii. Master Database for Tracking Logs
 
 All tracking logs are stored in the Master database. From this data set, course specifc tracking logs are extracted and stored in a course specific database. 
 
@@ -88,7 +92,7 @@ Database name: tracking_logs
 
 Migrate tracking logs to Master Database with the script parsing/tracking_logs/load_tracking_logs_to_mongo.py
 
-#####Course Specific Collection for Tracking Logs
+###iii. Course Specific Collection for Tracking Logs
 
 Course specific tracking log data is filtered by course ID as well as course enrollment start date and course end date.
 
@@ -99,3 +103,6 @@ Generate course specific tracking log collections
 
 1. Setup config file for given course by following the template template_config.json. This config file will be used to extract course specific tracking logs between the specific course start of enrollment date and end of course date
 2. Run script generate_course_tracking_logs.py under parsing/tracking_logs to create a new collection that will contain tracking logs of given course along with some data from the course_structure collection
+
+Extraction of csv datasets
+----
