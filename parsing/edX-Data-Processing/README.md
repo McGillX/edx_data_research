@@ -86,17 +86,16 @@ Master Database structure
 Database name: tracking_logs
  Collection: tracking
 
+Migrate tracking logs to Master Database with the script parsing/tracking_logs/load_tracking_logs_to_mongo.py
+
 #####Course Specific Collection for Tracking Logs
 
 Course specific tracking log data is filtered by course ID as well as course enrollment start date and course end date.
 
 Note: Before extracting the tracking logs of a course make sure the course structure data has been migrated to the course specific database. A subset of the course structure data is appended to the corresponding record in the tracking log. 
+Ensure the course_structure data for the given course has been migrated to its own collection in the course database. The data is provided in json format and can be migrated using the script parsing/course_structure/course_structure_to_mongod.py
 
 Generate course specific tracking log collections
 
-1. Download tracking logs from edX server
-2. Run decryption following steps above
-3. Migrate tracking logs to master tracking collection of master tracking database (use the script parsing/tracking_logs/load_tracking_logs_to_mongo.py)
-4. Ensure the course_structure data for the given course has been migrated to its own collection under the course database. The data is provided in json format and can be migrated using the script parsing/course_structure/course_structure_to_mongod.py
-5. Setup config file for given course by following the template template_config.json. This config file will be used to extract course specific tracking logs between the specific course start of enrollment date and end of course date
-6. Run script generate_course_tracking_logs.py under parsing/tracking_logs to create collection that will contain tracking logs of given course along with some data from the course_structure collection
+1. Setup config file for given course by following the template template_config.json. This config file will be used to extract course specific tracking logs between the specific course start of enrollment date and end of course date
+2. Run script generate_course_tracking_logs.py under parsing/tracking_logs to create a new collection that will contain tracking logs of given course along with some data from the course_structure collection
