@@ -69,7 +69,10 @@ All data packages except the tracking logs are course specific as provided by ed
 | {org}-{course}-{date}-{site}.mongo     | forum |
 | {org}-{course}-{date}-wiki_article-{site}-analytics.sql     | NOT IN USE |
 | {org}-{course}-{date}-wiki_articlerevision-{site}-analytics.sql     | NOT IN USE |
+| {org}-{course}-{date}-course_structure-{site}-analytics.json     | course_structure |
 | Tracking Logs     | tracking |
+
+{site} always appears as "prod"
 
 There are two components to populating the course specific databases:
 1. For the Mongo and SQL files listed above the files are directly imported into each course's database
