@@ -104,5 +104,5 @@ Generate course specific tracking log collections
 1. Setup config file for given course by following the template template_config.json. This config file will be used to extract course specific tracking logs between the specific course start of enrollment date and end of course date
 2. Run script generate_course_tracking_logs.py under parsing/tracking_logs to create a new collection that will contain tracking logs of given course along with some data from the course_structure collection
 
-Extraction of csv datasets
+3. Extraction of csv datasets
 ----
