@@ -92,6 +92,7 @@ Course specific tracking log data is filtered by course ID as well as course enr
 Note: Before extracting the tracking logs of a course make sure the course structure data has been migrated to the course specific database. A subset of the course structure data is appended to the corresponding record in the tracking log. 
 
 Generate course specific tracking log collections
+
 1. Download tracking logs from edX server
 2. Run decryption following steps above
 3. Migrate tracking logs to master tracking collection of master tracking database (use the script parsing/tracking_logs/load_tracking_logs_to_mongo.py)
