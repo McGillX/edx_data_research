@@ -90,8 +90,14 @@ There are two components to populating the course specific databases:
 
 ####i. Creation of Course Specific Database (excluding tracking logs)
 
-Mongo and SQL files are directly imported into each course's database
-The course structure JSON file are migrated to mongo using the following script parsing/course_structure/course_structure_to_mongod.py
+JSON, Mongo and SQL files are directly imported into each course's database
+
+1. For information on importing the Course structure JSON files see [parsing/course_structure](parsing/course_structure)
+2. For information on importing the Mongo files [(Discussion Forum Data)](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html) see [parsing/forum](parsing/forum)
+3. For information on importing SQL files [(Student Info and Progress Data)](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html) see [parsing/sql](parsing/sql)
+
+
+
 
 ####ii. Master Database for Tracking Logs
 
