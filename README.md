@@ -127,6 +127,10 @@ Generate course specific tracking log collections
 ----
 *documentation in progress*
 
+4. Anonymize csv datasets
+----
+*documentation in progress*
+
 ## Contact
 
 You can contact McGillX for any help in running the scripts, setting up or just an explanation about a specific script:
