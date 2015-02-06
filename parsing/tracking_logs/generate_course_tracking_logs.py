@@ -61,7 +61,7 @@ def extract_tracking_logs(source_collection, target_collection, course_structure
     within the given range
 
     '''
-    documents = source_collection.find({'context.course_id' : { '$in' : course_ids }})
+    documents = source_collection.find({'course_id' : { '$in' : course_ids }})
     for document in documents:
         if start_date <= datetime.strptime(document['time'].split('T')[0], "%Y-%m-%d").date() <= end_date:
             # Bind parent_data and metadata from course_structure to tracking document

@@ -59,9 +59,10 @@ def delete_category(json_data, category):
             for item in json_data.keys():
                 if json_data[item]['children'] and key in json_data[item]['children']:
                     parent_id = item
-            index_child = json[parent_id]['children'].index(key)
+            index_child = json_data[parent_id]['children'].index(key)
             left_list = json_data[parent_id]['children'][:index_child]
-            right_list = json_data[parent_id]['children'] = left_list + json_data[key]['children'] + right_list
+            right_list = json_data[parent_id]['children'][index_child + 1:]
+            json_data[parent_id]['children'] = left_list + json_data[key]['children'] + right_list
             del json_data[key]
     return json_data
 

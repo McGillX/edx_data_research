@@ -4,7 +4,7 @@ This module takes a list of collections to retrieve from the mongodb DATABASE_AD
 
 Usage:
 
-connection = EdXConnection('tracking', 'course_structure')
+connection = EdXConnection('atoc185x', 'tracking', 'course_structure')
 collection = connection.get_access_to_collection()
 # collection now is a list of two elements, each element referring to the corresponding collection
 
@@ -13,15 +13,14 @@ collection = connection.get_access_to_collection()
 from pymongo import MongoClient
 
 DATABASE_ADDRESS = "mongodb://localhost"
-# Make sure to change name of database before running the reporting scripts
-DATABASE_NAME = 'atoc185x'
+
 
 class EdXConnection(object):
     
-    def __init__(self,*collections):
+    def __init__(self, db_name, *collections):
         client = MongoClient(DATABASE_ADDRESS)
-        db = client[DATABASE_NAME]
-        self.collection = {collection : db[collection] for collection in collections}
+        db = client[db_name]
+        self.collections = {collection : db[collection] for collection in collections}
 
     def get_access_to_collection(self):
-        return self.collection
+        return self.collections

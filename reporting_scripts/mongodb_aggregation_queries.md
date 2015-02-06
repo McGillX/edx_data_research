@@ -47,3 +47,18 @@ Mongo Aggregation Queries used on the mongo shell to output new collections with
 
 ### 15 - Number of accesses to Course Info Page per user
     db.tracking.aggregate([{$match : {event_type : "/courses/McGillX/CHEM181X/1T2014/info"}},{$group : {_id :     "$username", count : {"$sum" : 1}}},{"$out" : "course_info_access_count_per_user"}])
+
+### 16 User Gender
+    db.auth_userprofile.aggregate([{$group: {_id : {"user_id" : "$user_id", "gender" : "$gender"}}}, {$out: "user_gender"}])
+
+### 17 User Grades
+    db.certificates_generatedcertificate.aggregate([{$group: {_id : {"user_id" : "$user_id", "grade" : "$grade"}}}, {$out: "user_grade"}])
+
+### 18 User Certificate Type
+    db.student_courseenrollment.aggregate([{$group: {_id : {"user_id" : "$user_id", "mode" : "$mode"}}}, {$out: "user_certificate_type"}])
+
+### 19 User Year of Birth
+    db.student_courseenrollment.aggregate([{$group: {_id : {"user_id" : "$user_id", "mode" : "$mode"}}}, {$out: "user_certificate_type"}])
+
+### 20 Level of Education
+    db.auth_userprofile.aggregate([{$group: {_id : {"user_id" : "$user_id", "level_of_education" : "$level_of_education"}}}, {$out: "user_level_of_education"}])

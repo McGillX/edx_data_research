@@ -63,7 +63,7 @@ def main():
         sys.exit(1)
 
     collection = connect_to_db_collection(sys.argv[1], 'forum')
-    migrate_forum_to_mongodb(syd.argv[2], collection)
+    migrate_forum_to_mongodb(sys.argv[2], collection)
 
 if __name__ == '__main__':
     main()

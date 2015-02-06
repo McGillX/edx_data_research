@@ -9,17 +9,22 @@ if the IP is an actual IP or a proxy IP
 
 At the end of the analysis, the results are used to create a Pie Chart to visualize the distribution
 
+Usage:
+python ip_to_country.py <db_name>
+
 '''
 import geoip
 import csv
-import matplotlib.pyplot as pyplot
 from collections import Counter, defaultdict
+import sys
 
 from base_edx import EdXConnection
 from generate_csv_report import CSV
 
+db_name = sys.argv[1]
+
 # Change name of collection as required
-connection = EdXConnection('tracking_atoc185x' )
+connection = EdXConnection(db_name, 'tracking' )
 collection = connection.get_access_to_collection()
 
 # The csv file country_code_to_country.csv was retrieved from http://dev.maxmind.com/geoip/legacy/geolite/
@@ -57,23 +62,5 @@ for key in result:
                     country_set.add((key, country))
                     ip_to_country.append([key, value, 'SS', country_code_to_country['SS']])
 
-output = CSV(ip_to_country, ['Username', 'IP Address', 'Country Code', 'Country'], output_file='ip_to_country.csv')
+output = CSV(ip_to_country, ['Username', 'IP Address', 'Country Code', 'Country'], output_file=db_name+'_ip_to_country.csv')
 output.generate_csv()
-
-# Following lines of code are used to create a pie chart using matplotlib
-pie_chart_counter =  Counter([country[-1] for country in ip_to_country])
-pie_chart_counter_filter = defaultdict(float)
-for count in pie_chart_counter:
-    count_per = float(pie_chart_counter[count]) * 100.0 / len(ip_to_country)
-    if count_per < 1.0:
-        pie_chart_counter_filter['Other'] += pie_chart_counter[count]
-    else:
-        pie_chart_counter_filter[count] = count_per
-pie_chart_counter_filter['Other'] = float(pie_chart_counter_filter['Other']) * 100.0 / len(ip_to_country)
-pie_chart_labels = [key + " %0.2f" % value for key,value in pie_chart_counter_filter.items()]
-pyplot.axis('equal')
-#pyplot.pie(pie_chart_counter.values(), labels=pie_chart_labels)
-patches, text = pyplot.pie(pie_chart_counter_filter.values())
-lgd = pyplot.legend(patches, pie_chart_labels, loc='center left', bbox_to_anchor=(-0.1, 1.), fontsize=8)
-pyplot.title("Pie Chart of Location of Students for ATOC 185x")
-pyplot.savefig('student_location_atoc185x.png', bbox_extra_artists=(lgd,), bbox_inches='tight')
