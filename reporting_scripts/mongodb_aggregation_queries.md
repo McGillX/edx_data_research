@@ -58,7 +58,10 @@ Mongo Aggregation Queries used on the mongo shell to output new collections with
     db.student_courseenrollment.aggregate([{$group: {_id : {"user_id" : "$user_id", "mode" : "$mode"}}}, {$out: "user_certificate_type"}])
 
 ### 19 User Year of Birth
-    db.student_courseenrollment.aggregate([{$group: {_id : {"user_id" : "$user_id", "mode" : "$mode"}}}, {$out: "user_certificate_type"}])
+    db.auth_userprofile.aggregate([{$group: {_id : {"user_id" : "$user_id", "year_of_birth" : "$year_of_birth"}}}, {$out: "user_year_of_birth"}])
 
 ### 20 Level of Education
     db.auth_userprofile.aggregate([{$group: {_id : {"user_id" : "$user_id", "level_of_education" : "$level_of_education"}}}, {$out: "user_level_of_education"}])
+
+### 21 User Country
+    db.auth_userprofile.aggregate([{$group: {_id : {"user_id" : "$user_id", "country" : "$country"}}}, {$out: "user_country"}])

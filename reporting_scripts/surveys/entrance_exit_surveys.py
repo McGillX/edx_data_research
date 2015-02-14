@@ -51,7 +51,7 @@ collection = connection.get_access_to_collection()
 # Modify key-value pairs in survey_pages to the name of the survey pages and to 
 # the problem ids that maps to the survey pages E.g. if a course have a 
 
-survey_pages = {'entrance_survey' : {'general_info' : '4x://McGillX/CHEM181x/problem/c9d2efffbdf043e68789bd60cd4954e3', 
+survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/CHEM181x/problem/c9d2efffbdf043e68789bd60cd4954e3', 
 'demographics_background' : 'i4x://McGillX/CHEM181x/problem/134cfc9efb2b400bab2ee1505cc9e4a9', 
 'aspirations_motivation' : 'i4x://McGillX/CHEM181x/problem/579ae070227c4f5c973eb02affdcba2a'}, 
 'exit_survey' : {'part_1' : 'i4x://McGillX/CHEM181x/problem/72c6a513dae945779520c3a93bb5bc49',
