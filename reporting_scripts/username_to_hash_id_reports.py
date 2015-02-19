@@ -3,7 +3,7 @@ In this script, we take a csv report as input and maps usernames
 to their hash ids and return a new csv_report
 
 Usage:
-python usernames_to_hash_id_reports.py db_name csv_report
+python username_to_hash_id_reports.py db_name csv_report
 
 '''
 import sys
@@ -25,12 +25,13 @@ with open(sys.argv[2]) as f:
 
 result = []
 for row in data:
-    cursor = collection['user_id_map'].find_one({'id' : long(row[0])})
+    cursor = collection['user_id_map'].find_one({'username' : row[0]})
     hash_id = cursor['hash_id']
-    result.append([hash_id] + row[1:])
+    user_id = cursor['id']
+    result.append([row[0], user_id, hash_id] + row[1:])
 
 input_file, extension = sys.argv[2].split('.')
-output = CSV(result, ['User Hash ID'] + headers.split(',')[1:], output_file=input_file+'_anon.'+extension)
+output = CSV(result, [headers.split(',')[0],'User ID','User Hash ID'] + headers.split(',')[1:], output_file=input_file+'_username_anon.'+extension)
 output.generate_csv()
     
 
