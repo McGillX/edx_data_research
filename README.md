@@ -140,6 +140,7 @@ Generate course specific tracking log collections
 
 5. Other Reporting Scripts
 ----
+*documentation in progress*
 |Script | Description
 |:------:|----------
 |ip_to_country.py | Map IP address of given event to country
