@@ -138,7 +138,7 @@ Generate course specific tracking log collections
 |username_to_hash_id_reports.py| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
 
 
-5. Other Reporting Scripts
+Other Reporting Scripts
 ----
 *documentation in progress*
 
