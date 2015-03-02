@@ -132,15 +132,17 @@ Generate course specific tracking log collections
 4. Anonymize csv datasets
 ----
 *documentation in progress*
+|Script | Description
+|:------:|----------
+|username_to_hash_id_reports.py| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
 
-5. Reporting Scripts
+
+5. Other Reporting Scripts
 ----
 |Script | Description
 |:------:|----------
 |ip_to_country.py | Map IP address of given event to country
 |user_info.py | Retrieve info about students registered in the course
-|username_to_hash_id_reports.py| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
-|user_id_to_hash_id_reports.py| Take a csv report as input and maps user ids to their hash ids and usernames and return a new csv_report
 |show_transcript_completers.py| Retrieve the completers (users who completed the course) and filters all those who had event_type 'show_transcript'
 |session_info.py| Gather the session time for each user everytime they logged in i.e. how long did they stay logged in
 |speed_change_video.py| Gets all the events per user when they changed speed of videos
