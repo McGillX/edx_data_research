@@ -167,11 +167,11 @@ Other Reporting Scripts
 ----
 *documentation in progress*
 
-|Script | Description
-|:------:|----------
-|ip_to_country.py | Map IP address of given event to country
-|user_info.py | Retrieve info about students registered in the course
-|show_transcript_completers.py| Retrieve the completers (users who completed the course) and filters all those who had event_type 'show_transcript'
+|Script | Description|csv fields | Notes
+|:------:|----------|---------- |----------
+|ip_to_country.py | Map IP address of given event to country | username, ip | There may be multiple ip adresses per user and some ip addresses may lack an associated username
+|user_info.py | Retrieve info about students registered in the course |
+|show_transcript_completers.py| Retrieve the completers (users who completed the course) and filters all those who had event_type 'show_transcript' |
 |session_info.py| Gather the session time for each user everytime they logged in i.e. how long did they stay logged in
 |speed_change_video.py| Gets all the events per user when they changed speed of videos
 |seek_video.py|Gets all the events per user while watching videos
