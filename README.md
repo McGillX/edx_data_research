@@ -123,13 +123,15 @@ JSON, Mongo and SQL files are directly imported into each course's database
 
 All tracking logs are stored in the Master database. From this data set, course specifc tracking logs are extracted and stored in a course specific database. 
 
-tracking log data provided by edX is logged on a daily basis and are not course specific.
+tracking log data provided by edX is logged on a daily basis. The log files are not course specific.
 
 Master Database structure
 Database name: tracking_logs
  Collection: tracking
 
-Migrate tracking logs to Master Database with the script parsing/tracking_logs/load_tracking_logs_to_mongo.py
+Migrate tracking logs to Master Database
+ 1. Run mongod
+ 2. Run [load_tracking_logs_to_mongo.py](parsing/tracking_logs/load_tracking_logs_to_mongo.py)
 
 ####iii. Course Specific Collection for Tracking Logs
 
