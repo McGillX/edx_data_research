@@ -105,10 +105,10 @@ JSON, Mongo and SQL files are directly imported into each course's database
    python course_structure_to_mongod.py name_of_database name_of_collection <path_to_json_file>
    ```
  2. For details see [parsing/course_structure](parsing/course_structure) 
-2. Import the [(Discussion Forum Data)](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html)
- 1. For directions and information see [parsing/forum](parsing/forum)
-3. Import the [(Student Info and Progress Data)](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html)
- 1. For directions and information see [parsing/sql](parsing/sql)
+2. Import the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html)
+ 1. For details see [parsing/forum](parsing/forum)
+3. Import the [Student Info and Progress Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html)
+ 1. For details see [parsing/sql](parsing/sql)
 
 
 
