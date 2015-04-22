@@ -15,6 +15,8 @@ Contents
 
 Process Overview
 ------
+Before starting the setup consult with edX to setup keys and credentials for data transfer
+
 1. edX Data Download and Decryption
 2. Populating Mongo Databases
  1. Import of SQL, Mongo and JSON files
