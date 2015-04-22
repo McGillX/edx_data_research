@@ -57,6 +57,7 @@ We use the file transfer client Cyberduck to access the amazon s3 server
    The trackings logs are contained in the encrypted .gpg files
    
 7. Download your files of interest
+8. Decrypt the files using [Kleopatra Gpg4win](http://gpg4win.org/) 
 
 2. Populating Mongo Databases
 ----
