@@ -100,6 +100,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
 1. Import the Course Structure
  1. Run mongod
  2. Run course_structure_to_mongod.py
+ 
    ```
    python course_structure_to_mongod.py name_of_database name_of_collection <path_to_json_file>
    ```
