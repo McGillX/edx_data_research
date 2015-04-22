@@ -132,7 +132,12 @@ Database name: tracking_logs
 Migrate tracking logs to Master Database
  1. Run mongod
  2. Run [load_tracking_logs_to_mongo.py](parsing/tracking_logs/load_tracking_logs_to_mongo.py)
-
+ 
+   ```
+   python load_tracking_logs_to_mongo.py db_name collection_name <path_to_directory>
+   ```
+ 3. For details see [parsing/sql](parsing/tracking_logs)
+ 
 ####iii. Course Specific Collection for Tracking Logs
 
 Course specific tracking log data is filtered by course ID as well as course enrollment start date and course end date.
