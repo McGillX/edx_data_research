@@ -17,13 +17,13 @@ Process Overview
 ------
 Before starting the setup consult with edX to setup keys and credentials for data transfer
 
-1. [edX Data Download and Decryption](https://github.com/McGillX/edx_data_research#1-edx-data-download-and-decryption)
-2. [Populating Mongo Databases](https://github.com/McGillX/edx_data_research#2-populating-mongo-databases)
+1. [edX Data Download and Decryption](#1-edx-data-download-and-decryption)
+2. [Populating Mongo Databases](#2-populating-mongo-databases)
  1. Import of SQL, Mongo and JSON files
  2. Creation of Master Database for Tracking Logs
  2. Extraction of Course Specific for Tracking Logs
-3. [Extract csv datasets](https://github.com/McGillX/edx_data_research#3-extract-csv-datasets)
-4. [Anonymize csv datasets](https://github.com/McGillX/edx_data_research#4-anonymize-csv-datasets)
+3. [Extract csv datasets](#3-extract-csv-datasets)
+4. [Anonymize csv datasets](#4-anonymize-csv-datasets)
 
 1. edX Data Download and Decryption
 ------
