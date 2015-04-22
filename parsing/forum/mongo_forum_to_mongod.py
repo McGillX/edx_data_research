@@ -21,7 +21,7 @@ def connect_to_db_collection(db_name, collection_name):
 
 def _remove_dollar_sign(json_object):
     '''
-    MongoDB does not accept '$' as key values. Loop through all the jeys and
+    MongoDB does not accept '$' as key values. Loop through all the keys and
     remove the '$' symbol
 
     '''
