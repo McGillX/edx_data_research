@@ -115,6 +115,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
  2. For details see [parsing/forum](parsing/forum)
 3. Import the [Student Info and Progress Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html)
  1. For details see [parsing/sql](parsing/sql)
+ 2. 
 
 
 
