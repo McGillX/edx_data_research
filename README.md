@@ -104,7 +104,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
    ```
    python course_structure_to_mongod.py name_of_database name_of_collection <path_to_json_file>
    ```
- 2. For details see [parsing/course_structure](parsing/course_structure) 
+ 2. Further details: [parsing/course_structure](parsing/course_structure) 
 2. Import the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html)
  1. Run mongod
  2. Run [mongo_forum_to_mongod.py](parsing/forum/mongo_forum_to_mongod.py)
@@ -112,7 +112,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
    ```
    python mongo_forum_to_mongod.py course_db_name <path_to_forum_mongo_file>
    ```
- 2. For details see [parsing/forum](parsing/forum)
+ 2. Further details: [parsing/forum](parsing/forum)
 3. Import the [Student Info and Progress Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html)
  1. Run mongod
  2. Run to following commands from the console:
@@ -129,7 +129,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
    mongoimport -d edx -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
 
    ```
-2. For details see [parsing/sql](parsing/sql)
+ 2. Further details: [parsing/sql](parsing/sql)
 
 
 
@@ -151,7 +151,7 @@ Migrate tracking logs to Master Database
    ```
    python load_tracking_logs_to_mongo.py db_name collection_name <path_to_directory>
    ```
- 3. For details see [parsing/sql](parsing/tracking_logs)
+ 3. Further details: [parsing/sql](parsing/tracking_logs)
 
  
 ####iii. Course Specific Collection for Tracking Logs
