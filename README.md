@@ -127,9 +127,8 @@ JSON, Mongo and SQL files are directly imported into each course's database
    mongoimport -d edx -c auth_user --type tsv --file {org}-{course}-{date}-auth_user-prod-analytics.sql --headerline
 
    mongoimport -d edx -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
-
    ```
- 2. Further details: [parsing/sql](parsing/sql)
+ 3. Further details: [parsing/sql](parsing/sql)
 
 
 
