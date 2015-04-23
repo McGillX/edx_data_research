@@ -58,7 +58,7 @@ def migrate_forum_to_mongodb(forum_mongo_file, collection):
 
 def main():
     if len(sys.argv) != 3:
-        usage_message = 'usage: %s coure_db_name forum_mongo_file'
+        usage_message = 'usage: %s course_db_name path_to_forum_mongo_file'
         sys.stderr.write(usage_message % sys.argv[0])
         sys.exit(1)
 
