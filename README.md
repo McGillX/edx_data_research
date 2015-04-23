@@ -177,18 +177,6 @@ This script creates a new collection that will contain tracking logs of given co
 3. Extract csv datasets
 ----
 *documentation in progress*
-
-4. Anonymize csv datasets
-----
-*documentation in progress*
-
-|Script | Description
-|:------:|----------
-|username_to_hash_id_reports.py| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
-
-
-Other Reporting Scripts
-----
 *documentation in progress*
 
 |Script | Description|csv fields | Notes|
@@ -214,6 +202,14 @@ Other Reporting Scripts
 |navigation_tabs_data_date.py| Get the number of times each Navigation tab was clicked/viewed for each day during the course
 |navigation_tabs_data_date_completers.py| Get the number of times each Navigation tab was clicked/viewed, by students who completed the course, for each day during the course
 |navigational_events_completers.py| Count the number of navigation events: seq_next, seq_prev, seq_goto for those students who completed the course
+
+4. Anonymize csv datasets
+----
+*documentation in progress*
+
+|Script | Description
+|:------:|----------
+|username_to_hash_id_reports.py| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
 
 ## Contact
 
