@@ -120,7 +120,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
    ```
    mongoimport -d edx -c auth_userprofile --type tsv --file {org}-{course}-{date}-auth_userprofile-prod-analytics.sql   --headerline
 
-   mongoimport -d edx -c certificates_generatedcertificate --type tsv --file McGillX-CHEM181x-1T2014-certificates_generatedcertificate-prod-analytics.sql --headerline
+   mongoimport -d edx -c certificates_generatedcertificate --type tsv --file {org}-{course}-{date}-certificates_generatedcertificate-prod-analytics.sql --headerline
 
    mongoimport -d edx -c student_courseenrollment --type tsv --file {org}-{course}-{date}-student_courseenrollment-prod-analytics.sql --headerline
 
