@@ -114,8 +114,22 @@ JSON, Mongo and SQL files are directly imported into each course's database
    ```
  2. For details see [parsing/forum](parsing/forum)
 3. Import the [Student Info and Progress Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html)
- 1. For details see [parsing/sql](parsing/sql)
- 2. 
+ 1. Run mongod
+ 2. Run to following commands from the console:
+   
+   ```
+   mongoimport -d edx -c auth_userprofile --type tsv --file {org}-{course}-{date}-auth_userprofile-prod-analytics.sql   --headerline
+
+   mongoimport -d edx -c certificates_generatedcertificate --type tsv --file McGillX-CHEM181x-1T2014-certificates_generatedcertificate-prod-analytics.sql --headerline
+
+   mongoimport -d edx -c student_courseenrollment --type tsv --file {org}-{course}-{date}-student_courseenrollment-prod-analytics.sql --headerline
+
+   mongoimport -d edx -c auth_user --type tsv --file {org}-{course}-{date}-auth_user-prod-analytics.sql --headerline
+
+   mongoimport -d edx -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
+
+   ```
+2. For details see [parsing/sql](parsing/sql)
 
 
 
@@ -138,6 +152,7 @@ Migrate tracking logs to Master Database
    python load_tracking_logs_to_mongo.py db_name collection_name <path_to_directory>
    ```
  3. For details see [parsing/sql](parsing/tracking_logs)
+
  
 ####iii. Course Specific Collection for Tracking Logs
 
