@@ -153,7 +153,8 @@ Migrate tracking logs to Master Database - [parsing/tracking_logs](parsing/track
    python load_tracking_logs_to_mongo.py <database_name> <collection_name> <path_to_directory_containing_trackings_logs>
    ```
 
-   A collection called {collection_name}_imported is created to keep track of what files were successfully imported and errors that occured
+   A second collection called {collection_name}_imported is automatically generated to keep track of what files were successfully imported and errors that occured
+   
    **_Errors:_** {org}-edx-events-{date}.log.gz-errors files are generated when documents are not successfully loaded to the database
   - Some events associated with openassessments generate errors. We are working to resolve the issue.
  
