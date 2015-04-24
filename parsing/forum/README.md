@@ -21,7 +21,6 @@ python mongo_forum_to_mongod.py
 ```
 
 # mongo_forum_to_csv.py
----
 
 Deprecated. Working but more stable to use mongo shell terminal command. See [mongod_forum_to_csv.md](https://github.com/McGillX/mongo-conversion/blob/master/forum_parsing/mongod_forum_to_csv.md)
 
@@ -49,7 +48,6 @@ python mongo_forum_to_csv.py
 ```
 
 # mongod_to_csv
----
 
 ### Export the .mongo discussion database from a hosted mongo database to .csv for analysis
 
