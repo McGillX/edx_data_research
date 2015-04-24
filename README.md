@@ -183,7 +183,7 @@ generate_course_tracking_logs.py
 
 
 
-3. Extract csv datasets
+3. Extract csv datasets - [report_scripts](/reporting_scripts) 
 ----
 *documentation in progress*
 *documentation in progress*
