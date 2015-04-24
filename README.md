@@ -118,15 +118,15 @@ JSON, Mongo and SQL files are directly imported into each course's database
  2. Run to following commands from the console:
    
    ```
-   mongoimport -d edx -c auth_userprofile --type tsv --file {org}-{course}-{date}-auth_userprofile-prod-analytics.sql   --headerline
+   mongoimport -d database_name -c auth_userprofile --type tsv --file {org}-{course}-{date}-auth_userprofile-prod-analytics.sql   --headerline
 
-   mongoimport -d edx -c certificates_generatedcertificate --type tsv --file {org}-{course}-{date}-certificates_generatedcertificate-prod-analytics.sql --headerline
+   mongoimport -d database_name -c certificates_generatedcertificate --type tsv --file {org}-{course}-{date}-certificates_generatedcertificate-prod-analytics.sql --headerline
 
-   mongoimport -d edx -c student_courseenrollment --type tsv --file {org}-{course}-{date}-student_courseenrollment-prod-analytics.sql --headerline
+   mongoimport -d database_name -c student_courseenrollment --type tsv --file {org}-{course}-{date}-student_courseenrollment-prod-analytics.sql --headerline
 
-   mongoimport -d edx -c auth_user --type tsv --file {org}-{course}-{date}-auth_user-prod-analytics.sql --headerline
+   mongoimport -d database_name -c auth_user --type tsv --file {org}-{course}-{date}-auth_user-prod-analytics.sql --headerline
 
-   mongoimport -d edx -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
+   mongoimport -d database_name -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
    ```
  3. Further details: [parsing/sql](parsing/sql)
 
