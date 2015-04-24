@@ -102,7 +102,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
  2. Run [course_structure_to_mongod.py](parsing/course_structure/course_structure_to_mongod.py)
  
    ```
-   python course_structure_to_mongod.py name_of_database name_of_collection <path_to_json_file>
+   python course_structure_to_mongod.py <name_of_database> <name_of_collection> <path_to_json_file>
    ```
  2. Further details: [parsing/course_structure](parsing/course_structure) 
 2. Import the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html)
@@ -110,21 +110,23 @@ JSON, Mongo and SQL files are directly imported into each course's database
  2. Run [mongo_forum_to_mongod.py](parsing/forum/mongo_forum_to_mongod.py)
  
    ```
-   python mongo_forum_to_mongod.py course_db_name <path_to_forum_mongo_file>
+   python mongo_forum_to_mongod.py <course_db_name> <path_to_forum_mongo_file>
    ```
  2. Further details: [parsing/forum](parsing/forum)
 3. Import the [Student Info and Progress Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html)
  1. Run mongod
  2. Run to following commands from the console:
+ 
+Enter the appropriate SQL file names
    
    ```
-   mongoimport -d database_name -c auth_userprofile --type tsv --file {org}-{course}-{date}-auth_userprofile-prod-analytics.sql   --headerline
+   mongoimport -d <database_name> -c auth_userprofile --type tsv --file {org}-{course}-{date}-auth_userprofile-prod-analytics.sql --headerline
 
-   mongoimport -d database_name -c certificates_generatedcertificate --type tsv --file {org}-{course}-{date}-certificates_generatedcertificate-prod-analytics.sql --headerline
+   mongoimport -d <database_name> -c certificates_generatedcertificate --type tsv --file {org}-{course}-{date}-certificates_generatedcertificate-prod-analytics.sql --headerline
 
-   mongoimport -d database_name -c student_courseenrollment --type tsv --file {org}-{course}-{date}-student_courseenrollment-prod-analytics.sql --headerline
+   mongoimport -d <database_name> -c student_courseenrollment --type tsv --file {org}-{course}-{date}-student_courseenrollment-prod-analytics.sql --headerline
 
-   mongoimport -d database_name -c auth_user --type tsv --file {org}-{course}-{date}-auth_user-prod-analytics.sql --headerline
+   mongoimport -d <database_name> -c auth_user --type tsv --file {org}-{course}-{date}-auth_user-prod-analytics.sql --headerline
 
    mongoimport -d database_name -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
    ```
