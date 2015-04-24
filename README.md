@@ -136,20 +136,21 @@ Enter the appropriate SQL file names
 
 ####ii. Master Database for Tracking Logs
 
-All tracking logs are stored in the Master database. From this data set, course specifc tracking logs are extracted and stored in a course specific database. 
+- Tracking log data provided by edX is logged on a daily basis. The log files are not course specific.
+- All tracking logs are stored in the Master database.
+- Course specifc tracking logs are extracted and stored in a course specific database. 
 
-tracking log data provided by edX is logged on a daily basis. The log files are not course specific.
+Master Database structure:
 
-Master Database structure
-Database name: tracking_logs
- Collection: tracking
+- Database name: tracking_logs
+- Collection: tracking
 
 Migrate tracking logs to Master Database - [parsing/tracking_logs](parsing/tracking_logs)
  1. Run mongod
  2. Run [load_tracking_logs_to_mongo.py](parsing/tracking_logs/load_tracking_logs_to_mongo.py)
  
    ```
-   python load_tracking_logs_to_mongo.py <database_name> <collection_name> <path_to_directory>
+   python load_tracking_logs_to_mongo.py <database_name> <collection_name> <path_to_directory_containing_trackings_logs>
    ```
 
 
@@ -158,8 +159,11 @@ Migrate tracking logs to Master Database - [parsing/tracking_logs](parsing/track
 
 Course specific tracking log data is filtered by course ID as well as course enrollment start date and course end date.
 
-Note: Before extracting the tracking logs of a course make sure the course structure data has been migrated to the course specific database. A subset of the course structure data is appended to the corresponding record in the tracking log. 
-Ensure the course_structure data for the given course has been migrated to its own collection in the course database. The data is provided in json format and can be migrated using the script parsing/course_structure/course_structure_to_mongod.py
+**_Note_**
+- Before extracting the tracking logs of a course make sure the course structure data has been migrated to the course specific database. 
+- A subset of the course structure data is appended to the corresponding record in the tracking log. 
+Ensure the course_structure data for the given course has been migrated to its own collection in the course database. 
+- The data is provided in json format and can be migrated using the script parsing/course_structure/course_structure_to_mongod.py
 
 Generate course specific tracking log collections - [parsing/tracking_logs](parsing/tracking_logs) 
 
