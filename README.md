@@ -97,28 +97,27 @@ There are two components to populating the course specific databases:
 
 JSON, Mongo and SQL files are directly imported into each course's database
 
-1. Import the Course Structure
+1. Parse the Course Structure - [parsing/course_structure](parsing/course_structure)
  1. Run mongod
  2. Run [course_structure_to_mongod.py](parsing/course_structure/course_structure_to_mongod.py)
  
    ```
    python course_structure_to_mongod.py <database_name> <collection_name> <path_to_json_file>
    ```
- 2. Further details: [parsing/course_structure](parsing/course_structure) 
-2. Import the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html)
+ 
+2. Parse the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html) - [parsing/forum](parsing/forum)
  1. Run mongod
  2. Run [mongo_forum_to_mongod.py](parsing/forum/mongo_forum_to_mongod.py)
  
    ```
    python mongo_forum_to_mongod.py <database_name> <path_to_forum_mongo_file>
    ```
- 2. Further details: [parsing/forum](parsing/forum)
-3. Import the [Student Info and Progress Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html)
+
+3. Parse the [Student Info and Progress Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html) - [parsing/sql](parsing/sql)
  1. Run mongod
  2. Run to following commands from the console:
- 
+
 Enter the appropriate SQL file names
-   
    ```
    mongoimport -d <database_name> -c auth_userprofile --type tsv --file {org}-{course}-{date}-auth_userprofile-prod-analytics.sql --headerline
 
@@ -130,7 +129,7 @@ Enter the appropriate SQL file names
 
    mongoimport -d <database_name> -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
    ```
- 3. Further details: [parsing/sql](parsing/sql)
+
 
 
 
@@ -145,14 +144,14 @@ Master Database structure
 Database name: tracking_logs
  Collection: tracking
 
-Migrate tracking logs to Master Database
+Migrate tracking logs to Master Database - [parsing/tracking_logs](parsing/tracking_logs)
  1. Run mongod
  2. Run [load_tracking_logs_to_mongo.py](parsing/tracking_logs/load_tracking_logs_to_mongo.py)
  
    ```
    python load_tracking_logs_to_mongo.py <database_name> <collection_name> <path_to_directory>
    ```
- 3. Further details: [parsing/sql](parsing/tracking_logs)
+
 
  
 ####iii. Course Specific Collection for Tracking Logs
@@ -162,19 +161,18 @@ Course specific tracking log data is filtered by course ID as well as course enr
 Note: Before extracting the tracking logs of a course make sure the course structure data has been migrated to the course specific database. A subset of the course structure data is appended to the corresponding record in the tracking log. 
 Ensure the course_structure data for the given course has been migrated to its own collection in the course database. The data is provided in json format and can be migrated using the script parsing/course_structure/course_structure_to_mongod.py
 
-Generate course specific tracking log collections
+Generate course specific tracking log collections - [parsing/tracking_logs](parsing/tracking_logs) 
 
 1. Setup 
+ - Create a config file for each course by following the template template_config.json. 
+ - The config file will be used to extract course specific tracking logs between the specific course start of enrollment date and end of course date
 
-Create a config file for each course by following the template template_config.json. This config file will be used to extract course specific tracking logs between the specific course start of enrollment date and end of course date
-
-2. Run [generate_course_tracking_logs.py/parsing/tracking_logs](generate_course_tracking_logs.py/parsing/tracking_logs) 
+2. Run [/parsing/tracking_logs/generate_course_tracking_logs.py](/parsing/tracking_logs/generate_course_tracking_logs.py) 
 ```
 generate_course_tracking_logs.py 
 ```
 This script creates a new collection that will contain tracking logs of given course along with extracts from the course_structure collection
 
-3. Further details: [parsing/tracking_logs](parsing/tracking_logs) 
 
 3. Extract csv datasets
 ----
