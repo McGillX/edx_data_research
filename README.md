@@ -159,6 +159,8 @@ Migrate tracking logs to Master Database - [parsing/tracking_logs](parsing/track
 
 Course specific tracking log data is filtered by course ID as well as course enrollment start date and course end date.
 
+This process creates a new collection that will contain tracking logs of given course along with extracts from the course_structure collection.
+
 **_Note_**
 - Before extracting the tracking logs of a course make sure the course structure data has been migrated to the course specific database. 
 - A subset of the course structure data is appended to the corresponding record in the tracking log. 
@@ -175,7 +177,7 @@ Generate course specific tracking log collections - [parsing/tracking_logs](pars
 ```
 generate_course_tracking_logs.py 
 ```
-This script creates a new collection that will contain tracking logs of given course along with extracts from the course_structure collection
+
 
 
 3. Extract csv datasets
