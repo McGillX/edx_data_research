@@ -165,7 +165,7 @@ Generate course specific tracking log collections - [parsing/tracking_logs](pars
 
 1. Setup [template_config.json](/parsing/tracking_logs/course_config/template_config.json)
  - Create a config file for each course using the template 
- - The config file will be used to extract course specific tracking logs between the specific course start of enrollment date and end of course date
+ - The config file will be used to extract course specific tracking logs between the specified course start of enrollment date and end of course date
 
 2. Run [generate_course_tracking_logs.py](/parsing/tracking_logs/generate_course_tracking_logs.py) 
 ```
