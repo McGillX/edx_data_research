@@ -1,4 +1,4 @@
-# mongod_to_csv
+# mongod_forum_to_csv
 
 ### Export the .mongo discussion database from a hosted mongo database to .csv for analysis
 
