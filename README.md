@@ -128,7 +128,7 @@ Enter the appropriate SQL file names
 
    mongoimport -d <database_name> -c auth_user --type tsv --file {org}-{course}-{date}-auth_user-prod-analytics.sql --headerline
 
-   mongoimport -d database_name -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
+   mongoimport -d <database_name> -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
    ```
  3. Further details: [parsing/sql](parsing/sql)
 
