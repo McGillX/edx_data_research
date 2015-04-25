@@ -2,22 +2,10 @@
 
 Loads the .mongo dicussion forum data into MongoDB
 
-### Setup
-
-```python
-# SPECIFY input .mongo filepath
-FILENAME = 'data/McGillX-CHEM181x-1T2014-prod.mongo'
-
-# SPECIFY connection details
-DATABASE_ADDRESS = "mongodb://localhost"
-DATABASE_NAME = "edx"
-DATABASE_FORUM_COLLECTION = "forum"
-```
-
 ### Run
 
 ```
-python mongo_forum_to_mongod.py
+python mongo_forum_to_mongod.py course_db_name <path_to_forum_mongo_file>
 ```
 
 # mongo_forum_to_json.py
