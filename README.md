@@ -196,7 +196,10 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 3. Extract csv datasets - [report_scripts](/reporting_scripts) 
 ----
 *documentation in progress*
-<h4>User Demographics</h4>
+
+<a href="#demographics">Demographics</a>
+
+<h4 id="demographics">Demographics</h4>
 
 <table style="undefined;table-layout: fixed; width: 445px">
 <colgroup>
@@ -229,7 +232,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   </tr>
 </table>
 
-<h4>User Page Interaction</h4>
+<h4>Page Interaction</h4>
 
 <table style="undefined;table-layout: fixed; width: 445px">
 <colgroup>
@@ -287,7 +290,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   </tr>
 </table>
         
-<h4>Course Engagement and Performance</h4>
+<h4>Engagement and Performance</h4>
             
 <table style="undefined;table-layout: fixed; width: 445px">
 <colgroup>
