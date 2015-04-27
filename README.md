@@ -214,7 +214,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 </colgroup>
   <tr>
     <th>Script</th>
-    <th>Description</th>
+    <th>Description / csv fields / Notes</th>
   </tr>
   <tr>
       <td><a href="/reporting_scripts/ip_to_country.py">ip_to_country.py</a></td>
@@ -247,7 +247,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 </colgroup>
   <tr>
     <th>Script</th>
-    <th>Description</th>
+    <th>Description / csv fields / Notes</th>
   </tr>
   <tr>
       <td><a href="/reporting_scripts/show_transcript_completers.py">show_transcript_completers.py</a></td>
@@ -280,7 +280,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 </colgroup>
   <tr>
     <th>Script</th>
-    <th>Description</th>
+    <th>Description / csv fields / Notes</th>
   </tr>
   <tr>
       <td><a href="/reporting_scripts/forum_stats.py">forum_stats.py</a></td>
@@ -305,7 +305,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 </colgroup>
   <tr>
     <th>Script</th>
-    <th>Description</th>
+    <th>Description / csv fields / Notes</th>
   </tr>
   <tr>
       <td><a href="/reporting_scripts/date_of_registration_completers.py">date_of_registration_completers.py</a></td>
@@ -346,7 +346,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 </colgroup>
     <tr>
     <th>Script</th>
-    <th>Description</th>
+    <th>Description / csv fields / Notes</th>
   </tr>
   <tr>
     <td><a href="/reporting_scripts/navigation_tabs_data.py">navigation_tabs_data.py</a></td>
