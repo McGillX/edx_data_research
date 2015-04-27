@@ -196,6 +196,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 3. Extract csv datasets - [report_scripts](/reporting_scripts) 
 ----
 *documentation in progress*
+<h4>User Demographics</h4>
 
 <table style="undefined;table-layout: fixed; width: 445px">
 <colgroup>
@@ -208,21 +209,36 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   </tr>
   <tr>
     <td>ip_to_country.py</td>
-    <td><ul>
-    <li>Maps IP address of user tracking events to the associated country</li>
-    <li>Username, IP</li>
-    <li>There may be multiple ip adresses per user and some IP addresses may lack an associated username</li>
-    </ul></td>
+    <td>
+        <ul>
+            <li>Maps IP address of user tracking events to the associated country</li>
+            <li>Username, IP</li>
+            <li>There may be multiple ip adresses per user and some IP addresses may lack an associated username</li>
+        </ul>
+      </td>
   </tr>
   <tr>
     <td>user_info.py</td>
     <td>
-    <ul>
-    <li>Retrieve info about students registered in the course</li>
-    <li>User ID,'Username', 'Final Grade', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'</li>
-    <li>This script accesses the collections: 'certificates_generatedcertificate', 'auth_userprofile'</li>
-    </ul>
+        <ul>
+            <li>Retrieve info about students registered in the course</li>
+            <li>User ID,'Username', 'Final Grade', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'</li>
+            <li>This script accesses the collections: 'certificates_generatedcertificate', 'auth_userprofile'</li>
+        </ul>
     </td>
+  </tr>
+</table>
+
+<h4>User Page Interaction</h4>
+
+<table style="undefined;table-layout: fixed; width: 445px">
+<colgroup>
+<col style="width: 190px">
+<col style="width: 255px">
+</colgroup>
+  <tr>
+    <th>Script</th>
+    <th>Description</th>
   </tr>
   <tr>
     <td>show_transcript_completers.py</td>
@@ -244,6 +260,19 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
     <td>sequential_aggregation.py</td>
     <td>Gather the number of various categories under each sequential including the number of html, videos, verticals etc.</td>
   </tr>
+</table>
+
+<h4>Forum Data</h4>
+
+<table style="undefined;table-layout: fixed; width: 445px">
+<colgroup>
+<col style="width: 190px">
+<col style="width: 255px">
+</colgroup>
+  <tr>
+    <th>Script</th>
+    <th>Description</th>
+  </tr>
   <tr>
     <td>forum_stats.py</td>
     <td>Calculates the number of forum threads and posts for a given course</td>
@@ -251,6 +280,23 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   <tr>
     <td>forum_data.py</td>
     <td>Get data for each comment thread and comment in the forum</td>
+  </tr>
+            <tr>
+    <td>forum_body_extraction_for_word_cloud.py</td>
+    <td>Extract all of the comments and comment threads from the forum of a given course using NLTK</td>
+  </tr>
+</table>
+        
+<h4>Course Engagement and Performance</h4>
+            
+<table style="undefined;table-layout: fixed; width: 445px">
+<colgroup>
+<col style="width: 190px">
+<col style="width: 255px">
+</colgroup>
+  <tr>
+    <th>Script</th>
+    <th>Description</th>
   </tr>
   <tr>
     <td>date_of_registration_completers.py</td>
@@ -280,9 +326,18 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
     <td>first_activity_completers.py</td>
     <td>Retrieve the first activity of all user who completed a course</td>
   </tr>
-  <tr>
-    <td>forum_body_extraction_for_word_cloud.py</td>
-    <td>Extract all of the comments and comment threads from the forum of a given course using NLTK</td>
+</table>
+
+<h4>Navigation</h4>
+
+<table style="undefined;table-layout: fixed; width: 445px">
+<colgroup>
+<col style="width: 190px">
+<col style="width: 255px">
+</colgroup>
+    <tr>
+    <th>Script</th>
+    <th>Description</th>
   </tr>
   <tr>
     <td>navigation_tabs_data.py</td>
@@ -301,6 +356,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
     <td>Count the number of navigation events: seq_next, seq_prev, seq_goto for those students who completed the course</td>
   </tr>
 </table>
+
 
 4. Anonymize csv datasets
 ----
