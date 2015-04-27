@@ -349,7 +349,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
     <th>Description</th>
   </tr>
   <tr>
-    <td>navigation_tabs_data.py</td>
+    <td><a href="/reporting_scripts/navigation_tabs_data.py">navigation_tabs_data.py</a></td>
     <td>Get the number of users who access each navigation tab</td>
   </tr>
   <tr>
@@ -373,7 +373,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 
 |Script | Description
 |:------:|----------
-|username_to_hash_id_reports.py| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
+|[username_to_hash_id_reports.py](/reporting_scripts/username_to_hash_id_reports.py)| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
 
 ## Contact
 
