@@ -197,30 +197,104 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 ----
 *documentation in progress*
 
-
-|Script | Description|csv fields | Notes|
-| ---: | --- | --- | --- |
-|ip_to_country.py | Map IP address of given event to country | 'Username, 'IP' | There may be multiple ip adresses per user and some IP addresses may lack an associated username|
-|user_info.py | Retrieve info about students registered in the course | 'User ID','Username', 'Final Grade', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City' | This script accesses the collections: 'certificates_generatedcertificate', 'auth_userprofile'|
-|show_transcript_completers.py| Retrieve the completers (users who completed the course) and filters all those who had event_type 'show_transcript' |
-|session_info.py| Gather the session time for each user everytime they logged in i.e. how long did they stay logged in
-|speed_change_video.py| Gets all the events per user when they changed speed of videos
-|seek_video.py|Gets all the events per user while watching videos
-|sequential_aggregation.py| Gather the number of various categories under each sequential including the number of html, videos, verticals etc.
-|forum_stats.py | Calculates the number of forum threads and posts for a given course
-|forum_data.py| Get data for each comment thread and comment in the forum
-|date_of_registration_completers.py| Get the date of registration of all users who completed the course
-|course_completers.py| Extract the usernames of the course completers
-|activities_with_lower_completion.py| Get the number of students who answered a given problem correctly or incorrectly
-|activity_count_completers.py| Get the number of completers who did each activity
-|chapters_accessed_per_user.py| Determines how many chapters were accessed by each user for a given course
-|failure_analysis.py| extracts all the videos watched and the problems attempted by users who got grades between 50% and 59% inclusive
-|first_activity_completers.py| Retrieve the first activity of all user who completed a course
-|forum_body_extraction_for_word_cloud.py| Extract all of the comments and comment threads from the forum of a given course using NLTK
-|navigation_tabs_data.py| Get the number of users who access each navigation tab
-|navigation_tabs_data_date.py| Get the number of times each Navigation tab was clicked/viewed for each day during the course
-|navigation_tabs_data_date_completers.py| Get the number of times each Navigation tab was clicked/viewed, by students who completed the course, for each day during the course
-|navigational_events_completers.py| Count the number of navigation events: seq_next, seq_prev, seq_goto for those students who completed the course
+<table style="undefined;table-layout: fixed; width: 445px">
+<colgroup>
+<col style="width: 190px">
+<col style="width: 255px">
+</colgroup>
+  <tr>
+    <th>Script</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>ip_to_country.py</td>
+    <td><ul>
+    <li>Map IP address of given event to country</li>
+    <li>Username, IP</li>
+    <li>There may be multiple ip adresses per user and some IP addresses may lack an associated username</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td>user_info.py</td>
+    <td>Retrieve info about students registered in the course</td>
+  </tr>
+  <tr>
+    <td>show_transcript_completers.py</td>
+    <td>Retrieve the completers (users who completed the course) and filters all those who had event_type 'show_transcript'</td>
+  </tr>
+  <tr>
+    <td>session_info.py</td>
+    <td>Gather the session time for each user everytime they logged in i.e. how long did they stay logged in</td>
+  </tr>
+  <tr>
+    <td>speed_change_video.py</td>
+    <td>Gets all the events per user when they changed speed of videos</td>
+  </tr>
+  <tr>
+    <td>seek_video.py</td>
+    <td>Gets all the events per user while watching videos</td>
+  </tr>
+  <tr>
+    <td>sequential_aggregation.py</td>
+    <td>Gather the number of various categories under each sequential including the number of html, videos, verticals etc.</td>
+  </tr>
+  <tr>
+    <td>forum_stats.py</td>
+    <td>Calculates the number of forum threads and posts for a given course</td>
+  </tr>
+  <tr>
+    <td>forum_data.py</td>
+    <td>Get data for each comment thread and comment in the forum</td>
+  </tr>
+  <tr>
+    <td>date_of_registration_completers.py</td>
+    <td>Get the date of registration of all users who completed the course</td>
+  </tr>
+  <tr>
+    <td>course_completers.py</td>
+    <td>Extract the usernames of the course completers</td>
+  </tr>
+  <tr>
+    <td>activities_with_lower_completion.py</td>
+    <td>Get the number of students who answered a given problem correctly or incorrectly</td>
+  </tr>
+  <tr>
+    <td>activity_count_completers.py</td>
+    <td>Get the number of completers who did each activity</td>
+  </tr>
+  <tr>
+    <td>chapters_accessed_per_user.py</td>
+    <td>Determines how many chapters were accessed by each user for a given course</td>
+  </tr>
+  <tr>
+    <td>failure_analysis.py</td>
+    <td>extracts all the videos watched and the problems attempted by users who got grades between 50% and 59% inclusive</td>
+  </tr>
+  <tr>
+    <td>first_activity_completers.py</td>
+    <td>Retrieve the first activity of all user who completed a course</td>
+  </tr>
+  <tr>
+    <td>forum_body_extraction_for_word_cloud.py</td>
+    <td>Extract all of the comments and comment threads from the forum of a given course using NLTK</td>
+  </tr>
+  <tr>
+    <td>navigation_tabs_data.py</td>
+    <td>Get the number of users who access each navigation tab</td>
+  </tr>
+  <tr>
+    <td>navigation_tabs_data_date.py</td>
+    <td>Get the number of times each Navigation tab was clicked/viewed for each day during the course</td>
+  </tr>
+  <tr>
+    <td>navigation_tabs_data_date_completers.py</td>
+    <td>Get the number of times each Navigation tab was clicked/viewed, by students who completed the course, for each day during the course</td>
+  </tr>
+  <tr>
+    <td>navigational_events_completers.py</td>
+    <td>Count the number of navigation events: seq_next, seq_prev, seq_goto for those students who completed the course</td>
+  </tr>
+</table>
 
 4. Anonymize csv datasets
 ----
