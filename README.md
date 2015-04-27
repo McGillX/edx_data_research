@@ -63,7 +63,7 @@ We use the file transfer client Cyberduck to access the amazon s3 server
 
 2. Populating Mongo Databases
 ----
-McGillX uses MongoDB 
+McGillX uses [Python 2.7](https://www.python.org/download/releases/2.7/) scripts to populate and analyze a [Mongo Database](https://www.mongodb.org/). In order to execute the following setup you will need to have python 2.7, mongodb and [PyMongo](https://api.mongodb.org/python/current/) installed on your machine. Note some scripts require the installation of specific python libraries in order to run.
 
 ####Course Specific Database Structure
 * Each McGillX course has one database with the following collections to store each dataset delivered by edx:
