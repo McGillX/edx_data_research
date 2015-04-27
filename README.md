@@ -197,7 +197,13 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 ----
 *documentation in progress*
 
-<a href="#demographics">Demographics</a>
+<ul>
+    <li><a href="#demographics">Demographics</a></li>
+    <li><a href="#page-interaction">Page Interaction</a></li>
+    <li><a href="#forum">Forum</a></li>
+    <li><a href="#access-and-performance">Access and Performance</a></li>
+    <li><a href="#navigation">Navigation</a></li>
+</ul>
 
 <h4 id="demographics">Demographics</h4>
 
@@ -232,7 +238,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   </tr>
 </table>
 
-<h4>Page Interaction</h4>
+<h4 id="page-interaction">Page Interaction</h4>
 
 <table style="undefined;table-layout: fixed; width: 445px">
 <colgroup>
@@ -265,7 +271,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   </tr>
 </table>
 
-<h4>Forum Data</h4>
+<h4 id="forum">Forum</h4>
 
 <table style="undefined;table-layout: fixed; width: 445px">
 <colgroup>
@@ -290,7 +296,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   </tr>
 </table>
         
-<h4>Engagement and Performance</h4>
+<h4 id="access-and-performance">Access and Performance</h4>
             
 <table style="undefined;table-layout: fixed; width: 445px">
 <colgroup>
@@ -331,7 +337,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   </tr>
 </table>
 
-<h4>Navigation</h4>
+<h4 id="navigation">Navigation</h4>
 
 <table style="undefined;table-layout: fixed; width: 445px">
 <colgroup>
