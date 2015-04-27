@@ -209,14 +209,20 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
   <tr>
     <td>ip_to_country.py</td>
     <td><ul>
-    <li>Map IP address of given event to country</li>
+    <li>Maps IP address of user tracking events to the associated country</li>
     <li>Username, IP</li>
     <li>There may be multiple ip adresses per user and some IP addresses may lack an associated username</li>
     </ul></td>
   </tr>
   <tr>
     <td>user_info.py</td>
-    <td>Retrieve info about students registered in the course</td>
+    <td>
+    <ul>
+    <li>Retrieve info about students registered in the course</li>
+    <li>User ID,'Username', 'Final Grade', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'</li>
+    <li>This script accesses the collections: 'certificates_generatedcertificate', 'auth_userprofile'</li>
+    </ul>
+    </td>
   </tr>
   <tr>
     <td>show_transcript_completers.py</td>
