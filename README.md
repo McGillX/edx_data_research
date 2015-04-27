@@ -188,7 +188,7 @@ Generate course specific tracking log collections - [parsing/tracking_logs](pars
 ```
 2. Run [generate_course_tracking_logs.py](/parsing/tracking_logs/generate_course_tracking_logs.py) 
 ```
-generate_course_tracking_logs.py 
+generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
 ```
 
 
@@ -196,7 +196,7 @@ generate_course_tracking_logs.py
 3. Extract csv datasets - [report_scripts](/reporting_scripts) 
 ----
 *documentation in progress*
-*documentation in progress*
+
 
 |Script | Description|csv fields | Notes|
 | ---: | --- | --- | --- |
