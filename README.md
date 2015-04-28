@@ -185,11 +185,13 @@ Generate course specific tracking log collections - [parsing/tracking_logs](pars
     "date_of_course_completion" : "YYYY-MM-DD"
 
 }
-```
+   ```
+ - A single course may have multiple course ID's associated with its events. Search the main tracking collection for potential course ID's. From the mongo shell execute the following for a print out of the course ID's:
+   `db.tracking.distinct('course_id')`
 2. Run [generate_course_tracking_logs.py](/parsing/tracking_logs/generate_course_tracking_logs.py) 
-```
+   ```
 generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
-```
+   ```
 
 
 
