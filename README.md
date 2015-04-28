@@ -222,7 +222,7 @@ generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
         <ul>
             <li>Maps IP address of user tracking events to the associated country</li>
             <li>Username, IP</li>
-            <li>There may be multiple ip adresses per user and some IP addresses may lack an associated username</li>
+            <li>There may be multiple ip addresses per user and some IP addresses may lack an associated username. When a user is not logged in the server emits an anonymous event that has not associated username.</li>
         </ul>
       </td>
   </tr>
