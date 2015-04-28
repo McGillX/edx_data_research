@@ -41,6 +41,20 @@ You need to provide path to directory which contain all the log files or path to
     	
     }
 
+Note: To retrieve the course ids for a given course, please follow these steps:
+
+1) Open the mongo shell (Enter mongo on the terminal/command line)
+
+2) Go to the main tracking database:
+
+    use tracking
+    
+3) Run the following command to retrieve all the course ids in the tracking collection of the master tracking database:
+
+    db.tracking.distinct('course_id')
+    
+4) From the resulting list of all unique course ids, select the course ids that correspond to the desired course and use them to populate the "course_ids" field in the config file
+
 ### Run
     python generate_course_tracking_logs.py course_db_name <path_to_config_file>
 mongod_log_to_csv.py
