@@ -17,13 +17,21 @@ Overview
 ------
 Before starting the setup consult with edX to setup keys and credentials for data transfer
 
-1. [edX Data Download and Decryption](#1-edx-data-download-and-decryption)
-2. [Populating Mongo Databases](#2-populating-mongo-databases)
- 1. Import of SQL, Mongo and JSON files
- 2. Creation of Master Database for Tracking Logs
- 2. Extraction of Course Specific for Tracking Logs
-3. [Extract csv datasets](#3-extract-csv-datasets)
-4. [Anonymize csv datasets](#4-anonymize-csv-datasets)
+
+<ol>
+    <li><a href="#1-edx-data-download-and-decryption">edX Data Download and Decryption</a></li>
+    <li> <a href="#2-populating-mongo-databases">Populating Mongo Databases</a></li>
+    <ol>
+        <li>Import of SQL, Mongo and JSON files</li>
+        <li>Creation of Master Database for Tracking Logs</li>
+        <li>Extraction of Course Specific for Tracking Logs</li>
+    </ol>
+    <li> <a href="#3-extract-csv-datasets">Extract csv datasets</a></li>
+    <li><a href="#4-anonymize-csv-datasets">Anonymize csv datasets</a></li>
+</ol>
+<p>
+<img src="https://docs.google.com/drawings/d/17GHG0-01iaHpshhi9WYktv4g2dIc4unWwmibZ5QHofI/pub?w=1308&h=603"/>
+</p>
 
 1. edX Data Download and Decryption
 ------
