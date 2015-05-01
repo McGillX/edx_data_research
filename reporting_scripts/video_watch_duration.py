@@ -19,7 +19,7 @@ sort by "time": "" so that the events are chronologically ordered
 
 for each load_video new video watch segment should include ONLY:
 
-- time between play_video -> another video event (pause_video or seek_video)
+- time between play_video -> next video event in time (pause_video or seek_video)
 - time between seek_video : {'new_time' : Time}  -> pause video (only with new_time > old_time, this is to avoid including rewinds)
 
 watch periods:
