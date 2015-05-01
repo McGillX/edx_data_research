@@ -4,28 +4,28 @@
 
 db.tracking_collection.aggregate([{$match :{$or : [{"event_type" : "seek_video"}, {"event_type" : "play_video"},{"event_type":"pause_video"}]}}, {$out : "video_watch_duration_collection"}])
 
-2) Run: python video_watch_duration.py
+2) Run: python video_watch_segments.py
 
 
 desired final output.csv
 
 new row for every unique load_video event for a username
 
-username, video associated with load_video event, chapter, vertical, sequential, watch duration
+username, video associated with load_video event, chapter, vertical, sequential, video watch segments
 
 get the event_types : load_video, play_video, pause_video, seek_video
 
-for each load_video watch duration should include ONLY:
+for each load_video new video watch segment should include ONLY:
 
 - time between play_video -> another video event (pause_video or seek_video)
 - time between seek_video : {'new_time' : Time}  -> pause video (only with new_time > old_time, this is to avoid including rewinds)
 
 watch periods:
-    event_type : pause_video - "event_type":"play_video" {"event":{"currentTime":TIME}} = add to watch duration
-    if seek_video : {'old_time' : TIME} > seek_video : {'new_time' : TIME} = rewind (exclude from watch duration)
+    event_type : pause_video - "event_type":"play_video" {"event":{"currentTime":TIME}} = new video watch segment
     if seek_video : {'old_time' : TIME} < seek_video : {'new_time' : TIME} 
-      "pause_video" {"event":{"currentTime":TIME}} - seek_video : {'new_time': TIME } = add to watch duration
+      "pause_video" {"event":{"currentTime":TIME}} - seek_video : {'new_time': TIME } = new video watch segment
 
+    if seek_video : {'old_time' : TIME} > seek_video : {'new_time' : TIME} = rewind (exclude from watch segments)
 '''
 
 from base_edx import EdXConnection
