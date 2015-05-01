@@ -17,11 +17,7 @@ watch duration should include ONLY:
 
 - time between play_video -> another video event (pause_video or seek_video)
 - time between seek_video : {'new_time' : Time}  -> pause video (only with new_time > old_time, this is to avoid including rewinds)
-- 
 
-
-
-play_video(when user presses play on video console, may not be 0) -> pause video time
 watch periods:
     event_type : pause_video - "event_type":"play_video" {"event":{"currentTime":TIME}} = add to watch duration
     if seek_video : {'old_time' : TIME} > seek_video : {'new_time' : TIME} = rewind (exclude from watch duration)
