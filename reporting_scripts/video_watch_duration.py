@@ -9,11 +9,13 @@ db.tracking_collection.aggregate([{$match :{$or : [{"event_type" : "seek_video"}
 
 desired final output.csv
 
-username, video, chapter, vertical, sequential, watch duration
+for every load_video event
 
-get the event_types : play_video, pause_video, seek_video
+video associated with load_video event, username, chapter, vertical, sequential, watch duration
 
-watch duration should include ONLY:
+get the event_types : load_video, play_video, pause_video, seek_video
+
+for each load_video watch duration should include ONLY:
 
 - time between play_video -> another video event (pause_video or seek_video)
 - time between seek_video : {'new_time' : Time}  -> pause video (only with new_time > old_time, this is to avoid including rewinds)
