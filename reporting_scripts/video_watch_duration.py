@@ -9,9 +9,9 @@ db.tracking_collection.aggregate([{$match :{$or : [{"event_type" : "seek_video"}
 
 desired final output.csv
 
-for every load_video event
+new row for every unique load_video event for a username
 
-video associated with load_video event, username, chapter, vertical, sequential, watch duration
+username, video associated with load_video event, chapter, vertical, sequential, watch duration
 
 get the event_types : load_video, play_video, pause_video, seek_video
 
