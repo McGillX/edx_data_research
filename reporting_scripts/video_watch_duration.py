@@ -15,6 +15,8 @@ username, video associated with load_video event, chapter, vertical, sequential,
 
 get the event_types : load_video, play_video, pause_video, seek_video
 
+sort by "time": "" so that the events are chronologically ordered
+
 for each load_video new video watch segment should include ONLY:
 
 - time between play_video -> another video event (pause_video or seek_video)
