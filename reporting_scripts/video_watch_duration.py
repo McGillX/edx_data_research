@@ -11,7 +11,7 @@ desired final output.csv
 
 new row for every unique load_video event for a username
 
-username, video associated with load_video event, chapter, vertical, sequential, video watch segments
+username, video associated with load_video event, parent_data: {chapter_display_name, sequential_display_name, vertical_display_name,}, edx_video_id, video watch segments
 
 get the event_types : load_video, play_video, pause_video, seek_video
 
