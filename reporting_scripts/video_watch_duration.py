@@ -2,7 +2,7 @@
 
 1) Create a new collection in the mongo shell:
 
-db.tracking_collection.aggregate([{$match :{$or : [{"event_type" : "seek_video"}, {"event_type" : "play_video"},{"event_type":"pause_video"}]}}, {$out : "video_watch_duration_collection"}])
+db.tracking_collection.aggregate([{$match :{$or : [{"event_type" : "load_video"},{"event_type" : "seek_video"}, {"event_type" : "play_video"},{"event_type":"pause_video"}]}}, {$out : "video_watch_duration_collection"}])
 
 2) Run: python video_watch_segments.py
 
