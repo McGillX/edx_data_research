@@ -47,7 +47,10 @@ for key in result:
         try:
             country_code = geoip.country(value)
             country = country_code_to_country[country_code]
-            if (key, country) not in country_set:
+            if not key:
+                key = 'anonymous'
+                ip_to_country.append([key, value, country_code, country])
+            elif (key, country) not in country_set:
                 country_set.add((key,country))
                 ip_to_country.append([key, value, country_code, country])
         except:
@@ -58,7 +61,10 @@ for key in result:
             # IP addresses which cannot be mapped to a country code stored in GeoIP.dat
             if value == '41.79.120.29':
                 country = country_code_to_country['SS']
-                if (key, country) not in country_set:
+                if not key:
+                    key = 'anonymous'
+                    ip_to_country.append([key, value, 'SS', country_code_to_country['SS']])
+                elif (key, country) not in country_set:
                     country_set.add((key, country))
                     ip_to_country.append([key, value, 'SS', country_code_to_country['SS']])
 
