@@ -55,7 +55,7 @@ def append_course_structure_data(course_structure_collection, _id, document):
     except:
         pass    
 
-def extract_tracking_logs(source_collection, target_collection, course_structure_collection, course_ids, start_date, end_date):
+def extract_tracking_logs(source_collection, destination_collection, course_structure_collection, course_ids, start_date, end_date):
     '''
     Return all trackings logs that contain given ids and that contain dates
     within the given range
@@ -82,22 +82,26 @@ def extract_tracking_logs(source_collection, target_collection, course_structure
                     if not bound:
                         append_course_structure_data(course_structure_collection, document['page'], document)
             # End of binding, now insert document into collection
-            target_collection.insert(document)
+            destination_collection.insert(document)
 
 
 def main():
-    if len(sys.argv) !=  3:
-        usage_message = """usage: %s course_db_name course_config_file 
+    if len(sys.argv) !=  6:
+        usage_message = """usage: %s source_db source_collection destination_db destination_collection course_config_file 
             Provide name of course database to insert tracking logs to and 
             config file to load configurations\n
             """
         sys.stderr.write(usage_message % sys.argv[0])
         sys.exit(1)
-    source_collection = connect_to_db_collection('tracking', 'tracking') 
-    target_collection = connect_to_db_collection(sys.argv[1], 'tracking') 
-    course_structure_collection = connect_to_db_collection(sys.argv[1], 'course_structure')
-    course_ids, start_date, end_date = load_config(sys.argv[2])
-    extract_tracking_logs(source_collection, target_collection, course_structure_collection, course_ids, start_date, end_date)
+    source_db =  sys.argv[1]
+    source_collection =  sys.argv[2]
+    destination_db =  sys.argv[3]
+    destination_collection =  sys.argv[4]
+    source_collection = connect_to_db_collection(source_db, source_collection) 
+    destination_collection = connect_to_db_collection(destination_db, destination_collection) 
+    course_structure_collection = connect_to_db_collection(destination_db, 'course_structure')
+    course_ids, start_date, end_date = load_config(sys.argv[5])
+    extract_tracking_logs(source_collection, destination_collection, course_structure_collection, course_ids, start_date, end_date)
     
 
 if __name__ == '__main__':
