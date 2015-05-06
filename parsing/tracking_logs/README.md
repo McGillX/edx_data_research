@@ -56,7 +56,8 @@ Note: To retrieve the course ids for a given course, please follow these steps:
 4) From the resulting list of all unique course ids, select the course ids that correspond to the desired course and use them to populate the "course_ids" field in the config file
 
 ### Run
-    python generate_course_tracking_logs.py course_db_name <path_to_config_file>
+    python generate_course_tracking_logs.py source_db source_collection destination_db destination_collection <path_to_config_file>
+  
 mongod_log_to_csv.py
 ====
 
