@@ -202,7 +202,7 @@ Generate course specific tracking log collections - [parsing/tracking_logs](pars
    `db.tracking.distinct('course_id')`
 2. Run [generate_course_tracking_logs.py](/parsing/tracking_logs/generate_course_tracking_logs.py) 
    ```
-generate_course_tracking_logs.py <course_database_name> <path_to_config_file>
+python generate_course_tracking_logs.py <source_db> <source_collection> <destination_db> <destination_collection> <path_to_config_file>
    ```
 
 
