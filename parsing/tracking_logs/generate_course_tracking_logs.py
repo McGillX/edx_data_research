@@ -87,20 +87,18 @@ def extract_tracking_logs(source_collection, destination_collection, course_stru
 
 def main():
     if len(sys.argv) !=  6:
-        usage_message = """usage: %s source_db source_collection destination_db destination_collection course_config_file 
+        usage_message = """usage: %s source_db destination_db course_config_file 
             Provide name of course database to insert tracking logs to and 
             config file to load configurations\n
             """
         sys.stderr.write(usage_message % sys.argv[0])
         sys.exit(1)
     source_db =  sys.argv[1]
-    source_collection =  sys.argv[2]
-    destination_db =  sys.argv[3]
-    destination_collection =  sys.argv[4]
-    source_collection = connect_to_db_collection(source_db, source_collection) 
-    destination_collection = connect_to_db_collection(destination_db, destination_collection) 
+    destination_db =  sys.argv[2]
+    source_collection = connect_to_db_collection(source_db, 'tracking') 
+    destination_collection = connect_to_db_collection(destination_db, 'tracking') 
     course_structure_collection = connect_to_db_collection(destination_db, 'course_structure')
-    course_ids, start_date, end_date = load_config(sys.argv[5])
+    course_ids, start_date, end_date = load_config(sys.argv[3])
     extract_tracking_logs(source_collection, destination_collection, course_structure_collection, course_ids, start_date, end_date)
     
 
