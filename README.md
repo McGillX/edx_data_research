@@ -98,7 +98,7 @@ All data packages except the tracking logs are course specific as provided by ed
 | {org}-{course}-{date}-course_structure-{site}-analytics.json     | course_structure |
 | Tracking Logs     | tracking |
 
-*<span style="font-weight:bold"> Please use the collection names outlined above to avoid import and report generation issues.</span>
+*Please use the collection names outlined above to avoid import and report generation issues.
 
 *{site} always appears as "prod"*
 
