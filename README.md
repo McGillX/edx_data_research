@@ -82,7 +82,7 @@ McGillX uses [Python 2.7](https://www.python.org/download/releases/2.7/) scripts
 
 All data packages except the tracking logs are course specific as provided by edx 
 
-| Raw Data Packages | Collection Name |
+| Raw Data Packages | Collection Name* |
 | --------------------------------------------------------   |:-------------:  | |
 |{org}-{course}-{date}-auth_user-{site}-analytics.sql| user |
 |{org}-{course}-{date}-auth_userprofile-{site}-analytics.sql| userprofile |
@@ -97,6 +97,8 @@ All data packages except the tracking logs are course specific as provided by ed
 | {org}-{course}-{date}-wiki_articlerevision-{site}-analytics.sql     | NOT IN USE |
 | {org}-{course}-{date}-course_structure-{site}-analytics.json     | course_structure |
 | Tracking Logs     | tracking |
+
+*<span style="font-weight:bold"> Please use the collection names outlined above to avoid import and report generation issues.</span>
 
 *{site} always appears as "prod"*
 
