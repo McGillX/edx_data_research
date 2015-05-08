@@ -28,5 +28,5 @@ for document in documents:
         # Handle users with no grades
         pass
     
-output = CSV(result, ['User ID','Username', 'Final Grade', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'], output_file=db_name+'-user_info.csv')
+output = CSV(result, ['User ID','Name', 'Final Grade', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'], output_file=db_name+'-user_info.csv')
 output.generate_csv()
