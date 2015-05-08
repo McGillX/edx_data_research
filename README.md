@@ -131,6 +131,10 @@ JSON, Mongo and SQL files are directly imported into each course's database
  1. Run mongod
  2. Run to following commands from the console:
 
+`mongoimport -d <database_name> -c <collection_name*> --type tsv --file <path_to_file>`
+
+*Use the collection names outlined below to avoid issues
+
 Enter the appropriate SQL file names
    ```
    mongoimport -d <database_name> -c auth_userprofile --type tsv --file {org}-{course}-{date}-auth_userprofile-prod-analytics.sql --headerline
@@ -142,6 +146,9 @@ Enter the appropriate SQL file names
    mongoimport -d <database_name> -c auth_user --type tsv --file {org}-{course}-{date}-auth_user-prod-analytics.sql --headerline
 
    mongoimport -d <database_name> -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
+   
+   mongoimport -d <database_name> -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-user_id_map-prod-analytics.sql --headerline
+   
    ```
 
 
