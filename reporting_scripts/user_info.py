@@ -6,12 +6,15 @@ Usage:
 python user_info.py
 
 '''
-
+import sys
+import csv
 
 from base_edx import EdXConnection
 from generate_csv_report import CSV 
 
-connection = EdXConnection('certificates_generatedcertificate', 'auth_userprofile')
+db_name = sys.argv[1]
+
+connection = EdXConnection(db_name, 'certificates_generatedcertificate', 'auth_userprofile')
 collection = connection.get_access_to_collection()
 documents = collection['auth_userprofile'].find()
 
@@ -25,5 +28,5 @@ for document in documents:
         # Handle users with no grades
         pass
     
-output = CSV(result, ['User ID','Username', 'Final Grade', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'], output_file='atoc185x_user_info.csv')
+output = CSV(result, ['User ID','Username', 'Final Grade', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'], output_file=db_name+'-user_info.csv')
 output.generate_csv()
