@@ -119,13 +119,16 @@ JSON, Mongo and SQL files are directly imported into each course's database
    python course_structure_to_mongod.py <database_name> course_structure* <path_to_json_file>
    ```
     *Be sure the name the course structure collection "course_structure" using the command above
-2. Parse the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html) - [parsing/forum](parsing/forum)
+    
+    
+2. Parse the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html)
  1. Run mongod
- 2. Run [mongo_forum_to_mongod.py](parsing/forum/mongo_forum_to_mongod.py)
- 
+ 2. Run to following command from the console:
+
    ```
-   python mongo_forum_to_mongod.py <database_name> <path_to_forum_mongo_file>
+   importmongo --db <database_name> --collection <collection_name*> --file path_to_file
    ```
+   
 
 3. Parse the [Student Info and Progress Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/sql_schema.html) - [parsing/sql](parsing/sql)
  1. Run mongod
