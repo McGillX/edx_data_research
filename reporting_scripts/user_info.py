@@ -3,7 +3,7 @@ This module will retrieve info about students registered in the course
 
 Usage:
 
-python user_info.py
+python user_info.py <db_name>
 
 '''
 import sys
@@ -30,5 +30,5 @@ for document in documents:
         pass
     
 
-output = CSV(result, ['User ID','Name', 'Final Grade', 'Username', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'], output_file=db_name+'-user_info.csv')
+output = CSV(result, ['User ID','Name', 'Final Grade', 'Username', 'Gender', 'Year of Birth', 'Level of Education', 'Country', 'City'], output_file=db_name+'_user_info.csv')
 output.generate_csv()
