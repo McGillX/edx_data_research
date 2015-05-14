@@ -150,7 +150,7 @@ Enter the appropriate SQL file names
 
    mongoimport -d <database_name> -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-courseware_studentmodule-prod-analytics.sql --headerline
    
-   mongoimport -d <database_name> -c courseware_studentmodule --type tsv --file {org}-{course}-{date}-user_id_map-prod-analytics.sql --headerline
+   mongoimport -d <database_name> -c user_id_map --type tsv --file {org}-{course}-{date}-user_id_map-prod-analytics.sql --headerline
    
    ```
 
