@@ -126,7 +126,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
  2. Run to following command from the console:
 
    ```
-   importmongo --db <database_name> --collection <collection_name*> --file path_to_file
+   mongoimport --db <database_name> --collection <collection_name*> --file path_to_file
    ```
    
 
