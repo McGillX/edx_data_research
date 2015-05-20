@@ -28,6 +28,10 @@ watch periods:
       "pause_video" {"event":{"currentTime":TIME}} - seek_video : {'new_time': TIME } = new video watch segment
 
     if seek_video : {'old_time' : TIME} > seek_video : {'new_time' : TIME} = rewind (exclude from watch segments)
+    
+Notes:
+Do not use session key from logs, only ends when student's log out
+    
 '''
 import sys
 #import csv
@@ -42,10 +46,29 @@ db_name = sys.argv[1]
 connection = EdXConnection(db_name,'tracking')
 collection = connection.get_access_to_collection()
 result = []
+#get all usernames
+usernames = collection['tracking'].distinct('username')
+print
+print usernames
 
+'''
+for session_username in usernames
+    documents = collection['tracking'].find({'username': session_username}).sort({"time": 1})
+    for document in documents:
+        session_start_time = document['event_type':'play_video','event_source':'browser','event.currentTime':0']
+    session = collection['tracking'].find_one({'username': session_username, event_type':'play_video','event_source':'browser','event.currentTime':0})
+    session_start_time = session['time']
+    
+'''
 #restricting event_source to browser, excluding mobile events
 session = collection['tracking'].find_one({'event_type':'play_video','event_source':'browser','event.currentTime':0})
+print
 print session
+
+#get video id associated with session
+#video_id= session['id']
+
+video_page = session ['page']
 #store the session start time
 session_start_time = session['time']
 print
@@ -63,10 +86,23 @@ session_end_time = session_end['time']
 print
 print session_end_time
 #calculate session watch duration
-session_watch_duration = datetime.strptime(session_end_time.split('+')[0], "%Y-%m-%dT%H:%M:%S.%f") -datetime.strptime(session_start_time.split('+')[0], "%Y-%m-%dT%H:%M:%S.%f")
+session_watch_duration =  datetime.strptime(session_end_time.split('+')[0], "%Y-%m-%dT%H:%M:%S.%f") -  datetime.strptime(session_start_time.split('+')[0], "%Y-%m-%dT%H:%M:%S.%f")
 print
 print session_watch_duration
+
+#convert the session watch duration to seconds
+session_watch_duration = session_watch_duration.total_seconds()
+print
+print session_watch_duration
+
+if session_watch_duration <= 5:
+    result.append([session_username, video_page, session_watch_duration])
+else:
+    result.append('less than 5 seconds')
+print result
+
 #session_end_type = session_end['event_type']
+
 
 
 
