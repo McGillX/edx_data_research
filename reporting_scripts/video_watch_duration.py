@@ -29,15 +29,50 @@ watch periods:
 
     if seek_video : {'old_time' : TIME} > seek_video : {'new_time' : TIME} = rewind (exclude from watch segments)
 '''
+import sys
+#import csv
+import time
+from datetime import datetime
 
 from base_edx import EdXConnection
-from generate_csv_report import CSV
+#from generate_csv_report import CSV 
 
-connection = EdXConnection('video_watch_duration_collection')
+db_name = sys.argv[1]
+
+connection = EdXConnection(db_name,'tracking')
 collection = connection.get_access_to_collection()
-cursor = collection['video_watch_duration_collection'].find()
+result = []
 
+#restricting event_source to browser, excluding mobile events
+session = collection['tracking'].find_one({'event_type':'play_video','event_source':'browser','event.currentTime':0})
+print session
+#store the session start time
+session_start_time = session['time']
+print
+print session_start_time
+#store the username
+session_username = session['username']
+print
+print session_username
+#find the next tracking event in time associated with the username
+session_end = collection['tracking'].find_one({'username':session_username,'time':{ "$gt": session_start_time }})
+print
+print session_end
+#store session end time
+session_end_time = session_end['time']
+print
+print session_end_time
+#calculate session watch duration
+session_watch_duration = datetime.strptime(session_end_time.split('+')[0], "%Y-%m-%dT%H:%M:%S.%f") -datetime.strptime(session_start_time.split('+')[0], "%Y-%m-%dT%H:%M:%S.%f")
+print
+print session_watch_duration
+#session_end_type = session_end['event_type']
+
+
+
+'''
 result = []
 
 output = CSV(result,['Username',], output_file='video_watch_duration.csv', row_limit=200000) 
 output.generate_csv()
+'''
