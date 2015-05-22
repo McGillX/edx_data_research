@@ -35,20 +35,25 @@ for student in students[0:2]:
     for index,item in enumerate(cursor):
 #if both a start and end event have been found append them to the list
         if start_event_time !={'blank'} and end_event_time != {'blank'}:
+            duration = start_event_time - end_event_time
             watch_durations.append([student, video_id, start_event_time,end_event_time])
+#if event is play_video then assign as start
         if item['event_type'] == 'play_video':
-            start_event_time = item['time']
+            start_event_time = datetime.strptime(item['time'].split('+')[0], "%Y-%m-%dT%H:%M:%S.%f")
             video_id = item['event']
             print 'start'
             print (start_event_time)
 #when a start event is found set the end event to blank
             end_event_time = {'blank'}
             continue
+#assign all other event types to end
+#Note: currently seek_video events count as an end_event
         else:
-            end_event_time = item['time']
+            end_event_time = datetime.strptime(item['time'].split('+')[0], "%Y-%m-%dT%H:%M:%S.%f")
             print 'end'
             print (end_event_time)
             continue
 print watch_durations
 
-            
+output = CSV(watch_durations, ['Username','video_id','start_event_time','end_event_time'] output_file='video_watch_duration.csv', row_limit=200000) 
+output.generate_csv()
