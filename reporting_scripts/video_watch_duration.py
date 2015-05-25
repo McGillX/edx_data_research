@@ -1,8 +1,9 @@
+'''
 1) start by aggregating a new collection that includes the video interaction, page navigation and page close events for users sorted by username and time
 db.tracking.aggregate([{$match:{$and:[{'event_source':'browser'},{$or:[{'event_type':'play_video'},{'event_type':'speed_change_video'},{'event_type':'seq_goto'}, {'event_type':'seq_next'}, {'event_type':'seq_prev'}, {'event_type':'page_close'}, {'event_type':'play_video'},{'event_type':'pause_video'}, {'event_type':'seek_video'}, {'event_type':'pause_video'}]}]}}, {$project:{"username":1, "event_type":1, 'time':1,"event":1}},{ $sort: {'username':1,'time':1}},{$out: "video_watching"}],{allowDiskUse:true})
 or
 db.runCommand({aggregate:'tracking',pipeline:[{$match:{$and:[{'event_source':'browser'},{$or:[{'event_type':'play_video'},{'event_type':'speed_change_video'},{'event_type':'seq_goto'}, {'event_type':'seq_next'}, {'event_type':'seq_prev'}, {'event_type':'page_close'}, {'event_type':'play_video'},{'event_type':'pause_video'}, {'event_type':'seek_video'}, {'event_type':'pause_video'}]}]}}, {$project:{"username":1, "event_type":1, 'time':1,"event":1}},{ $sort: {'username':1,'time':1}},{$out: "video_watching"}],allowDiskUse:true})
-
+'''
 import sys
 import csv
 import time
