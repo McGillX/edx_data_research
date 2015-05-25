@@ -7,6 +7,9 @@ Course specific tracking logs are loaded to a course specific database in collec
 
 Note, this script works with both decompressed (.log) and compressed (.log.gz) tracking logs
 
+Usage: python load_tracking_logs_to_mongo.py <database_name> <collection_name> <path_to_directory_containing_trackings_logs>
+Note, use tracking as both the database_name and the collection_name
+
 '''
 
 import pymongo
