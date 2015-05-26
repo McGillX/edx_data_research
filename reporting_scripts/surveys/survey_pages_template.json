@@ -1,4 +1,4 @@
 {  
-   "entrance_survey": ["problem_id_1", "problem_id_2", ...],
-   "exit_survey": ["problem_id_3", "problem_id_4", ...]
+   "entrance_survey": ["problem_id_1, problem_id_2, ..."],
+   "exit_survey": ["problem_id_3, problem_id_4, ..."]
 }
