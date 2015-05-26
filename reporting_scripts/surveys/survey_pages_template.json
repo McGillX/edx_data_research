@@ -1,0 +1,11 @@
+{  
+   "entrance_survey":{  
+         "general_info":"i4x://McGillX/DEMOXXXx/problem/e60f566b9a9342ac9b8dd3f92296af41",
+         "demographics_background":"i4x://McGilX/DEMOXXXx/problem/8781ed8818064bf08722ee3175c2f356",
+         "aspirations_motivation":"i4x://McGillX/DEMOXXXx/problem/ca3486d4d1ef49ea8c6aa38534bab855"
+   },
+   "exit_survey":{  
+         "part_1":"i4x://McGillX/DEMOXXXx/problem/7620c0262e3d44049d73ba5fed62edfd",
+         "part_2":"i4x://McGillX/DEMOXXXx/problem/c993861c76e5484d8233e702af2e4b3d"
+   }
+}

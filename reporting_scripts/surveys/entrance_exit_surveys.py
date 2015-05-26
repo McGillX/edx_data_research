@@ -31,7 +31,7 @@ courseware_studentmodule of a given course.
 
 Usage (after getting the ids of all the pages in the Entrance and Exit surveys): 
 
-python entrance_exit_surveys.py 
+python entrance_exit_surveys.py db_name path_to_json_file 
 
 '''
 
@@ -46,18 +46,14 @@ from base_edx import EdXConnection
 from generate_csv_report import CSV
 
 db_name = sys.argv[1]
-#connection = EdXConnection(db_name, 'courseware_studentmodule', 'auth_user' )
+survey_pages_json = sys.argv[2]
 connection = EdXConnection(db_name, 'tracking', 'auth_user' )
 collection = connection.get_access_to_collection()
 
-# Modify key-value pairs in survey_pages to the name of the survey pages and to 
-# the problem ids that maps to the survey pages E.g. if a course have a 
-
-survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x_2/problem/e60f566b9a9342ac9b8dd3f92296af41', 
-'demographics_background' : 'i4x://McGillX/ATOC185x_2/problem/8781ed8818064bf08722ee3175c2f356', 
-'aspirations_motivation' : 'i4x://McGillX/ATOC185x_2/problem/ca3486d4d1ef49ea8c6aa38534bab855'},
-'exit_survey' : {'part_1' : 'i4x://McGillX/ATOC185x_2/problem/7620c0262e3d44049d73ba5fed62edfd',
-'part_2': 'i4x://McGillX/ATOC185x_2/problem/c993861c76e5484d8233e702af2e4b3d'}}
+# Load Entrace and Exit surveys Problem IDs from .json file using template
+# given
+with open(survey_pages_json) as data_file:
+    survey_pages = json.load(data_file)
 
 survey_ids = [_id for page in survey_pages.values() for _id in page.values()]
 cursor_tracking = collection['tracking'].find({'event_type' : 'problem_check', 'event_source': 'server'})
