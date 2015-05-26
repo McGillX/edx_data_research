@@ -55,7 +55,7 @@ collection = connection.get_access_to_collection()
 with open(survey_pages_json) as data_file:
     survey_pages = json.load(data_file)
 
-survey_ids = [_id for page in survey_pages.values() for _id in page.values()]
+survey_ids = [_id for page in survey_pages.values() for _id in page]
 cursor_tracking = collection['tracking'].find({'event_type' : 'problem_check', 'event_source': 'server'})
 
 # For each student, get the values filled in a survey page and store the results
