@@ -35,9 +35,10 @@ python entrance_exit_surveys.py
 
 '''
 
-from collections import defaultdict
 import json
 import sys
+
+from collections import defaultdict
 
 # These modules can be found under reporting scripts. You will have to add them
 # in the same directory as this script
@@ -45,61 +46,46 @@ from base_edx import EdXConnection
 from generate_csv_report import CSV
 
 db_name = sys.argv[1]
-connection = EdXConnection(db_name, 'courseware_studentmodule', 'auth_user' ) # EdXConnection('courseware_studentmodule', 'auth_user')
+#connection = EdXConnection(db_name, 'courseware_studentmodule', 'auth_user' )
+connection = EdXConnection(db_name, 'tracking', 'auth_user' )
 collection = connection.get_access_to_collection()
 
 # Modify key-value pairs in survey_pages to the name of the survey pages and to 
 # the problem ids that maps to the survey pages E.g. if a course have a 
 
-survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/CHEM181x/problem/c9d2efffbdf043e68789bd60cd4954e3', 
-'demographics_background' : 'i4x://McGillX/CHEM181x/problem/134cfc9efb2b400bab2ee1505cc9e4a9', 
-'aspirations_motivation' : 'i4x://McGillX/CHEM181x/problem/579ae070227c4f5c973eb02affdcba2a'}, 
-'exit_survey' : {'part_1' : 'i4x://McGillX/CHEM181x/problem/72c6a513dae945779520c3a93bb5bc49',
-'part_2': 'i4x://McGillX/CHEM181x/problem/0ec10c7420a040f6beb2be520fe1eb50'}}
+survey_pages = {'entrance_survey' : {'general_info' : 'i4x://McGillX/ATOC185x_2/problem/e60f566b9a9342ac9b8dd3f92296af41', 
+'demographics_background' : 'i4x://McGillX/ATOC185x_2/problem/8781ed8818064bf08722ee3175c2f356', 
+'aspirations_motivation' : 'i4x://McGillX/ATOC185x_2/problem/ca3486d4d1ef49ea8c6aa38534bab855'},
+'exit_survey' : {'part_1' : 'i4x://McGillX/ATOC185x_2/problem/7620c0262e3d44049d73ba5fed62edfd',
+'part_2': 'i4x://McGillX/ATOC185x_2/problem/c993861c76e5484d8233e702af2e4b3d'}}
 
 survey_ids = [_id for page in survey_pages.values() for _id in page.values()]
-cursor_courseware_studentmodule = collection['courseware_studentmodule'].find()
-cursor_student = collection['auth_user']
+cursor_tracking = collection['tracking'].find({'event_type' : 'problem_check', 'event_source': 'server'})
 
 # For each student, get the values filled in a survey page and store the results
 # in a dictionary where the key is the username. The username is extracted from
 # the auth_user collection using the student id stored in the courseware_studentmodule collection
-result = defaultdict(list)
-not_in_auth_user = set()
-for document in cursor_courseware_studentmodule:
-    if document['module_id'] in survey_ids:
-        try:
-            username = cursor_student.find_one({'id' : document['student_id']})['username']
-            doc_json = json.loads(document['state'])
-            if 'student_answers' in doc_json:
-                result[username].append(doc_json['student_answers'])
-        except:
-            not_in_auth_user.add(document['student_id'])
+result = defaultdict(lambda : defaultdict(str))
+problem_id_parts = set()
+for document in cursor_tracking:
+    problem_id = document['event']['problem_id']
+    if problem_id in survey_ids:
+        username = document['username']
+        answer_submissions = document['event']['submission']
+        for key, value in answer_submissions.iteritems():
+            result[username][key] = value['answer']
+            problem_id_parts.add(key)
 
-# For loop to retrieve the names of all the survey pages. Since a student may
-# not have filled all pages, we look for the longest list and use the values
-# to retrieve the survey pages
-survey_question_ids = {}
-for value in result.values():
-    if len(value) == 5:
-        temp = {key for item in value for key in item.keys()}
-        if len(temp) > len(survey_question_ids):
-            survey_question_ids = temp
-
-survey_question_ids = sorted(list(survey_question_ids))
 csv_data = []
-for username, survey_info in result.iteritems():
-    temp = [''] * len(survey_question_ids) 
-    for item in survey_info:
-        for key,value in item.iteritems():
-            try:
-                index = survey_question_ids.index(key)
-                if key in survey_question_ids:
-                    temp[index] = value
-            except:
-                pass
-    temp.insert(0, username)
+for username, submissions in result.iteritems():
+    temp = [username]
+    for key in sorted(problem_id_parts):
+        try:
+            temp.append(submissions[key])
+        except:
+            temp.append('')
     csv_data.append(temp)
 
-output = CSV(csv_data, ['Username'] +  survey_question_ids, output_file=db_name+'_entrance_exit_surveys.csv')
+headers = [_id for _id in sorted(_ids for _ids in problem_id_parts)]
+output = CSV(csv_data, ['Username'] +  headers, output_file=db_name+'_entrance_exit_surveys.csv')
 output.generate_csv()
