@@ -47,7 +47,7 @@ from generate_csv_report import CSV
 
 db_name = sys.argv[1]
 survey_pages_json = sys.argv[2]
-connection = EdXConnection(db_name, 'tracking', 'auth_user' )
+connection = EdXConnection(db_name, 'tracking')
 collection = connection.get_access_to_collection()
 
 # Load Entrace and Exit surveys Problem IDs from .json file using template
@@ -72,16 +72,18 @@ for document in cursor_tracking:
             result[username][key] = value['answer']
             problem_id_parts.add(key)
 
+problem_id_parts.sort()
+
 csv_data = []
 for username, submissions in result.iteritems():
     temp = [username]
-    for key in sorted(problem_id_parts):
+    for key in problem_id_parts:
         try:
             temp.append(submissions[key])
         except:
             temp.append('')
     csv_data.append(temp)
 
-headers = [_id for _id in sorted(_ids for _ids in problem_id_parts)]
+headers = [_id for _id in problem_id_parts]
 output = CSV(csv_data, ['Username'] +  headers, output_file=db_name+'_entrance_exit_surveys.csv')
 output.generate_csv()
