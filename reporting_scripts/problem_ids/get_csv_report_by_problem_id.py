@@ -14,8 +14,8 @@ python get_csv_report_by_problem_id.py i4x://McGillX/ATOC185x/problem/dedc04b82b
 from collections import defaultdict
 import sys
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV
 
 connection = EdXConnection('atoc185x_problem_ids')
 collection = connection.get_access_to_collection()

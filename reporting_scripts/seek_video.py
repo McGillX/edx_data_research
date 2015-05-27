@@ -9,8 +9,8 @@ db.tracking_atoc185x.aggregate([{$match : {$and : [{"event_type" : "seek_video"}
 
 '''
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV
 
 connection = EdXConnection('seek_video')
 collection = connection.get_access_to_collection()

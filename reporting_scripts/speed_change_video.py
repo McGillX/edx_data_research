@@ -12,8 +12,8 @@ python speed_change_video.py
 
 '''
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV 
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV 
 
 connection = EdXConnection('speed_change_video_data')
 collection = connection.get_access_to_collection()

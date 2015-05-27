@@ -9,8 +9,8 @@ python user_info.py <db_name>
 import sys
 import csv
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV 
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV 
 
 db_name = sys.argv[1]
 

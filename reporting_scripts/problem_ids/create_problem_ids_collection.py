@@ -18,7 +18,7 @@ Make sure the module base_edx is in the same directory as this script so that it
 can be imported
 
 '''
-from base_edx import EdXConnection
+from common.base_edx import EdXConnection
 
 # The second argument in line 27 is the name of the new collection which will 
 # contain the results of this script. Each new document will be inserted into

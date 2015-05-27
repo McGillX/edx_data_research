@@ -13,8 +13,8 @@ from datetime import datetime
 from collections import defaultdict
 import sys
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV
 
 connection = EdXConnection('tracking_atoc185x')
 collection = connection.get_access_to_collection()

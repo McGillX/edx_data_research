@@ -6,7 +6,7 @@ from datetime import datetime
 from collections import defaultdict
 import sys
 
-from base_edx import EdXConnection
+from common.base_edx import EdXConnection
 
 connection = EdXConnection('tracking' )
 collection = connection.get_access_to_collection()

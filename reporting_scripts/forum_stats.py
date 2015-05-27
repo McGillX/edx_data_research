@@ -7,7 +7,7 @@ Usage:
 python <path_to_script> 
 
 '''
-from base_edx import EdXConnection
+from common.base_edx import EdXConnection
 
 connection = EdXConnection('forum' )
 collection = connection.get_access_to_collection()

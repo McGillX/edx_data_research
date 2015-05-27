@@ -11,7 +11,7 @@ from datetime import datetime
 from collections import defaultdict
 
 
-from base_edx import EdXConnection
+from common.base_edx import EdXConnection
 
 # Connect to MongoDB and extra the tracking collection
 connection = EdXConnection('tracking', 'tracking_before_jan22')

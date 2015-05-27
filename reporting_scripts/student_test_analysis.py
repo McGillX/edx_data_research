@@ -4,9 +4,9 @@ This module gets all the navigation events for each user while they are taking a
 from collections import defaultdict
 import time
 from datetime import datetime
-from generate_csv_report import CSV
 
-from base_edx import EdXConnection
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV
 
 connection = EdXConnection('format_tests', 'tracking')
 collection = connection.get_access_to_collection()

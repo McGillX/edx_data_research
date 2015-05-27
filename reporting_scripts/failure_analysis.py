@@ -12,8 +12,8 @@ python failure_analysis.py
 import csv
 
 # Connect to MongoDB and extra the tracking collection
-from base_edx import EdXConnection
-from generate_csv_report import CSV 
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV 
 
 # If you have access to the grade report provided by edX, you can use the following
 # 7 lines of code to get all usernames with grades between 50% and 59% inclusive

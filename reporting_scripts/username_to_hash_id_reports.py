@@ -9,8 +9,8 @@ python username_to_hash_id_reports.py db_name csv_report
 import sys
 import csv
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV 
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV 
 
 db_name = sys.argv[1]
 

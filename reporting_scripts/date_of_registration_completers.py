@@ -10,8 +10,8 @@ python date_of_registration_completers.py
 import csv
 from datetime import datetime
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV
 
 connection = EdXConnection('student_courseenrollment')
 collection = connection.get_access_to_collection()

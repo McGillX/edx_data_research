@@ -17,8 +17,8 @@ python activities_with_lower_completion.py
 '''
 from collections import defaultdict
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV
 
 # Connect to MongoDB and extra the tracking collection
 connection = EdXConnection('user_attempts_per_problem_id')

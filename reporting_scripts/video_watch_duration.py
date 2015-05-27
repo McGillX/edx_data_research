@@ -9,8 +9,8 @@ import csv
 import time
 from datetime import datetime
 
-from base_edx import EdXConnection
-from generate_csv_report import CSV 
+from common.base_edx import EdXConnection
+from common.generate_csv_report import CSV 
 
 db_name = sys.argv[1]
 
