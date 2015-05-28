@@ -34,7 +34,6 @@ Usage (after getting the ids of all the pages in the Entrance and Exit surveys):
 python entrance_exit_surveys.py db_name path_to_json_file 
 
 '''
-
 import json
 import sys
 
