@@ -9,4 +9,10 @@ subparsers = parser.add_subparsers(help='commands')
 list_parser = subparsers.add_parser('list', help='List commands')
 list_parser.add_argument('list_commands', action='store', choices=['all', 'basic'],help='List anayltics commands based on choice')
 
-parser.parse_args()
+# An run command to execute the analysis
+run_parser = subparsers.add_parser('run', help='Run commands')
+run_parser.add_argument('run_commands', help='Run analytics based on argument', nargs='?', default='basic')
+
+if __name__ == '__main__':
+    args = parser.parse_args()
+    print args
