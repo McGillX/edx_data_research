@@ -1,3 +1,5 @@
+import csv
+
 from pymongo import MongoClient
 
 class BaseEdX(object):
@@ -11,3 +13,29 @@ class BaseEdX(object):
         self.row_limit = args.row_limit
         self.csv_data = None
         self.list_of_headers = None
+        
+    def generate_csv(self, csv_data, list_of_headers, output_file):
+    	self.csv_data = csv_data
+    	self.list_of_headers = list_of_headers
+    	number_of_rows = len(csv_data) + 1
+        if number_of_rows <= self.row_limit:
+			self._write_to_csv(self.output_file)
+		else:
+			if number_of_rows % self.row_limit:
+				number_of_splits = number_of_rows // self.row_limit + 1
+			else:
+				number_of_splits = number_of_rows // self.row_limit
+				
+	def _write_to_csv(self, output_file, number_of_splits=0):
+		with open(output_file, 'w') as csv_file:
+			writer = csv.writer(csv_file)
+			writer.writerow(self.list_of_headers)
+			for row in self.csv_data[number_of_splits * self.row_limit : (number_of_splits + 1) * self.row_limit]:
+				# This loop looks for unicode objects and encodes them to ASCII to avoif Unicode errors,
+				# for e.g. UnicodeEncodeError: 'ascii' codec can't encode character u'\xf1'
+				for index,item in enumerate(row[:]):
+				    if type(item) is unicode:
+					    row[index] = item.encode('ascii', 'ignore')
+				writer.writerow(row)
+			for index in xrange(number_of_splits):
+				self._write_to_csv(output_file.split('.')[0] + '_' + str(index) + '.csv', index)
