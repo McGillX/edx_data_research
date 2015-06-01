@@ -15,10 +15,12 @@ def main():
     run_parser = subparsers.add_parser('run', help='Run commands')
     run_parser.add_argument('db_name', help='Name of database where each database corresponds to a course offering')
     run_parser.add_argument('run_action', help='Run analytics based on argument', nargs='?', default='basic')
+    run_parser.add_argument('-u', '--uri', help='URI to MongoDB database (default: mongodb://localhost:27017)')
     run_parser.add_argument('-o', '--output', help='Path to directory to save CSV report (defaults to current directory: %(default)s)', default=os.getcwd())
     run_parser.add_argument('-j', '--json', help='Path to JSON file that may be needed for some analytics commands')
     run_parser.add_argument('-c', '--csv', help='Path to CSV file that may be needed for some analytics commands')
     run_parser.add_argument('-p', '--problem-id', help='Course specifc problem ID that may be needed for some analytics commands')
+    run_parser.add_argument('-r', '--row-limit', help='Number of rows per CSV file', type=int, default=100000)
 
     args = parser.parse_args()
     print args
