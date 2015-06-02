@@ -48,7 +48,7 @@ We use the file transfer client Cyberduck to access the amazon s3 server
    Do not try finding the tracking logs in the default course directory
 
 4. Select "Go to Folder"
-5. In the new window that opens enter the file path /edx-course-data
+5. In the new window that opens enter the file path "/edx-course-data" to access the tracking logs ("/course-data" to acess the student profile, course structure and forum data)
 6. Find the name of your institution in the directory
 
    A directory with the following file structure should display:
