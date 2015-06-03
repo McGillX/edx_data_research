@@ -8,7 +8,7 @@ class BaseEdX(object):
         self.url = args.url
         client = MongoClient(self.url)
         self.db = client[args.db_name]
-        self.collections = None
+        self._collections = None
         self.output_directory = args.output_directory
         self.row_limit = args.row_limit
         self.csv_data = None
@@ -45,4 +45,11 @@ class BaseEdX(object):
 		    if type(item) is unicode:
 		        row[index] = item.encode('ascii', 'ignore')
 		writer.writerow(row)
-		
+    @property
+    def collections(self):
+    	return self._collections
+    	
+    @collections.setter
+    def collections(self, *collections):
+    	self._collections = {collection : self.db[collection] for collection in *collections}
+    		
