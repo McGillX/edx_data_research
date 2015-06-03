@@ -50,6 +50,6 @@ class BaseEdX(object):
     	return self._collections
     	
     @collections.setter
-    def collections(self, *collections):
-    	self._collections = {collection : self.db[collection] for collection in *collections}
+    def collections(self, *_collections):
+    	self._collections = {collection : self.db[collection] for collection in _collections}
     		
