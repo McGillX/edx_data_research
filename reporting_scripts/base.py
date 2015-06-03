@@ -1,4 +1,5 @@
 import csv
+import os
 
 from pymongo import MongoClient
 
@@ -35,6 +36,7 @@ class BaseEdX(object):
     	"""
     	Helper method to write rows to csv files
     	"""
+    	output_file_path = os.path.abspath(os.path.join(self.output_directory, output_file))
         with open(output_file, 'w') as csv_file:
 	    writer = csv.writer(csv_file)
 	    writer.writerow(self.list_of_headers)
@@ -42,9 +44,10 @@ class BaseEdX(object):
 	        # This loop looks for unicode objects and encodes them to ASCII to avoif Unicode errors,
 		# for e.g. UnicodeEncodeError: 'ascii' codec can't encode character u'\xf1'
 		for index,item in enumerate(row[:]):
-		    if type(item) is unicode:
+		    if isinstance(item, unicode):
 		        row[index] = item.encode('ascii', 'ignore')
 		writer.writerow(row)
+		
     @property
     def collections(self):
     	return self._collections
@@ -52,4 +55,3 @@ class BaseEdX(object):
     @collections.setter
     def collections(self, *_collections):
     	self._collections = {collection : self.db[collection] for collection in _collections}
-    		
