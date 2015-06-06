@@ -20,3 +20,9 @@ def cmd_run_basic(args):
 	Run basic analytics
 	"""
 	pass
+
+def cmd_run_ip_to_country(args):
+    """
+    Map IP to Country for each student (if applicable)
+    """
+    pass

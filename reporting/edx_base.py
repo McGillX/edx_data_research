@@ -1,9 +1,12 @@
 import csv
+import inspect
 import os
 
 from pymongo import MongoClient
 
-class BaseEdX(object):
+import basic
+
+class EdX(object):
 
     def __init__(self, args):
         self.url = args.url
@@ -24,7 +27,7 @@ class BaseEdX(object):
     	number_of_rows = len(csv_data) + 1
         if number_of_rows <= self.row_limit:
 	        self._write_to_csv(self.output_file)
-	    else:
+        else:
 	        if number_of_rows % self.row_limit:
 		        number_of_splits = number_of_rows // self.row_limit + 1
 	        else:
