@@ -4,7 +4,6 @@ import os
 
 from pymongo import MongoClient
 
-import basic
 
 class EdX(object):
 
@@ -26,7 +25,7 @@ class EdX(object):
     	self.list_of_headers = list_of_headers
     	number_of_rows = len(csv_data) + 1
         if number_of_rows <= self.row_limit:
-	        self._write_to_csv(self.output_file)
+	        self._write_to_csv(output_file)
         else:
 	        if number_of_rows % self.row_limit:
 		        number_of_splits = number_of_rows // self.row_limit + 1
@@ -56,5 +55,5 @@ class EdX(object):
     	return self._collections
     	
     @collections.setter
-    def collections(self, *_collections):
+    def collections(self, _collections):
     	self._collections = {collection : self.db[collection] for collection in _collections}

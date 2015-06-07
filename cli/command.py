@@ -2,6 +2,8 @@
 In this module we define the interface between the cli input provided
 by the user and the analytics required by the user
 """
+from reporting import basic
+from reporting.edx_base import EdX
 
 def cmd_list_basic(args):
 	"""
@@ -25,4 +27,5 @@ def cmd_run_ip_to_country(args):
     """
     Map IP to Country for each student (if applicable)
     """
-    pass
+    edx_obj = EdX(args)
+    basic.ip_to_country(edx_obj)
