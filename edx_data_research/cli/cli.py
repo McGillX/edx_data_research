@@ -3,7 +3,7 @@ import inspect
 import os
 import sys
 
-import commands
+from edx_data_research.cli import commands
 
 def main():
     parser = argparse.ArgumentParser(prog='moocx', description='EdX MOOC Data Anaylysis')

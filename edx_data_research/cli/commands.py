@@ -2,8 +2,8 @@
 In this module we define the interface between the cli input provided
 by the user and the analytics required by the user
 """
-from reporting import basic
-from reporting.edx_base import EdX
+from edx_data_research.reporting import basic
+from edx_data_research.reporting.edx_base import EdX
 
 def cmd_list_basic(args):
 	"""
