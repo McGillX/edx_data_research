@@ -8,8 +8,8 @@ from pymongo import MongoClient
 class EdX(object):
 
     def __init__(self, args):
-        self.url = args.url
-        client = MongoClient(self.url)
+        self.uri = args.uri
+        client = MongoClient(self.uri)
         self.db = client[args.db_name]
         self._collections = None
         self.output_directory = args.output_directory
