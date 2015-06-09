@@ -1,1 +1,1 @@
-from ip_to_country_2 import ip_to_country
+from ip_to_country import ip_to_country
