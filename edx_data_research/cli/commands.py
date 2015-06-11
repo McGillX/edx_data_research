@@ -30,6 +30,9 @@ def cmd_run_ip_to_country(args):
     edx_obj = EdX(args)
     basic.ip_to_country(edx_obj)
 
-def cmd_run_user_infp(args):
+def cmd_run_user_info(args):
+    """
+    Retrieve information about students registered in the course
+    """
     edx_obj = EdX(args)
     basic.user_info(edx_obj)

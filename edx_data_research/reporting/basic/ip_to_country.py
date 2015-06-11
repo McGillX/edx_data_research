@@ -9,9 +9,6 @@ if the IP is an actual IP or a proxy IP
 
 At the end of the analysis, the results are used to create a Pie Chart to visualize the distribution
 
-Usage:
-python ip_to_country.py <db_name>
-
 '''
 import csv
 import geoip
@@ -27,22 +24,22 @@ def ip_to_country(edx_obj):
         reader = csv.reader(csv_file)
         country_code_to_country = dict(reader)
     cursor = edx_obj.collections['tracking'].find()
-    result = defaultdict(set)
+    tracking = defaultdict(set)
     for index, item in enumerate(cursor):
-        result[item['username']].add(item['ip'])
-    ip_to_country = []
+        tracking[item['username']].add(item['ip'])
+    result = []
     country_set = set()
-    for key, value_set in result.iteritems():
+    for key, value_set in tracking.iteritems():
         for value in value_set:
             try:
                 country_code = geoip.country(value, dbname=os.path.join(data_directory, 'GeoIP.dat'))
                 country = country_code_to_country[country_code]
                 if not key:
                     key = 'anonymous'
-                    ip_to_country.append([key, value, country_code, country])
+                    result.append([key, value, country_code, country])
                 elif (key, country) not in country_set:
                     country_set.add((key,country))
-                    ip_to_country.append([key, value, country_code, country])
+                    result.append([key, value, country_code, country])
             except:
                 # IMPORTANT
                 # The following code for an exception are hardcoded for those IPs which do have a mapping to a 
@@ -53,8 +50,8 @@ def ip_to_country(edx_obj):
                     country = country_code_to_country['SS']
                     if not key:
                         key = 'anonymous'
-                        ip_to_country.append([key, value, 'SS', country_code_to_country['SS']])
+                        result.append([key, value, 'SS', country_code_to_country['SS']])
                     elif (key, country) not in country_set:
                         country_set.add((key, country))
-                        ip_to_country.append([key, value, 'SS', country_code_to_country['SS']])
-    edx_obj.generate_csv(ip_to_country, ['Username', 'IP Address', 'Country Code', 'Country'], output_file=edx_obj.db.name+'_ip_to_country.csv')
+                        result.append([key, value, 'SS', country_code_to_country['SS']])
+    edx_obj.generate_csv(result, ['Username', 'IP Address', 'Country Code', 'Country'], output_file=edx_obj.db.name+'_ip_to_country.csv')
