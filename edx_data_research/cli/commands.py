@@ -29,3 +29,7 @@ def cmd_run_ip_to_country(args):
     """
     edx_obj = EdX(args)
     basic.ip_to_country(edx_obj)
+
+def cmd_run_user_infp(args):
+    edx_obj = EdX(args)
+    basic.user_info(edx_obj)
