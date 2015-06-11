@@ -220,7 +220,7 @@ python generate_course_tracking_logs.py <source_db> <source_collection> <destina
 
 
 
-3. Extract csv datasets - [report_scripts](/reporting_scripts) 
+3. Extract csv datasets - [reporting](/reporting) 
 ----
 *documentation in progress*
 
