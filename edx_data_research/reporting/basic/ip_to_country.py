@@ -13,14 +13,17 @@ Usage:
 python ip_to_country.py <db_name>
 
 '''
-import geoip
 import csv
+import geoip
+import os
+
 from collections import defaultdict
 
 
 def ip_to_country(edx_obj):
     edx_obj.collections = ['tracking']
-    with open('reporting/basic/country_code_to_country.csv') as csv_file:
+    data_directory =  os.path.abspath(os.path.dirname(__file__) + "/../data")
+    with open(os.path.join(data_directory, 'country_code_to_country.csv')) as csv_file:
         reader = csv.reader(csv_file)
         country_code_to_country = dict(reader)
     cursor = edx_obj.collections['tracking'].find()
@@ -32,7 +35,7 @@ def ip_to_country(edx_obj):
     for key, value_set in result.iteritems():
         for value in value_set:
             try:
-                country_code = geoip.country(value, dbname='reporting/basic/GeoIP.dat')
+                country_code = geoip.country(value, dbname=os.path.join(data_directory, 'GeoIP.dat'))
                 country = country_code_to_country[country_code]
                 if not key:
                     key = 'anonymous'
