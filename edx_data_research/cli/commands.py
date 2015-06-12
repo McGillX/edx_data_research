@@ -36,3 +36,10 @@ def cmd_run_user_info(args):
     """
     edx_obj = EdX(args)
     basic.user_info(edx_obj)
+
+def cmd_run_course_completers(args):
+    """
+    Retrieve users who have completed a course 
+    """
+    edx_obj = EdX(args)
+    basic.course_completers(edx_obj)
