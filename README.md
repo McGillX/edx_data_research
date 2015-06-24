@@ -3,13 +3,19 @@ Data Analytics Platform
 
 This is a public repository for the tools developed and used by the McGillX research team to package, analyse, and manipulate the data that is collected through McGill's online courses offered via the edX platform. 
 
+#### MOOCX
+
+We are currently working towards an installable package.
+Download the repo and run `python setup.py install`
+
 Contents
 --------
 
 |Directory | Description
 |:------:|----------
-|parsing | Contains the scripts and procedures used to load the raw data (json, sql, csv, mongodb) from edx to MongoDB
-|reporting_scripts | Contains scripts that were used for extracting and aggregating data for analysis 
+|edx_data_research/parsing | Contains the scripts and procedures used to load the raw data (json, sql, csv, mongodb) from edx to MongoDB
+|edx_data_research/reporting | Contains scripts that were used for extracting and aggregating data for analysis
+|edx_data_research/cli | Command line interface
 
 
 
