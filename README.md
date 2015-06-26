@@ -124,7 +124,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
    ```
    python course_structure_to_mongod.py <database_name> course_structure* <path_to_json_file>
    ```
-    *Be sure the name the course structure collection "course_structure" using the command above
+    *Use "course_structure" as the collection name
     
     
 2. Parse the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html)
