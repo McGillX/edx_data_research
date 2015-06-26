@@ -10,6 +10,8 @@ Note, this script works with both decompressed (.log) and compressed (.log.gz) t
 Usage: python load_tracking_logs_to_mongo.py <database_name> <collection_name> <path_to_directory_containing_trackings_logs>
 Note, use tracking as both the database_name and the collection_name
 
+*Some errors occur when loading open assessments events
+
 '''
 
 import pymongo
