@@ -408,6 +408,11 @@ python generate_course_tracking_logs.py <source_db> <source_collection> <destina
 |:------:|----------
 |[username_to_hash_id_reports.py](/reporting_scripts/username_to_hash_id_reports.py)| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
 
+## Open Issues
+
+- invalid doc errors generated when loading some open assessment events to Mongodb edx_data_research/edx_data_research/parsing/tracking_logs/load_tracking_logs_to_mongo.py
+
+
 ## Contact
 
 You can contact McGillX for any help in running the scripts, setting up or just an explanation about a specific script:
@@ -417,6 +422,8 @@ McGillX - <mcgillx.tls@mcgill.ca>
 ## Contribute
 
 If you would like to add new scripts, improve existing scripts, or found an error in the script feel free to send a pull request or raise an issue.
+
+
 
 
 
