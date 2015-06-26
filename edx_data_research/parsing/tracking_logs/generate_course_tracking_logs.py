@@ -4,6 +4,8 @@ between when course enrollment start and when the course ended. For each log,
 the parent_data and meta_data from the course_structure collection will be 
 appended to the log based on the event key in the log
 
+Usage: python generate_course_tracking_logs.py <source_db> <source_collection> <destination_db> <destination_collection> <path_to_config_file>
+
 '''
 
 import pymongo
