@@ -118,14 +118,8 @@ def migrate_tracking_logs_to_mongo(tracking, tracking_imported, log_content, log
             data = json.loads(record)
         except ValueError:
             log_to_be_imported['error'] += 1
-            errors.append("PARSE: " + record )
+            errors.append("JSON LOAD: " + record)
 
-        if 'event' in data and not isinstance(data['event'], dict):
-            try:
-                event_dict = json.loads(data['event'])
-                data['event'] = event_dict
-            except ValueError:
-                pass
         try:
             log_to_be_imported['courses'][data['context']['course_id']] += 1
             data['course_id'] = data['context']['course_id']
