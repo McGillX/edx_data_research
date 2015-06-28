@@ -32,4 +32,6 @@ mongoimport -d edx -c auth_user --type tsv --file McGillX-CHEM181x-1T2014-auth_u
 
 mongoimport -d edx -c courseware_studentmodule --type tsv --file McGillX-CHEM181x-1T2014-courseware_studentmodule-prod-analytics.sql --headerline
 
+mongoimport -d edx -c student_languageproficiency  -type tsv --file McGillX-CHEM181x-1T2014-student_languageproficiency-prod-analytics.sql --headerline
+
 ```

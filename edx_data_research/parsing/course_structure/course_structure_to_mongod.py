@@ -4,6 +4,9 @@ into the mongodb database
 The one JSON object will be split into sub objects, in which all the first level
 keys will become the _id of its object value
 
+Usage: python course_structure_to_mongod.py <database_name> course_structure* <path_to_json_file>
+*Use "course_structure" as the collection name
+
 '''
 
 import pymongo

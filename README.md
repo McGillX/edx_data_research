@@ -3,13 +3,19 @@ Data Analytics Platform
 
 This is a public repository for the tools developed and used by the McGillX research team to package, analyse, and manipulate the data that is collected through McGill's online courses offered via the edX platform. 
 
+#### MOOCX
+
+We are currently working towards an installable package.
+Download the repo and run `python setup.py install`
+
 Contents
 --------
 
 |Directory | Description
 |:------:|----------
-|parsing | Contains the scripts and procedures used to load the raw data (json, sql, csv, mongodb) from edx to MongoDB
-|reporting_scripts | Contains scripts that were used for extracting and aggregating data for analysis 
+|edx_data_research/parsing | Contains the scripts and procedures used to load the raw data (json, sql, csv, mongodb) from edx to MongoDB
+|edx_data_research/reporting | Contains scripts that were used for extracting and aggregating data for analysis
+|edx_data_research/cli | Command line interface
 
 
 
@@ -118,7 +124,7 @@ JSON, Mongo and SQL files are directly imported into each course's database
    ```
    python course_structure_to_mongod.py <database_name> course_structure* <path_to_json_file>
    ```
-    *Be sure the name the course structure collection "course_structure" using the command above
+    *Use "course_structure" as the collection name
     
     
 2. Parse the [Discussion Forum Data](http://edx.readthedocs.org/projects/devdata/en/latest/internal_data_formats/discussion_data.html)
@@ -402,6 +408,11 @@ python generate_course_tracking_logs.py <source_db> <source_collection> <destina
 |:------:|----------
 |[username_to_hash_id_reports.py](/reporting_scripts/username_to_hash_id_reports.py)| Take a csv report as input and maps usernames to their hash ids and user ids and return a new csv_report
 
+## Open Issues
+
+- invalid doc errors generated when loading some open assessment events to Mongodb edx_data_research/edx_data_research/parsing/tracking_logs/load_tracking_logs_to_mongo.py
+
+
 ## Contact
 
 You can contact McGillX for any help in running the scripts, setting up or just an explanation about a specific script:
@@ -411,6 +422,8 @@ McGillX - <mcgillx.tls@mcgill.ca>
 ## Contribute
 
 If you would like to add new scripts, improve existing scripts, or found an error in the script feel free to send a pull request or raise an issue.
+
+
 
 
 

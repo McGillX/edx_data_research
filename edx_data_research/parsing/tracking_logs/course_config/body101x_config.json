@@ -2,7 +2,7 @@
     
     "edx_id" : "body101x",
     "edx_course_name" : "the body matters",
-    "course_ids" : [],
+    "course_ids" : ["McGillX/Body101x/1T2015"],
     "date_of_course_enrollment" : "2014-10-01",
     "date_of_course_completion" : "2015-05-07"
 
