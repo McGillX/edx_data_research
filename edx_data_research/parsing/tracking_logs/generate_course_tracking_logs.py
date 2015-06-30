@@ -88,7 +88,7 @@ def extract_tracking_logs(source_collection, destination_collection, course_stru
 
 
 def main():
-    if len(sys.argv) !=  6:
+    if len(sys.argv) !=  4:
         usage_message = """usage: %s source_db destination_db course_config_file 
             Provide name of course database to insert tracking logs to and 
             config file to load configurations\n
