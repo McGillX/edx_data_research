@@ -43,8 +43,9 @@ def _generate_name_from_problem_id(problem_id):
 cursor = collection['problem_ids'].find({'event.problem_id': problem_id})
 result = []
 for document in cursor:
+    answers = {key : value['answer'] for key, value in document['event']['submission'].iteritems()}
     result.append([document['username'], document['event']['attempts'], document['module']['display_name'],document['time'], document['event']['success'],
-    document['event']['grade'], document['event']['max_grade'], document['event']['answers']])
+    document['event']['grade'], document['event']['max_grade'], answers])
 
 csv_report_name = _generate_name_from_problem_id(problem_id)
 output = CSV(result, ['Username', 'Attempt Number', 'Module', 'Time', 'Success', 'Grade Achieved', 'Max Grade', 'Answers'], output_file=csv_report_name)
