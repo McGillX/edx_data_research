@@ -10,7 +10,7 @@ relatively less because we run these queries on only a subset of the tracking lo
 
 Usage:
 
-python create_problem_ids_collection.py 
+python create_problem_ids_collection.py <db_name> 
 
 Note:
 
@@ -19,16 +19,19 @@ can be imported
 
 '''
 from common.base_edx import EdXConnection
+import sys
+
+db_name = sys.argv[1]
 
 # The second argument in line 27 is the name of the new collection which will 
 # contain the results of this script. Each new document will be inserted into
 # this new collection. The name of the resulting collection could be anything;
 # preferrably relevant to the course
-connection = EdXConnection('tracking_atoc185x','atoc185x_problem_ids')
+connection = EdXConnection(db_name, 'tracking','problem_ids')
 collection = connection.get_access_to_collection()
 
-cursor = collection['tracking_atoc185x'].find({'event_type' : 'problem_check', 'event_source' : 'server'})
-for index, document in enumerate(cursor):
+cursor = collection['tracking'].find({'event_type' : 'problem_check', 'event_source' : 'server'})
+for document in cursor:
    doc_result = {}
    doc_result['username'] = document['username']
    doc_result['problem_id'] = document['event']['problem_id']
@@ -36,4 +39,4 @@ for index, document in enumerate(cursor):
    doc_result['module'] = document['context']['module']
    doc_result['time'] = document['time']
    doc_result['event'] = document['event']
-   collection['atoc185x_problem_ids'].insert(doc_result)
+   collection['problem_ids'].insert(doc_result)
