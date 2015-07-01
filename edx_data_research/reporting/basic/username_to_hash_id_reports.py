@@ -25,13 +25,17 @@ with open(sys.argv[2]) as f:
 
 result = []
 for row in data:
-    cursor = collection['user_id_map'].find_one({'username' : row[0]})
-    hash_id = cursor['hash_id']
-    user_id = cursor['id']
-    result.append([row[0], user_id, hash_id] + row[1:])
+    username = row[0]
+    if username.isdigit():
+        username = int(username)
+    cursor = collection['user_id_map'].find_one({'username' : username})
+    if cursor:
+        hash_id = cursor['hash_id']
+        user_id = cursor['id']
+        result.append([username, user_id, hash_id] + row[1:])
+    else:
+        print "username {0} not in collection".format(row[0])
 
 input_file, extension = sys.argv[2].split('.')
 output = CSV(result, [headers.split(',')[0],'User ID','User Hash ID'] + headers.split(',')[1:], output_file=input_file+'_username_anon.'+extension)
 output.generate_csv()
-    
-
