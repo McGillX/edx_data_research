@@ -4,11 +4,14 @@ will include information about how students fared with a given problem id
 
 Usage:
 
-python get_csv_report_by_problem_id.py <db_name> <problem_id>
+from the reporting directory
+
+python -m problem_ids.get_csv_report_by_problem_id <db_name> <problem_id>
 
 Example:
 
-python get_csv_report_by_problem_id.py atoc185x i4x://McGillX/ATOC185x/problem/dedc04b82b6e483b9c95dbe26313e5f3
+ python -m problem_ids.get_csv_report_by_problem_id body101x i4x://McGillX/Body101x/problem/fd3a83b0c06243b78554b69ad6f65e03
+
 
 '''
 from collections import defaultdict
