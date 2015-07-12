@@ -44,7 +44,7 @@ def _generate_name_from_problem_id(problem_id):
     return '_'.join(problem_id.split('/')[3:]) + '.csv'
 
 cursor = collection['problem_ids'].find({'event.problem_id': problem_id})
-problem_ids = sorted(cursor[0]['event']['submission'].keys())
+problem_ids = [key + " : " + value['question'] if value['question'] else key for key, value in sorted(cursor[0]['event']['submission'].iteritems())]
 result = []
 for document in cursor:
     answers = [value['answer'] for _, value in sorted(document['event']['submission'].iteritems())]
