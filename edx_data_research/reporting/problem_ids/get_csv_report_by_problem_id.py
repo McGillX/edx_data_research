@@ -44,7 +44,16 @@ def _generate_name_from_problem_id(problem_id):
     return '_'.join(problem_id.split('/')[3:]) + '.csv'
 
 cursor = collection['problem_ids'].find({'event.problem_id': problem_id})
-problem_ids = [key + " : " + value['question'] if value['question'] else key for key, value in sorted(cursor[0]['event']['submission'].iteritems())]
+one_record = cursor[0]['event']
+problemd_ids_keys = sorted(one_record['correct_map'].keys())
+problem_ids = []
+for key in problemd_ids_keys:
+    try:
+        item = one_record['submission'][key]
+        value = item['question']
+        problem_ids.append('{0} : {1}'.format(key, value))
+    except KeyError:
+        problem_ids.append('{0}'.format(key))
 result = []
 for document in cursor:
     answers = [value['answer'] for _, value in sorted(document['event']['submission'].iteritems())]
