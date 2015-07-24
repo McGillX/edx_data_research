@@ -46,9 +46,9 @@ def _generate_name_from_problem_id(problem_id, display_name):
 cursor = collection['problem_ids'].find({'event.problem_id': problem_id})
 display_name = cursor[0]['module']['display_name']
 one_record = cursor[0]['event']
-problemd_ids_keys = sorted(one_record['correct_map'].keys())
+problem_ids_keys = sorted(one_record['correct_map'].keys())
 problem_ids = []
-for key in problemd_ids_keys:
+for key in problem_ids_keys:
     try:
         item = one_record['submission'][key]
         value = item['question']
@@ -56,8 +56,20 @@ for key in problemd_ids_keys:
     except KeyError:
         problem_ids.append('{0}'.format(key))
 result = []
+answers = []
 for document in cursor:
-    answers = [value['answer'] for _, value in sorted(document['event']['submission'].iteritems())]
+    answers = []
+    for key in sorted(document['event']['correct_map'].keys()):
+        #if key in submission_keys:
+        try:
+            answers.append(document['event']['submission'][key]['answer'])
+            #print document['event']['submission'][key]['answer']
+        except KeyError:
+            answers.append('blank')
+            #print 'blank'
+    print answers
+        #answers.append(document['event']['submission'][key]['answer'])
+#answers = [value['answer'] for _, value in sorted(document['event']['submission'].iteritems())]
     result.append([document['username'], document['event']['attempts'], document['module']['display_name'],document['time'], document['event']['success'],
     document['event']['grade'], document['event']['max_grade']] + answers)
 csv_report_name = _generate_name_from_problem_id(problem_id, display_name)
