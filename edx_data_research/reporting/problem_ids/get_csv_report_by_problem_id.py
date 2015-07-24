@@ -37,13 +37,14 @@ if len(sys.argv) < 3:
     sys.stderr.write(usage_message)
     sys.exit(1)
 
-def _generate_name_from_problem_id(problem_id):
+def _generate_name_from_problem_id(problem_id, display_name):
     '''
     Generate name of csv output file from problem id
     '''
-    return '_'.join(problem_id.split('/')[3:]) + '.csv'
+    return '_'.join(problem_id.split('/')[3:]) + '_' +''.join(e for e in display_name if e.isalnum()) + '.csv'
 
 cursor = collection['problem_ids'].find({'event.problem_id': problem_id})
+display_name = cursor[0]['module']['display_name']
 one_record = cursor[0]['event']
 problemd_ids_keys = sorted(one_record['correct_map'].keys())
 problem_ids = []
@@ -59,6 +60,6 @@ for document in cursor:
     answers = [value['answer'] for _, value in sorted(document['event']['submission'].iteritems())]
     result.append([document['username'], document['event']['attempts'], document['module']['display_name'],document['time'], document['event']['success'],
     document['event']['grade'], document['event']['max_grade']] + answers)
-csv_report_name = _generate_name_from_problem_id(problem_id)
+csv_report_name = _generate_name_from_problem_id(problem_id, display_name)
 output = CSV(result, ['Username', 'Attempt Number', 'Module', 'Time', 'Success', 'Grade Achieved', 'Max Grade'] + problem_ids, output_file=csv_report_name)
 output.generate_csv()
