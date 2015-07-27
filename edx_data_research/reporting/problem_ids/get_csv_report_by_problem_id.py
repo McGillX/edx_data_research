@@ -6,7 +6,7 @@ Usage:
 
 from the reporting directory
 
-python -m problem_ids.get_csv_report_by_problem_id <db_name> <problem_id>
+python -m problem_ids.get_csv_report_by_problem_id <db_name> <problem_id> [--max-attempt]
 
 Example:
 
@@ -14,34 +14,35 @@ Example:
 
 
 '''
-from collections import defaultdict
 import sys
+
+from itertools import groupby
 
 from common.base_edx import EdXConnection
 from common.generate_csv_report import CSV
-
-db_name = sys.argv[1]
-problem_id = sys.argv[2]
-connection = EdXConnection(db_name, 'problem_ids')
-collection = connection.get_access_to_collection()
 
 if len(sys.argv) < 3:
     usage_message = """
     No problem id given as a command line argument. Please provide a problem_id
 
     Usage:
-    python get_csv_report_by_problem_id.py <db_name> <problem_id>
+    python get_csv_report_by_problem_id.py <db_name> <problem_id> [--max-attempt]
 
     """
 
     sys.stderr.write(usage_message)
     sys.exit(1)
 
+db_name = sys.argv[1]
+problem_id = sys.argv[2]
+max_attempt = True if len(sys.argv) == 4  else False
+connection = EdXConnection(db_name, 'problem_ids')
+collection = connection.get_access_to_collection()
+
 def _generate_name_from_problem_id(problem_id, display_name):
-    '''
-    Generate name of csv output file from problem id
-    '''
-    return '_'.join(problem_id.split('/')[3:]) + '_' +''.join(e for e in display_name if e.isalnum()) + '.csv'
+    '''Generate name of csv output file from problem id'''
+    return ('_'.join(problem_id.split('/')[3:]) + '_' +
+            ''.join(e for e in display_name if e.isalnum()) + '.csv')
 
 cursor = collection['problem_ids'].find({'event.problem_id': problem_id})
 display_name = cursor[0]['module']['display_name']
@@ -56,22 +57,25 @@ for key in problem_ids_keys:
     except KeyError:
         problem_ids.append('{0}'.format(key))
 result = []
-answers = []
 for document in cursor:
     answers = []
     for key in sorted(document['event']['correct_map'].keys()):
-        #if key in submission_keys:
         try:
             answers.append(document['event']['submission'][key]['answer'])
-            #print document['event']['submission'][key]['answer']
         except KeyError:
-            answers.append('blank')
-            #print 'blank'
-    print answers
-        #answers.append(document['event']['submission'][key]['answer'])
-#answers = [value['answer'] for _, value in sorted(document['event']['submission'].iteritems())]
-    result.append([document['username'], document['event']['attempts'], document['module']['display_name'],document['time'], document['event']['success'],
-    document['event']['grade'], document['event']['max_grade']] + answers)
+            answers.append('')
+    result.append([document['username'], document['event']['attempts'],
+                   document['module']['display_name'],document['time'],
+                   document['event']['success'],
+                   document['event']['grade'], document['event']['max_grade']]
+                   + answers)
+
+if max_attempt:
+    result = [max(items, key=lambda x : x[1]) for key, items in
+              groupby(result, lambda x : x[0])] 
+
 csv_report_name = _generate_name_from_problem_id(problem_id, display_name)
-output = CSV(result, ['Username', 'Attempt Number', 'Module', 'Time', 'Success', 'Grade Achieved', 'Max Grade'] + problem_ids, output_file=csv_report_name)
+output = CSV(result,
+             ['Username', 'Attempt Number', 'Module', 'Time', 'Success', 'Grade Achieved', 'Max Grade'] + problem_ids,
+             output_file=csv_report_name)
 output.generate_csv()
