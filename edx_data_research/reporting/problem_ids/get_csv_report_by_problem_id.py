@@ -26,7 +26,7 @@ if len(sys.argv) < 3:
     No problem id given as a command line argument. Please provide a problem_id
 
     Usage:
-    python get_csv_report_by_problem_id.py <db_name> <problem_id> [--max-attempt]
+    python get_csv_report_by_problem_id.py <db_name> <problem_id> [--final_attempts]
 
     """
 
@@ -35,14 +35,17 @@ if len(sys.argv) < 3:
 
 db_name = sys.argv[1]
 problem_id = sys.argv[2]
-max_attempt = True if len(sys.argv) == 4  else False
+final_attempts = True if len(sys.argv) == 4  else False
 connection = EdXConnection(db_name, 'problem_ids')
 collection = connection.get_access_to_collection()
 
 def _generate_name_from_problem_id(problem_id, display_name):
     '''Generate name of csv output file from problem id'''
+    attempts_name = 'AllAttempts'
+    if final_attempts: 
+        attempts_name = 'FinalAttempts'
     return ('_'.join(problem_id.split('/')[3:]) + '_' +
-            ''.join(e for e in display_name if e.isalnum()) + '.csv')
+            ''.join(e for e in display_name if e.isalnum()) + attempts_name + '.csv')
 
 cursor = collection['problem_ids'].find({'event.problem_id': problem_id})
 display_name = cursor[0]['module']['display_name']
@@ -70,7 +73,7 @@ for document in cursor:
                    document['event']['grade'], document['event']['max_grade']]
                    + answers)
 
-if max_attempt:
+if final_attempts:
     result = [max(items, key=lambda x : x[1]) for key, items in
               groupby(sorted(result, key=lambda x : x[0]), lambda x : x[0])] 
 
