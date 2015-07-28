@@ -72,7 +72,7 @@ for document in cursor:
 
 if max_attempt:
     result = [max(items, key=lambda x : x[1]) for key, items in
-              groupby(result, lambda x : x[0])] 
+              groupby(sorted(result, key=lambda x : x[0]), lambda x : x[0])] 
 
 csv_report_name = _generate_name_from_problem_id(problem_id, display_name)
 output = CSV(result,
