@@ -41,9 +41,9 @@ collection = connection.get_access_to_collection()
 
 def _generate_name_from_problem_id(problem_id, display_name):
     '''Generate name of csv output file from problem id'''
-    attempts_name = 'AllAttempts'
+    attempts_name = '_AllAttempts'
     if final_attempts: 
-        attempts_name = 'FinalAttempts'
+        attempts_name = '_FinalAttempts'
     return ('_'.join(problem_id.split('/')[3:]) + '_' +
             ''.join(e for e in display_name if e.isalnum()) + attempts_name + '.csv')
 
