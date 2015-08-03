@@ -6,7 +6,7 @@ Usage:
 
 from the reporting directory
 
-python -m problem_ids.get_csv_report_by_problem_id <db_name> <problem_id> [--max-attempt]
+python -m problem_ids.get_csv_report_by_problem_id <db_name> <problem_id> [--final_attempts]
 
 Example:
 
@@ -26,7 +26,7 @@ if len(sys.argv) < 3:
     No problem id given as a command line argument. Please provide a problem_id
 
     Usage:
-    python get_csv_report_by_problem_id.py <db_name> <problem_id> [--final_attempts]
+    ppython -m problem_ids.get_csv_report_by_problem_id <db_name> <problem_id> [--final_attempts]
 
     """
 
