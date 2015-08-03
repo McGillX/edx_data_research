@@ -57,6 +57,9 @@ for key in problem_ids_keys:
         item = one_record['submission'][key]
         value = item['question']
         problem_ids.append('{0} : {1}'.format(key, value))
+    except UnicodeEncodeError:
+        value = value.encode("utf-8")
+        problem_ids.append('{0} : {1}'.format(key, value))
     except KeyError:
         problem_ids.append('{0}'.format(key))
 result = []
