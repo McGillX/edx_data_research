@@ -12,7 +12,7 @@ def user_info(edx_obj):
         try:
             final_grade = edx_obj.collections['certificates_generatedcertificate'].find_one({'user_id' : user_id})['grade']
             username = edx_obj.collections['user_id_map'].find_one({'id' : user_id})['username']
-            enrollment_date = edx_obj.collections['student_courseenrollment'].find_one({'id' : user_id})['created']
+            enrollment_date = edx_obj.collections['student_courseenrollment'].find_one({'user_id' : user_id})['created']
             result.append([user_id, item['name'], final_grade, username, item['gender'], item['year_of_birth'], item['level_of_education'], item['country'], item['city'], enrollment_date])
         except:
             print "Exception occurred for user_id {0}".format(user_id)
