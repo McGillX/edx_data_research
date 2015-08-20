@@ -68,18 +68,18 @@ for document in cursor:
             answers.append(document['event']['submission'][key]['answer'])
         except KeyError:
             answers.append('')
-    result.append([document['username'], document['event']['attempts'],
-                   document['module']['display_name'],document['time'],
-                   document['event']['success'],
+    result.append([document['hash_id'], document['username'],
+                   document['event']['attempts'], document['module']['display_name'],
+                   document['time'], document['event']['success'],
                    document['event']['grade'], document['event']['max_grade']]
                    + answers)
 
 if final_attempts:
     result = [max(items, key=lambda x : x[1]) for key, items in
-              groupby(sorted(result, key=lambda x : x[0]), lambda x : x[0])] 
+              groupby(sorted(result, key=lambda x : x[0]), lambda x : x[0])]
 
 csv_report_name = _generate_name_from_problem_id(problem_id, display_name)
-output = CSV(result,
-             ['Username', 'Attempt Number', 'Module', 'Time', 'Success', 'Grade Achieved', 'Max Grade'] + problem_ids,
+output = CSV(result, ['Hash ID', 'Username', 'Attempt Number', 'Module',
+             'Time', 'Success', 'Grade Achieved', 'Max Grade'] + problem_ids,
              output_file=csv_report_name)
 output.generate_csv()
