@@ -16,6 +16,7 @@ class EdX(object):
         self.row_limit = args.row_limit
         self.csv_data = None
         self.list_of_headers = None
+        self.anonymize = args.anonymize
         
     def generate_csv(self, csv_data, list_of_headers, output_file):
     	"""
