@@ -9,19 +9,19 @@ def cmd_list_basic(args):
 	"""
 	List the basic analytics commands and their summary
 	"""
-	pass
+	print 'list basic'
 	
 def cmd_list_all(args):
 	"""
 	List all the analytics commands and their summary
 	"""
-	pass
+	print 'list all'
 	
 def cmd_report_basic(args):
 	"""
 	Run basic analytics
 	"""
-	pass
+	print "report basic"
 
 def cmd_report_ip_to_country(args):
     """
@@ -43,3 +43,6 @@ def cmd_report_course_completers(args):
     """
     edx_obj = EdX(args)
     basic.course_completers(edx_obj)
+
+def cmd_report_problem_id(args):
+    print 'problem id!!!'

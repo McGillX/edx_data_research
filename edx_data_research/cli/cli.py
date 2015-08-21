@@ -20,8 +20,6 @@ def main():
 
     # An report command to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report', help='Report commands')
-    report_parser.add_argument('action', help='Run analytics based on argument',
-                             nargs='?', default='basic')
     report_parser.add_argument('db_name',
                              help='Name of database where each database '
                              'corresponds to a course offering')
@@ -31,22 +29,21 @@ def main():
                             'CSV report (defaults to current directory: '
                             '%(default)s)', default=os.getcwd(),
                             dest='output_directory')
-    report_parser.add_argument('-j', '--json', help='Path to JSON file that may '
-                            'be needed for some analytics commands')
-    report_parser.add_argument('-c', '--csv', help='Path to CSV file that may be '
-                            'needed for some analytics commands')
-    report_parser.add_argument('-p', '--problem-id', help='Course specifc '
-                            'problem ID that may be needed for some analytics '
-                            'commands', dest='problem_id')
     report_parser.add_argument('-r', '--row-limit', help='Number of rows per CSV '
                             'file (default: %(default)s)', type=int,
                             default=100000, dest='row_limit')
     report_parser.add_argument('-a', '--anonymize', help='Only include hash id '
                             'of the students in output CSV report '
                             '(default: %(default)s)', action='store_true')
+    report_subparsers = report_parser.add_subparsers(help='report', dest='report')
+    basic_parser = report_subparsers.add_parser('basic', help='basic')
+    basic_parser.add_argument('action', help='Run analytics based on argument',
+                             nargs='?', default='all')
+    problem_id_parser = report_subparsers.add_parser('problem_id', help='problem_id')
+    problem_id_parser.add_argument('problem_id', help='Problem ID')
 
     args = parser.parse_args()
-    commands.__dict__['cmd_'+ args.command + '_' + args.action.replace('-', '_')](args)
+    commands.__dict__['cmd_'+ args.command](args)
 
 if __name__ == '__main__':
     main()
