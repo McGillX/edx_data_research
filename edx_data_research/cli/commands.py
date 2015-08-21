@@ -17,27 +17,27 @@ def cmd_list_all(args):
 	"""
 	pass
 	
-def cmd_run_basic(args):
+def cmd_report_basic(args):
 	"""
 	Run basic analytics
 	"""
 	pass
 
-def cmd_run_ip_to_country(args):
+def cmd_report_ip_to_country(args):
     """
     Map IP to Country for each student (if applicable)
     """
     edx_obj = EdX(args)
     basic.ip_to_country(edx_obj)
 
-def cmd_run_user_info(args):
+def cmd_report_user_info(args):
     """
     Retrieve information about students registered in the course
     """
     edx_obj = EdX(args)
     basic.user_info(edx_obj)
 
-def cmd_run_course_completers(args):
+def cmd_report_course_completers(args):
     """
     Retrieve users who have completed a course 
     """
