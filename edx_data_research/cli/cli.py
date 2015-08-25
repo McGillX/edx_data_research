@@ -15,7 +15,7 @@ def main():
 
     # A list command
     list_parser = subparsers.add_parser('list', help='List commands')
-    list_parser.add_argument('action', action='store', choices=['all', 'basic'],
+    list_parser.add_argument(list_parser.prog.split(' ')[-1], action='store', choices=['all', 'basic'],
                               help='List anayltics commands based on choice')
 
     # An report command to execute the analysis and/or generate CSV reports
@@ -37,13 +37,21 @@ def main():
                             '(default: %(default)s)', action='store_true')
     report_subparsers = report_parser.add_subparsers(help='report', dest='report')
     basic_parser = report_subparsers.add_parser('basic', help='basic')
-    basic_parser.add_argument('action', help='Run analytics based on argument',
+    basic_parser.add_argument(basic_parser.prog.split(' ')[-1], help='Run analytics based on argument',
                              nargs='?', default='all')
     problem_id_parser = report_subparsers.add_parser('problem_id', help='problem_id')
-    problem_id_parser.add_argument('problem_id', help='Problem ID')
-
+    problem_id_parser.add_argument(problem_id_parser.prog.split(' ')[-1], help='Problem ID')
     args = parser.parse_args()
-    commands.__dict__['cmd_'+ args.command](args)
+    command = args.command
+    try:
+        temp = getattr(args, command)
+        cmd_func_name = ['cmd', command, temp]
+        while temp:
+            temp = getattr(args, temp)
+            cmd_func_name.append(temp)
+    except AttributeError:
+        cmd_func_name = '_'.join(cmd_func_name[:-1])
+    commands.__dict__[cmd_func_name](args)
 
 if __name__ == '__main__':
     main()
