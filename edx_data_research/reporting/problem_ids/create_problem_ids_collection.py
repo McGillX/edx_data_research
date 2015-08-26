@@ -10,12 +10,7 @@ relatively less because we run these queries on only a subset of the tracking lo
 
 Usage:
 
-python create_problem_ids_collection.py <db_name> 
-
-Note:
-
-Make sure the module base_edx is in the same directory as this script so that it 
-can be imported
+python -m problem_ids.create_problem_ids_collection.py <db_name> 
 
 '''
 from common.base_edx import EdXConnection
@@ -27,8 +22,11 @@ db_name = sys.argv[1]
 # contain the results of this script. Each new document will be inserted into
 # this new collection. The name of the resulting collection could be anything;
 # preferrably relevant to the course
-connection = EdXConnection(db_name, 'tracking', 'user_id_map', 'problem_ids')
+connection = EdXConnection(db_name, 'test1', 'tracking', 'user_id_map', 'problem_ids')
 collection = connection.get_access_to_collection()
+
+# Drop problem_ids collection if exists
+collection['problem_ids'].drop()
 
 cursor = collection['tracking'].find({'event_type' : 'problem_check', 'event_source' : 'server'})
 for document in cursor:
