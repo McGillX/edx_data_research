@@ -26,7 +26,7 @@ if len(sys.argv) < 3:
     No problem id given as a command line argument. Please provide a problem_id
 
     Usage:
-    python -m problem_ids.get_csv_report_by_problem_id <db_name> <problem_id> [--final_attempts]
+    ppython -m problem_ids.get_csv_report_by_problem_id <db_name> <problem_id> [--final_attempts]
 
     """
 
@@ -48,8 +48,7 @@ def _generate_name_from_problem_id(problem_id, display_name):
 cursor = collection['problem_ids'].find({'event.problem_id': problem_id})
 display_name = cursor[0]['module']['display_name']
 one_record = cursor[0]['event']
-problem_ids_keys = sorted(one_record['correct_map'].keys(),
-                          key=lambda x : int(x.split('_')[-2]))
+problem_ids_keys = sorted(one_record['correct_map'].keys())
 problem_ids = []
 for key in problem_ids_keys:
     try:
@@ -64,8 +63,7 @@ for key in problem_ids_keys:
 result = []
 for document in cursor:
     answers = []
-    for key in sorted(document['event']['correct_map'].keys(),
-                      key=lambda x : int(x.split('_')[-2])):
+    for key in sorted(document['event']['correct_map'].keys()):
         try:
             answers.append(document['event']['submission'][key]['answer'])
         except KeyError:
