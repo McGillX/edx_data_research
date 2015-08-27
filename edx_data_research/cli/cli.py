@@ -21,34 +21,44 @@ def main():
     # An report command to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report', help='Report commands')
     report_parser.add_argument('db_name',
-                             help='Name of database where each database '
-                             'corresponds to a course offering')
+                               help='Name of database where each database '
+                               'corresponds to a course offering')
     report_parser.add_argument('-u', '--uri', help='URI to MongoDB database '
                             '(default: mongodb://localhost:27017)')
-    report_parser.add_argument('-o', '--output', help='Path to directory to save '
-                            'CSV report (defaults to current directory: '
-                            '%(default)s)', default=os.getcwd(),
-                            dest='output_directory')
-    report_parser.add_argument('-r', '--row-limit', help='Number of rows per CSV '
-                            'file (default: %(default)s)', type=int,
-                            default=100000, dest='row_limit')
+    report_parser.add_argument('-o', '--output', help='Path to directory to '
+                               'save CSV report (defaults to current directory: '
+                               '%(default)s)', default=os.getcwd(),
+                               dest='output_directory')
+    report_parser.add_argument('-r', '--row-limit', help='Number of rows per '
+                               'file (default: %(default)s)', type=int,
+                                default=100000, dest='row_limit')
     report_parser.add_argument('-a', '--anonymize', help='Only include hash id '
-                            'of the students in output CSV report '
-                            '(default: %(default)s)', action='store_true')
+                               'of the students in output CSV report '
+                               '(default: %(default)s)', action='store_true')
     report_subparsers = report_parser.add_subparsers(help='report', dest='report')
-    basic_parser = report_subparsers.add_parser('basic', help='basic')
-    basic_parser.add_argument(basic_parser.prog.split(' ')[-1], help='Run analytics based on argument',
-                             nargs='?', default='all')
-    problem_id_parser = report_subparsers.add_parser('problem_id', help='problem_id')
-    problem_id_parser.add_argument(problem_id_parser.prog.split(' ')[-1], help='Problem ID')
+    basic_parser = report_subparsers.add_parser('basic', help='Run basic '
+                                                'report generation commands')
+    basic_parser.add_argument(basic_parser.prog.split(' ')[-1],
+                              help='Run analytics based on argument',
+                              nargs='?', default='all')
+    problem_id_parser = report_subparsers.add_parser('problem_id',
+                                                     help='Generate CSV '
+                                                     'reports for given problem id')
+                                                     
+    problem_id_parser.add_argument(problem_id_parser.prog.split(' ')[-1],
+                                   help='Problem ID')
+    problem_id_parser.add_argument('-f', '--final-attempt', action='store_true',
+                                   help="Only include students' final attempt "
+                                   "to the given problem id")
+
     args = parser.parse_args()
     command = args.command
     try:
-        temp = getattr(args, command)
-        cmd_func_name = ['cmd', command, temp]
-        while temp:
-            temp = getattr(args, temp)
-            cmd_func_name.append(temp)
+        attr = getattr(args, command)
+        cmd_func_name = ['cmd', command, attr]
+        while attr:
+            attr = getattr(args, attr)
+            cmd_func_name.append(attr)
     except AttributeError:
         cmd_func_name = '_'.join(cmd_func_name[:-1])
     commands.__dict__[cmd_func_name](args)

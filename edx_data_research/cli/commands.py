@@ -2,7 +2,8 @@
 In this module we define the interface between the cli input provided
 by the user and the analytics required by the user
 """
-from edx_data_research.reporting.basic import user_info, ip_to_country
+from edx_data_research.reporting.basic import (user_info, ip_to_country,
+                                               course_completers)
 from edx_data_research.reporting.edx_base import EdX
 
 
@@ -21,6 +22,3 @@ def cmd_report_basic(args):
 
 def cmd_report_problem_id(args):
     print 'problem id!!!'
-
-if __name__ == '__main__':
-    print globals()
