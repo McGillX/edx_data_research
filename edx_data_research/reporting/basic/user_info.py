@@ -32,5 +32,4 @@ def user_info(edx_obj):
                ['User Hash ID', 'User ID', 'Username', 'Name'])
     headers.extend(['Final Grade', 'Gender', 'Year of Birth',
                     'Level of Education', 'Country', 'City', 'Enrollment Date'])
-    edx_obj.generate_csv(result, headers, output_file=edx_obj.db.name+
-                         '_user_info.csv')
+    edx_obj.generate_csv(result, headers, edx_obj.db.name+'_user_info.csv')
