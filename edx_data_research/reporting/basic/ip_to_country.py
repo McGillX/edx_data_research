@@ -61,4 +61,5 @@ def ip_to_country(edx_obj):
                         result.append([key, value, 'SS',
                                       country_code_to_country['SS']])
     edx_obj.generate_csv(result, ['Username', 'IP Address', 'Country Code',
-                         'Country'], edx_obj.db.name+'_ip_to_country.csv')
+                         'Country'], edx_obj.report_name(edx_obj.db.name,
+                         __name__.split('.')[-1]))

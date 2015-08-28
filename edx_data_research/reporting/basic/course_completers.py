@@ -17,4 +17,5 @@ def course_completers(edx_obj):
         result.append([user_document['id'], user_document['username'],
                        item['name'], item['grade']])
     edx_obj.generate_csv(result, ['User ID','Username', 'Name', 'Grade'],
-                         edx_obj.db.name+'_course_completers.csv')
+                         edx_obj.report_name(edx_obj.db.name,
+                         __name__.split('.')[-1]))
