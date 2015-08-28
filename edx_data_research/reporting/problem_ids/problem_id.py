@@ -14,13 +14,13 @@ class ProblemId(EdX):
         super(self.__class__, self).__init__(args)
         self.problem_id = args.problem_id
         self.final_attempt = args.final_attempt
-
-def _generate_name_from_problem_id(problem_id, display_name, final_attempt):
-    '''Generate name of csv output file from problem id'''
-    attempts_name = '_FinalAttempts' if final_attempt else '_AllAttempts'
-    return ('_'.join(problem_id.split('/')[3:]) + '_' +
-            ''.join(e for e in display_name if e.isalnum()) + attempts_name +
-            '.csv')
+    
+    def report_name(self, *args):
+        '''Generate name of csv output file from problem id'''
+        attempts_name = '-FinalAttempts' if args[2] else '-AllAttempts'
+        return ('-'.join(arg.lower() for arg in args[0].split('/')[3:]) + '-' +
+                args[1].replace(':', '').replace(' ', '_') +
+                attempts_name + '.csv')
 
 def problem_id(edx_obj):
     edx_obj.collections = ['problem_ids']
@@ -60,9 +60,8 @@ def problem_id(edx_obj):
     if edx_obj.final_attempt:
         result = [max(items, key=lambda x : x[1]) for key, items in
                   groupby(sorted(result, key=lambda x : x[0]), lambda x : x[0])]
-    csv_report_name = _generate_name_from_problem_id(edx_obj.problem_id,
-                                                     display_name,
-                                                     edx_obj.final_attempt)
+    csv_report_name = edx_obj.report_name(edx_obj.problem_id, display_name,
+                                          edx_obj.final_attempt)
     headers = (['Hash ID'] if edx_obj.anonymize else
                ['Hash ID', 'User ID', 'Username'])
     headers.extend(['Attempt Number', 'Module', 'Time', 'Success',
