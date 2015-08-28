@@ -58,3 +58,6 @@ class EdX(object):
     @collections.setter
     def collections(self, _collections):
     	self._collections = {collection : self.db[collection] for collection in _collections}
+
+    def report_name(self, *args):
+        return '-'.join(item for item in args) + '.csv'
