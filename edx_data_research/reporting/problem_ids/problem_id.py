@@ -18,9 +18,11 @@ class ProblemId(EdX):
     def report_name(self, *args):
         '''Generate name of csv output file from problem id'''
         attempts_name = '-FinalAttempts' if args[2] else '-AllAttempts'
-        return ('-'.join(arg.lower() for arg in args[0].split('/')[3:]) + '-' +
-                args[1].replace(':', '').replace(' ', '_') +
-                attempts_name + '.csv')
+        display_name = ''
+        if args[1]:
+            display_name = '-' + args[1].replace(':', '').replace(' ', '_')
+        return ('-'.join(arg.lower() for arg in args[0].split('/')[3:]) +
+                display_name + attempts_name + '.csv')
 
 def problem_id(edx_obj):
     edx_obj.collections = ['problem_ids']
