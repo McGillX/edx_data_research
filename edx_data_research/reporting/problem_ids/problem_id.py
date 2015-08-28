@@ -50,11 +50,13 @@ def problem_id(edx_obj):
                 answers.append(document['event']['submission'][key]['answer'])
             except KeyError:
                 answers.append('')
-        result.append([document['hash_id'], document['username'],
-                       document['event']['attempts'],
-                       document['module']['display_name'], document['time'],
-                       document['event']['success'], document['event']['grade'],
-                       document['event']['max_grade']] + answers)
+        row = ([document['hash_id']] if edx_obj.anonymize else
+               [document['hash_id'], document['user_id'], document['username']])
+        row.extend([document['event']['attempts'],
+                   document['module']['display_name'], document['time'],
+                   document['event']['success'], document['event']['grade'],
+                   document['event']['max_grade']] + answers)
+        result.append(row)
     if edx_obj.final_attempt:
         result = [max(items, key=lambda x : x[1]) for key, items in
                   groupby(sorted(result, key=lambda x : x[0]), lambda x : x[0])]
