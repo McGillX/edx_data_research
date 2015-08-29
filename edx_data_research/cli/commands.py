@@ -5,8 +5,8 @@ by the user and the analytics required by the user
 from edx_data_research.reporting.basic import (user_info, ip_to_country,
                                                course_completers)
 from edx_data_research.reporting.edx_base import EdX
-from edx_data_research.reporting.problem_ids.problem_id import (ProblemId,
-                                                                problem_id)
+from edx_data_research.reporting.problem_ids.problem_ids import (ProblemIds,
+                                                                problem_ids)
 
 
 def cmd_list(args):
@@ -22,6 +22,6 @@ def cmd_report_basic(args):
     edx_obj = EdX(args)
     globals()[args.basic.replace('-', '_')](edx_obj)
 
-def cmd_report_problem_id(args):
-    edx_obj = ProblemId(args)
-    problem_id(edx_obj)
+def cmd_report_problem_ids(args):
+    edx_obj = ProblemIds(args)
+    problem_ids(edx_obj)

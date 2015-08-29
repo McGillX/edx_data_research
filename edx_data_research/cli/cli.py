@@ -38,29 +38,28 @@ def main():
     report_subparsers = report_parser.add_subparsers(help='report', dest='report')
     basic_parser = report_subparsers.add_parser('basic', help='Run basic '
                                                 'report generation commands')
-    basic_parser.add_argument(basic_parser.prog.split(' ')[-1],
-                              help='Run analytics based on argument',
-                              nargs='?', default='all')
-    problem_id_parser = report_subparsers.add_parser('problem_id',
+    basic_parser.add_argument('basic', help='Run analytics based on argument')
+    problem_ids_parser = report_subparsers.add_parser('problem-ids',
                                                      help='Generate CSV '
-                                                     'reports for given problem id')
+                                                     'reports for given problem ids')
                                                      
-    problem_id_parser.add_argument(problem_id_parser.prog.split(' ')[-1],
-                                   help='Problem ID')
-    problem_id_parser.add_argument('-f', '--final-attempt', action='store_true',
+    problem_ids_parser.add_argument('problem_ids', nargs='+', help='Problem ID')
+    problem_ids_parser.add_argument('-f', '--final-attempt', action='store_true',
                                    help="Only include students' final attempt "
-                                   "to the given problem id")
+                                   "to the given problem ids")
 
     args = parser.parse_args()
-    command = args.command
+    attr = args.command
+    cmd_func_name = ['cmd', attr]
     try:
-        attr = getattr(args, command)
-        cmd_func_name = ['cmd', command, attr]
         while attr:
             attr = getattr(args, attr)
+            if isinstance(attr, basestring):
+                attr = attr.replace('-', '_')
             cmd_func_name.append(attr)
-    except AttributeError:
-        cmd_func_name = '_'.join(cmd_func_name[:-1])
+    except (AttributeError, TypeError):
+        pass
+    cmd_func_name = '_'.join(cmd_func_name[:-1])
     commands.__dict__[cmd_func_name](args)
 
 if __name__ == '__main__':
