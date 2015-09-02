@@ -63,13 +63,19 @@ class Basic(EdX):
 
     def forum(self):
         '''Retrieve info from the forum collection for a given course'''
-        self.collections = ['forum']
+        self.collections = ['forum', 'user_id_map']
         cursor = self.collections['forum'].find()
         result = []
         for item in cursor:
-            result.append([item['_id'], item['author_username'], item['_type'],
-                           item.get('title', ''), item['body'],
-                           item['created_at']]) 
-        headers = ['ID', 'Author Username', 'Type', 'Title', 'Body', 'Created At Date']
+            user_id = int(item['author_id'])
+            hash_id = (self.collections['user_id_map']
+                       .find_one({'id' : user_id})['hash_id'])
+            row = self.anonymize_row([hash_id],
+                                     [user_id, item['author_username']],
+                                     [item['_type'], item.get('title', ''),
+                                      item['body'], item['created_at']])
+            result.append(row)
+        headers = self.anonymize_headers(['Type', 'Title', 'Body',
+                                          'Created At Date'])
         self.generate_csv(result, headers, self.report_name(self.db.name,
                           self.basic_cmd))
