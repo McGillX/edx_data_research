@@ -59,14 +59,16 @@ class ProblemIds(EdX):
                         answers.append(document['event']['submission'][key]['answer'])
                     except KeyError:
                         answers.append('')
-                row = ([document['hash_id']] if self.anonymize else
-                       [document['hash_id'], document['user_id'],
-                       document['username']])
-                row.extend([document['event']['attempts'],
-                           document['module']['display_name'], document['time'],
-                           document['event']['success'],
-                           document['event']['grade'],
-                           document['event']['max_grade']] + answers)
+                row = self.anonymize_row([document['hash_id']],
+                                         [document['user_id'],
+                                          document['username']],
+                                         [document['event']['attempts'],
+                                          document['module']['display_name'],
+                                          document['time'],
+                                          document['event']['success'],
+                                          document['event']['grade'],
+                                          document['event']['max_grade']] +
+                                          answers)
                 result.append(row)
             if self.final_attempt:
                 result = [max(items, key=lambda x : x[1]) for key, items in
@@ -74,8 +76,8 @@ class ProblemIds(EdX):
                           lambda x : x[0])]
             csv_report_name = self.report_name(problem_id, display_name,
                                                self.final_attempt)
-            headers = (['Hash ID'] if self.anonymize else
-                       ['Hash ID', 'User ID', 'Username'])
-            headers.extend(['Attempt Number', 'Module', 'Time', 'Success',
-                           'Grade Achieved', 'Max Grade'] + problem_id_questions)
+            headers = self.anonymize_row(['Hash ID'], ['User ID', 'Username'],
+                                         ['Attempt Number', 'Module', 'Time',
+                                          'Success', 'Grade Achieved',
+                                          'Max Grade'] + problem_id_questions)
             self.generate_csv(result, headers, csv_report_name)
