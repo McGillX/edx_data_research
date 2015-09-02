@@ -20,9 +20,10 @@ def cmd_report_basic(args):
     """
     Run basic analytics
     """
-    edx_obj = Basic(args) #EdX(args)
+    edx_obj = Basic(args)
     getattr(edx_obj, args.basic.replace('-', '_'))()
-    # globals()[args.basic.replace('-', '_')](edx_obj)
+    #edx_obj = EdX(args)
+    #globals()[args.basic.replace('-', '_')](edx_obj)
 
 def cmd_report_problem_ids(args):
     edx_obj = ProblemIds(args)

@@ -2,7 +2,12 @@ from edx_data_research.reporting.edx_base import EdX
 
 class Basic(EdX):
 
+    def __init__(self, args):
+        super(self.__class__, self).__init__(args)
+        self.basic_cmd = args.basic.replace('-', '_')
+
     def user_info(self):
+        '''Retrieve info about students registered in given course'''
         self.collections = ['certificates_generatedcertificate',
                             'auth_userprofile','user_id_map',
                             'student_courseenrollment']
@@ -32,4 +37,23 @@ class Basic(EdX):
         headers.extend(['Final Grade', 'Gender', 'Year of Birth',
                         'Level of Education', 'Country', 'City', 'Enrollment Date'])
         self.generate_csv(result, headers, self.report_name(self.db.name,
-                         __name__.split('.')[-1]))
+                          self.basic_cmd))
+
+    def course_completers(self):
+        '''
+        Extract the student IDs from the collection
+        certificates_generatedcertificate of the students who completed the
+        course and achieved a certificate. The ids are then used to extract
+        the usernames of the course completers
+        '''
+        self.collections = ['certificates_generatedcertificate', 'auth_user']
+        cursor = (self.collections['certificates_generatedcertificate']
+                  .find({'status' : 'downloadable'}))
+        result = []
+        for item in cursor:
+            user_document = (self.collections['auth_user']
+                             .find_one({"id" : item['user_id']}))
+            result.append([user_document['id'], user_document['username'],
+                           item['name'], item['grade']])
+        self.generate_csv(result, ['User ID','Username', 'Name', 'Grade'],
+                          self.report_name(self.db.name, self.basic_cmd))
