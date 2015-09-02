@@ -47,6 +47,9 @@ def main():
     problem_ids_parser.add_argument('-f', '--final-attempt', action='store_true',
                                    help="Only include students' final attempt "
                                    "to the given problem ids")
+    problem_ids_parser.add_argument('-d', '--display-names', nargs='+',
+                                   help="Take list of display names in same  "
+                                   "order as problem ids")
 
     args = parser.parse_args()
     attr = args.command
