@@ -1,5 +1,4 @@
 import csv
-import inspect
 import os
 
 from pymongo import MongoClient
@@ -61,3 +60,8 @@ class EdX(object):
 
     def report_name(self, *args):
         return '-'.join(item for item in args) + '.csv'
+
+    def anonymize_row(self, yes, no, rest):
+        row = yes if self.anonymize else yes + no
+        row.extend(rest)
+        return row
