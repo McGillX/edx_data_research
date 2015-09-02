@@ -3,7 +3,7 @@ In this module we define the interface between the cli input provided
 by the user and the analytics required by the user
 """
 from edx_data_research.reporting.basic import (user_info, ip_to_country,
-                                               course_completers)
+                                               course_completers, forum)
 from edx_data_research.reporting.edx_base import EdX
 from edx_data_research.reporting.problem_ids.problem_ids import (ProblemIds,
                                                                 problem_ids)
