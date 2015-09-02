@@ -55,5 +55,19 @@ class Basic(EdX):
                              .find_one({"id" : item['user_id']}))
             result.append([user_document['id'], user_document['username'],
                            item['name'], item['grade']])
-        self.generate_csv(result, ['User ID','Username', 'Name', 'Grade'],
-                          self.report_name(self.db.name, self.basic_cmd))
+        headers = ['User ID','Username', 'Name', 'Grade']
+        self.generate_csv(result, headers, self.report_name(self.db.name,
+                          self.basic_cmd))
+
+    def forum(self):
+        '''Retrieve info from the forum collection for a given course'''
+        self.collections = ['forum']
+        cursor = self.collections['forum'].find()
+        result = []
+        for item in cursor:
+            result.append([item['_id'], item['author_username'], item['_type'],
+                           item.get('title', ''), item['body'],
+                           item['created_at']]) 
+        headers = ['ID', 'Author Username', 'Type', 'Title', 'Body', 'Created At Date']
+        self.generate_csv(result, headers, self.report_name(self.db.name,
+                          self.basic_cmd))
