@@ -24,18 +24,20 @@ class Basic(EdX):
 	        hash_id = user_id_map['hash_id']
                 enrollment_date = (self.collections['student_courseenrollment']
                                    .find_one({'user_id' : user_id})['created'])
-                row = ([hash_id] if self.anonymize else
-                       [hash_id, user_id, username, item['name']])
-                row.extend([final_grade, item['gender'], item['year_of_birth'],
-                            item['level_of_education'], item['country'],
-                            item['city'], enrollment_date])
+                row = self.anonymize_row([hash_id], [user_id, username,
+                                         item['name']], [final_grade,
+                                         item['gender'], item['year_of_birth'],
+                                         item['level_of_education'],
+                                         item['country'], item['city'],
+                                         enrollment_date])
                 result.append(row)
             except KeyError:
                 print "Exception occurred for user_id {0}".format(user_id)
-        headers = (['User Hash ID'] if self.anonymize else
-                   ['User Hash ID', 'User ID', 'Username', 'Name'])
-        headers.extend(['Final Grade', 'Gender', 'Year of Birth',
-                        'Level of Education', 'Country', 'City', 'Enrollment Date'])
+        headers = self.anonymize_row(['User Hash ID'],
+                                     ['User ID', 'Username', 'Name'],
+                                     ['Final Grade', 'Gender', 'Year of Birth',
+                                      'Level of Education', 'Country', 'City',
+                                      'Enrollment Date'])
         self.generate_csv(result, headers, self.report_name(self.db.name,
                           self.basic_cmd))
 
