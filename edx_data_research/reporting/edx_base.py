@@ -65,3 +65,6 @@ class EdX(object):
         row = yes if self.anonymize else yes + no
         row.extend(rest)
         return row
+
+    def anonymize_headers(self, headers):
+        return self.anonymize_row(['Hash ID'], ['User ID', 'Username'], headers)
