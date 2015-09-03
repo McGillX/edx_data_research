@@ -1,4 +1,10 @@
+import csv
+import os
+
+from collections import defaultdict, namedtuple
+
 from edx_data_research.reporting.edx_base import EdX
+from edx_data_research.reporting.lib import geoip
 
 class Basic(EdX):
 
@@ -83,3 +89,55 @@ class Basic(EdX):
                                           'Created At Date'])
         self.generate_csv(result, headers, self.report_name(self.db.name,
                           self.basic_cmd))
+
+    def ip_to_country(self):
+        self.collections = ['tracking', 'user_id_map']
+        data_directory = os.path.abspath(os.path.dirname(__file__) + "/data")
+        with open(os.path.join(data_directory, 'country_code_to_country.csv')) as csv_file:
+            reader = csv.reader(csv_file)
+            country_code_to_country = dict(reader)
+        User = namedtuple('User', ['hash_id', 'user_id', 'username'])
+        geoip_data = geoip.GeoIP(os.path.join(data_directory, 'GeoIP.dat'))
+        cursor = self.collections['tracking'].find()
+        tracking = defaultdict(set)
+        for item in cursor:
+            username = item['username']
+            if username:
+                if username.isdigit():
+                    username = int(username)
+                user_id_map =  (self.collections['user_id_map']
+                                .find_one({'username' : username}))
+                user_id = user_id_map['id']
+                hash_id = user_id_map['hash_id']
+                user = User(hash_id, user_id, username)
+            else:
+                user = User('unknown', 'unknown', 'unknown')
+            tracking[user].add(item['ip'])
+            result = []
+            seen = set()
+            for user, ips in tracking.iteritems():
+                for ip in ips:
+                    try:
+                        country_code = geoip_data.country(ip)
+                        country = country_code_to_country[country_code]
+                    except KeyError:
+                        # IMPORTANT
+			# The following code for an exception are hardcoded for those
+			# IPs which do have a mapping to a country code but they were
+			# not available in GeoIP.dat (most probably because it was
+			# not updated). People using this script can either report this
+			# code (under except) and or additional conditions IP addresses
+			# which cannot be mapped to a country code stored in GeoIP.dat
+                        if ip == '41.79.120.29':
+                            country_code = 'SS'
+                            country = country_code_to_country['SS']
+                    if (user, ip, country) not in seen:
+                        seen.add((user, ip, country))
+                        row = self.anonymize_row([user.hash_id],
+                                                 [user.user_id, user.username],
+                                                 [ip, country_code, country])
+                        result.append(row)
+            headers = self.anonymize_headers(['IP Address', 'Country Code',
+                                              'Country'])
+            self.generate_csv(result, headers, self.report_name(self.db.name,
+                             self.basic_cmd))
