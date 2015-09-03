@@ -33,11 +33,9 @@ class Basic(EdX):
                 result.append(row)
             except KeyError:
                 print "Exception occurred for user_id {0}".format(user_id)
-        headers = self.anonymize_row(['User Hash ID'],
-                                     ['User ID', 'Username', 'Name'],
-                                     ['Final Grade', 'Gender', 'Year of Birth',
-                                      'Level of Education', 'Country', 'City',
-                                      'Enrollment Date'])
+        headers = self.anonymize_headers(['Name', 'Final Grade', 'Gender',
+                                          'Year of Birth', 'Level of Education',
+                                          'Country', 'City', 'Enrollment Date'])
         self.generate_csv(result, headers, self.report_name(self.db.name,
                           self.basic_cmd))
 
