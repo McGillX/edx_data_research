@@ -42,8 +42,8 @@ class Basic(EdX):
         headers = self.anonymize_headers(['Name', 'Final Grade', 'Gender',
                                           'Year of Birth', 'Level of Education',
                                           'Country', 'City', 'Enrollment Date'])
-        self.generate_csv(result, headers, self.report_name(self.db.name,
-                          self.basic_cmd))
+        report_name = self.report_name(self.db.name, self.basic_cmd)
+        self.generate_csv(result, headers, report_name)
 
     def course_completers(self):
         '''
@@ -68,8 +68,8 @@ class Basic(EdX):
                                      [item['name'], item['grade']])
             result.append(row)
         headers = self.anonymize_headers(['Name', 'Grade'])
-        self.generate_csv(result, headers, self.report_name(self.db.name,
-                          self.basic_cmd))
+        report_name = self.report_name(self.db.name, self.basic_cmd)
+        self.generate_csv(result, headers, report_name)
 
     def forum(self):
         '''Retrieve info from the forum collection for a given course'''
@@ -87,8 +87,8 @@ class Basic(EdX):
             result.append(row)
         headers = self.anonymize_headers(['Type', 'Title', 'Body',
                                           'Created At Date'])
-        self.generate_csv(result, headers, self.report_name(self.db.name,
-                          self.basic_cmd))
+        report_name = self.report_name(self.db.name, self.basic_cmd)
+	self.generate_csv(result, headers, report_name)
 
     def ip_to_country(self):
         self.collections = ['tracking', 'user_id_map']
@@ -155,5 +155,5 @@ class Basic(EdX):
             result.append(row)
 	headers = self.anonymize_headers(['IP Address', 'Country Code',
                                           'Country'])
-	self.generate_csv(result, headers, self.report_name(self.db.name,
-                          self.basic_cmd))
+        report_name = self.report_name(self.db.name, self.basic_cmd)
+	self.generate_csv(result, headers, report_name)
