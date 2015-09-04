@@ -96,48 +96,64 @@ class Basic(EdX):
         with open(os.path.join(data_directory, 'country_code_to_country.csv')) as csv_file:
             reader = csv.reader(csv_file)
             country_code_to_country = dict(reader)
-        User = namedtuple('User', ['hash_id', 'user_id', 'username'])
         geoip_data = geoip.GeoIP(os.path.join(data_directory, 'GeoIP.dat'))
-        cursor = self.collections['tracking'].find()
         tracking = defaultdict(set)
+        cursor = self.collections['tracking'].find()
         for item in cursor:
             username = item['username']
-            if username:
+            if not username:
+                username = 'unknown'
+            ip = item['ip']
+            if ip:
+                tracking[username].add(ip)
+        temp_result = []
+        seen = set()
+        for user, ips in tracking.iteritems():
+            for ip in ips:
+                try:
+	            country_code = geoip_data.country(ip)
+                    country = country_code_to_country[country_code]
+                except KeyError:
+                    # IMPORTANT
+                    # The following code for an exception are hardcoded for those
+                    # IPs which do have a mapping to a country code but they were
+                    # not available in GeoIP.dat (most probably because it was
+                    # not updated). People using this script can either report this
+                    # code (under except) and or additional conditions IP addresses
+                    # which cannot be mapped to a country code stored in GeoIP.dat
+                    if ip == '41.79.120.29':
+                        country_code = 'SS'
+                        country = country_code_to_country['SS']
+                    else:
+                        print "Key Error Exception for IP {0}".format(ip)
+                except Exception:
+                    print "Uknown exception for ip {0}".format(ip)
+                if (username, country) in seen:
+                    continue
+                if username != 'unknown':
+                    seen.add((username, country))
+                temp_result.append([username, ip, country_code, country])
+        result = []
+        for item in (a for a in result):
+            username = item[0]
+            if username == 'unknown':
+                user_id = 'unknown'
+                hash_id = 'unknown'
+            else:
                 if username.isdigit():
                     username = int(username)
                 user_id_map =  (self.collections['user_id_map']
                                 .find_one({'username' : username}))
-                user_id = user_id_map['id']
-                hash_id = user_id_map['hash_id']
-                user = User(hash_id, user_id, username)
-            else:
-                user = User('unknown', 'unknown', 'unknown')
-            tracking[user].add(item['ip'])
-            result = []
-            seen = set()
-            for user, ips in tracking.iteritems():
-                for ip in ips:
-                    try:
-                        country_code = geoip_data.country(ip)
-                        country = country_code_to_country[country_code]
-                    except KeyError:
-                        # IMPORTANT
-			# The following code for an exception are hardcoded for those
-			# IPs which do have a mapping to a country code but they were
-			# not available in GeoIP.dat (most probably because it was
-			# not updated). People using this script can either report this
-			# code (under except) and or additional conditions IP addresses
-			# which cannot be mapped to a country code stored in GeoIP.dat
-                        if ip == '41.79.120.29':
-                            country_code = 'SS'
-                            country = country_code_to_country['SS']
-                    if (user, ip, country) not in seen:
-                        seen.add((user, ip, country))
-                        row = self.anonymize_row([user.hash_id],
-                                                 [user.user_id, user.username],
-                                                 [ip, country_code, country])
-                        result.append(row)
-            headers = self.anonymize_headers(['IP Address', 'Country Code',
-                                              'Country'])
-            self.generate_csv(result, headers, self.report_name(self.db.name,
-                             self.basic_cmd))
+                if user_id_map:
+                    user_id = user_id_map['id']
+                    hash_id = user_id_map['hash_id']
+                else:
+                    user_id = 'unknown'
+                    hash_id = 'unknown'
+            row = self.anonymize_row([hash_id], [user_id, username],
+                                     [item[1], item[2], item[3]])
+            result.append(row)
+	headers = self.anonymize_headers(['IP Address', 'Country Code',
+                                          'Country'])
+	self.generate_csv(result, headers, self.report_name(self.db.name,
+                          self.basic_cmd))
