@@ -134,7 +134,7 @@ class Basic(EdX):
                     seen.add((username, country))
                 temp_result.append([username, ip, country_code, country])
         result = []
-        for item in (a for a in result):
+        for item in (a for a in temp_result):
             username = item[0]
             if username == 'unknown':
                 user_id = 'unknown'
