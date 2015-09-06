@@ -76,8 +76,8 @@ class ProblemIds(EdX):
                           lambda x : x[0])]
             csv_report_name = self.report_name(problem_id, display_name,
                                                self.final_attempt)
-            headers = self.anonymize_row(['Hash ID'], ['User ID', 'Username'],
-                                         ['Attempt Number', 'Time', 'Success',
-                                          'Grade Achieved', 'Max Grade'] +
-                                          problem_id_questions)
+            headers = self.anonymize_headers(['Attempt Number', 'Time',
+                                              'Success', 'Grade Achieved',
+                                              'Max Grade'] + 
+                                              problem_id_questions)
             self.generate_csv(result, headers, csv_report_name)
