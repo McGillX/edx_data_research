@@ -30,8 +30,8 @@ class Basic(EdX):
 	        hash_id = user_id_map['hash_id']
                 enrollment_date = (self.collections['student_courseenrollment']
                                    .find_one({'user_id' : user_id})['created'])
-                row = self.anonymize_row([hash_id], [user_id, username,
-                                         item['name']], [final_grade,
+                row = self.anonymize_row([hash_id], [user_id, username],
+                                         [item['name'], final_grade,
                                          item['gender'], item['year_of_birth'],
                                          item['level_of_education'],
                                          item['country'], item['city'],
