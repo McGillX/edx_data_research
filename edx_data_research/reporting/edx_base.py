@@ -46,8 +46,8 @@ class EdX(object):
                        (index + 1) * self.row_limit]):
                 # This loop looks for unicode objects and encodes them to ASCII to avoif Unicode errors,
                 # for e.g. UnicodeEncodeError: 'ascii' codec can't encode character u'\xf1'
-                row = [item.encode('ascii', 'ignore') for item in row
-                       if isinstance(item, unicode)]
+                row = [item.encode('ascii', 'ignore')  if isinstance(item, unicode)
+                       else item for item in row]
                 writer.writerow(row)
 		
     @property
