@@ -145,6 +145,7 @@ class Basic(EdX):
 	self.generate_csv(result, headers, report_name)
 
     def date_of_registration(self):
+        '''Retrieve date of registration of students'''
         self.collections = ['student_courseenrollment', 'user_id_map']
         cursor = self.collections['student_courseenrollment'].find()
         seen = set()
@@ -158,5 +159,42 @@ class Basic(EdX):
                                          [item['created'].split()[0]])
                 result.append(row)
         headers = self.anonymize_headers(['Date of Registration'])
+        report_name = self.report_name(self.db.name, self.basic_cmd)
+        self.generate_csv(result, headers, report_name)
+
+    def sequential_aggregation(self):
+        '''
+        Retrieve the number of various categories under each sequential in 
+        the collection course_structure
+        '''
+        self.collections = ['course_structure']
+        cursor = (self.collections['course_structure']
+                  .find({'category' : 'sequential'}))
+        result = []
+        for item in cursor:
+            children = item['children']
+            aggregate_vertical = defaultdict(int)
+            aggregate_category = defaultdict(int)
+            for child_id in children:
+                child = (self.collections['course_structure']
+                         .find_one({'_id' : child_id}))
+                aggregate_vertical[child['category']] += 1
+                for grand_child_id in child['children']:
+                    grand_child = (self.collections['course_structure']
+                                   .find_one({'_id' : grand_child_id}))
+                    aggregate_category[grand_child['category']] += 1
+            result.append([item['_id'],
+                           item['parent_data']['chapter_display_name'],
+                           item['metadata']['display_name'], len(children),
+                           aggregate_category['video'],
+                           aggregate_category['html'],
+                           aggregate_category['problem'],
+                           aggregate_category['discussion'],
+                           aggregate_category['poll_question'],
+                           aggregate_category['word_cloud']])
+        headers = ['Sequential ID', 'Chapter Display Name', 'Sequential Name',
+                   'Number of Verticals', 'Number of Videos', 'Number of HTMLs',
+                   'Number of Problems' ,'Number of Discussions',
+                   'Number of Poll Questions', 'Number of Word Clouds']
         report_name = self.report_name(self.db.name, self.basic_cmd)
         self.generate_csv(result, headers, report_name)
