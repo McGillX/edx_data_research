@@ -42,7 +42,8 @@ class EdX(object):
         with open(output_file_path, 'w') as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(self.headers)
-            for row in self.csv_data[index * self.row_limit : (index + 1) * self.row_limit]:
+            for row in (item for item in self.csv_data[index * self.row_limit :
+                       (index + 1) * self.row_limit]):
                 # This loop looks for unicode objects and encodes them to ASCII to avoif Unicode errors,
                 # for e.g. UnicodeEncodeError: 'ascii' codec can't encode character u'\xf1'
                 row = [item.encode('ascii', 'ignore') for item in row
