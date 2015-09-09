@@ -24,10 +24,7 @@ class Basic(EdX):
             try:
                 final_grade = (self.collections['certificates_generatedcertificate']
                                .find_one({'user_id' : user_id})['grade'])
-                user_id_map = (self.collections['user_id_map']
-                               .find_one({'id' : user_id}))
-                username = user_id_map['username']
-	        hash_id = user_id_map['hash_id']
+                hash_id, username = self.user_map(user_id=user_id)
                 enrollment_date = (self.collections['student_courseenrollment']
                                    .find_one({'user_id' : user_id})['created'])
                 row = self.anonymize_row([hash_id], [user_id, username],
@@ -58,10 +55,7 @@ class Basic(EdX):
         result = []
         for item in cursor:
             user_id = item['user_id']
-            user_id_map = (self.collections['user_id_map']
-                           .find_one({'id' : user_id}))
-            username = user_id_map['username']
-            hash_id = user_id_map['hash_id']
+            hash_id, username = self.user_map(user_id=user_id)
             row = self.anonymize_row([hash_id],
                                      [user_id, username],
                                      [item['name'], item['grade']])
@@ -77,8 +71,7 @@ class Basic(EdX):
         result = []
         for item in cursor:
             user_id = int(item['author_id'])
-            hash_id = (self.collections['user_id_map']
-                       .find_one({'id' : user_id})['hash_id'])
+            hash_id, _ = self.user_map(user_id=user_id)
             row = self.anonymize_row([hash_id],
                                      [user_id, item['author_username']],
                                      [item['_type'], item.get('title', ''),
@@ -136,19 +129,13 @@ class Basic(EdX):
         for item in (a for a in temp_result):
             username = item[0]
             if username == 'unknown':
-                user_id = 'unknown'
-                hash_id = 'unknown'
+                hash_id, user_id = 'unknown', 'unknown'
             else:
                 if username.isdigit():
                     username = int(username)
-                user_id_map =  (self.collections['user_id_map']
-                                .find_one({'username' : username}))
-                if user_id_map:
-                    user_id = user_id_map['id']
-                    hash_id = user_id_map['hash_id']
-                else:
-                    user_id = 'unknown'
-                    hash_id = 'unknown'
+                hash_id, user_id = self.user_map(username=username)
+                if not (hash_id and user_id):
+                    hash_id, user_id = 'unknown', 'unknown'
             row = self.anonymize_row([hash_id], [user_id, username],
                                      [item[1], item[2], item[3]])
             result.append(row)
@@ -166,10 +153,7 @@ class Basic(EdX):
             user_id = item['user_id']
             if user_id not in seen:
                 seen.add(user_id)
-                user_id_map = (self.collections['user_id_map']
-                               .find_one({'id' : user_id}))
-                username = user_id_map['username']
-                hash_id = user_id_map['hash_id']
+                hash_id, username = self.user_map(user_id=user_id)
                 row = self.anonymize_row([hash_id], [user_id, username],
                                          [item['created'].split()[0]])
                 result.append(row)
