@@ -9,7 +9,7 @@ class EdX(object):
     def __init__(self, args):
         self.uri = args.uri
         client = MongoClient(self.uri)
-        self.db = client[args.db_name]
+        self._db = client[args.db_name]
         self._collections = None
         self.output_directory = args.output_directory
         self.row_limit = args.row_limit
@@ -64,6 +64,10 @@ class EdX(object):
     def collections(self, _collections):
     	self._collections = {collection : self.db[collection]
                              for collection in _collections}
+
+    @property
+    def db(self):
+        return self._db.name
 
     def report_name(self, *args):
         return '-'.join(item for item in args) + '.csv'
