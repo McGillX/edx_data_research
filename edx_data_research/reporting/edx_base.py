@@ -68,3 +68,14 @@ class EdX(object):
 
     def anonymize_headers(self, headers):
         return self.anonymize_row(['Hash ID'], ['User ID', 'Username'], headers)
+
+    def user_map(self, user_id=None, username=None):
+        if username:
+            user_map = (self.collections['user_id_map']
+                        .find_one({'username' : username}))
+            return ((user_map['hash_id'], user_map['id']) if user_map
+                    else (None, None))
+        user_map = (self.collections['user_id_map']
+                    .find_one({'id' : user_id}))
+        return ((user_map['hash_id'], user_map['username']) if user_map
+                else (None, None))
