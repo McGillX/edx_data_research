@@ -52,19 +52,18 @@ class Basic(EdX):
         course and achieved a certificate. The ids are then used to extract
         the usernames of the course completers
         '''
-        self.collections = ['certificates_generatedcertificate', 'auth_user',
-                            'user_id_map']
+        self.collections = ['certificates_generatedcertificate', 'user_id_map']
         cursor = (self.collections['certificates_generatedcertificate']
                   .find({'status' : 'downloadable'}))
         result = []
         for item in cursor:
-            user_document = (self.collections['auth_user']
-                             .find_one({"id" : item['user_id']}))
-            user_id = user_document['id']
-            hash_id = (self.collections['user_id_map']
-                       .find_one({'id' : user_id})['hash_id'])
+            user_id = item['user_id']
+            user_id_map = (self.collections['user_id_map']
+                           .find_one({'id' : user_id}))
+            username = user_id_map['username']
+            hash_id = user_id_map['hash_id']
             row = self.anonymize_row([hash_id],
-                                     [user_id, user_document['username']],
+                                     [user_id, username],
                                      [item['name'], item['grade']])
             result.append(row)
         headers = self.anonymize_headers(['Name', 'Grade'])
@@ -157,3 +156,6 @@ class Basic(EdX):
                                           'Country'])
         report_name = self.report_name(self.db.name, self.basic_cmd)
 	self.generate_csv(result, headers, report_name)
+
+    def date_of_registration(self):
+        pass #self.collections = ['certificates_generatedcertificate', ]
