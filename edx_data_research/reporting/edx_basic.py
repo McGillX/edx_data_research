@@ -158,4 +158,21 @@ class Basic(EdX):
 	self.generate_csv(result, headers, report_name)
 
     def date_of_registration(self):
-        pass #self.collections = ['certificates_generatedcertificate', ]
+        self.collections = ['student_courseenrollment', 'user_id_map']
+        cursor = self.collections['student_courseenrollment'].find()
+        seen = set()
+        result = []
+        for item in cursor:
+            user_id = item['user_id']
+            if user_id not in seen:
+                seen.add(user_id)
+                user_id_map = (self.collections['user_id_map']
+                               .find_one({'id' : user_id}))
+                username = user_id_map['username']
+                hash_id = user_id_map['hash_id']
+                row = self.anonymize_row([hash_id], [user_id, username],
+                                         [item['created'].split()[0]])
+                result.append(row)
+        headers = self.anonymize_headers(['Date of Registration'])
+        report_name = self.report_name(self.db.name, self.basic_cmd)
+        self.generate_csv(result, headers, report_name)
