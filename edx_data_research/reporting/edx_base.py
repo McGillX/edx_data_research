@@ -62,7 +62,7 @@ class EdX(object):
     	
     @collections.setter
     def collections(self, _collections):
-    	self._collections = {collection : self.db[collection]
+    	self._collections = {collection : self._db[collection]
                              for collection in _collections}
 
     @property
