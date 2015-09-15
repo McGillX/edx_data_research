@@ -22,3 +22,7 @@ def cmd_report_basic(args):
 def cmd_report_problem_ids(args):
     edx_obj = ProblemIds(args)
     getattr(edx_obj, args.report.replace('-', '_'))()
+
+def cmd_stats(args):
+    edx_obj = Stats(args)
+    getattr(edx_obj, args.report.replace('-', '_'))()

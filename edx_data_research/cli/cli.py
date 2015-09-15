@@ -50,6 +50,11 @@ def main():
     problem_ids_parser.add_argument('-d', '--display-names', nargs='+',
                                    help="Take list of display names in same  "
                                    "order as problem ids")
+                                   
+    # A stats command to print basic stats about given course
+    stats_parser = subparsers.add_parser('stats', help='Report commands')
+    stats_parser.add_argument('-c', '--csv', help='Print output to a csv report '
+                               '(default: %(default)s)', action='store_true')
 
     args = parser.parse_args()
     attr = args.command
