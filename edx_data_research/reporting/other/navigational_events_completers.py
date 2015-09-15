@@ -30,7 +30,7 @@ cursor = collection['tracking_atoc185x'].aggregate([{"$match" : {"event_source" 
 result = []
 for item in cursor['result']:
     try:
-        result.append([item['_id']['chapter_name'], item['_id']['display_name'], item['_id']['event_type'], item['_id'].get('event_old', 0), item['_id']['event_new'], ite    m['count']])
+        result.append([item['_id']['chapter_name'], item['_id']['display_name'], item['_id']['event_type'], item['_id'].get('event_old', 0), item['_id']['event_new'], item['count']])
     except:
         pass
 

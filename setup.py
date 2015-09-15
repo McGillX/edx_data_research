@@ -30,7 +30,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 
-setup(name = 'McGillX',
+setup(name = 'moocx',
       version = edx_data_research.__version__,
       author = edx_data_research.__author__,
       author_email = edx_data_research.__email__,
