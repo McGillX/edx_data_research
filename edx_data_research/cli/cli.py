@@ -71,18 +71,11 @@ def main():
 
     subparsers = get_subparsers(parser)
     args = parser.parse_args()
-    attr = args.command
-    cmd_func_name = ['cmd', attr]
-    try:
-        while attr:
-            attr = getattr(args, attr)
-            if isinstance(attr, basestring):
-                attr = attr.replace('-', '_')
-            cmd_func_name.append(attr)
-    except (AttributeError, TypeError):
-        pass
     cmd_func_name = '_'.join(cmd_func_name[:-1])
-    #commands.__dict__[cmd_func_name](args)
+    subparsers_list = [item.replace('-', '_') for item in vars(args).values()
+                       if isinstance(item, basestring) and item in subparsers]
+    cmd_func_name = 'cmd_' + '_'.join(subparsers_list)
+    commands.__dict__[cmd_func_name](args)
 
 if __name__ == '__main__':
     main()
