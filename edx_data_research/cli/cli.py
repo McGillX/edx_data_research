@@ -1,5 +1,5 @@
+import Queue
 import argparse
-import inspect
 import os
 import sys
 
@@ -58,18 +58,15 @@ def main():
 
     def get_subparsers(parser):
         subparsers = set()
-        queue = []
-        for action in parser._actions:
-            if isinstance(action, argparse._SubParsersAction):
-                subparsers.update(action.choices.keys())
-                queue.extend(action.choices.values())
-                break
-        while queue:
-            _subparser = queue.pop(0)
+        queue = Queue.Queue()
+        queue.put(parser)
+        while not queue.empty():
+            _subparser = queue.get()
             for action in _subparser._actions:
                 if isinstance(action, argparse._SubParsersAction):
-                    queue.extend(action.choices.values())
+                    [queue.put(item) for item in action.choices.values()]
                     subparsers.update(action.choices.keys())
+                    break
         return subparsers
 
     subparsers = get_subparsers(parser)
@@ -84,9 +81,8 @@ def main():
             cmd_func_name.append(attr)
     except (AttributeError, TypeError):
         pass
-    cmd_func_name = '_'.join(cmd_func_name)
     cmd_func_name = '_'.join(cmd_func_name[:-1])
-    commands.__dict__[cmd_func_name](args)
+    #commands.__dict__[cmd_func_name](args)
 
 if __name__ == '__main__':
     main()
