@@ -52,10 +52,27 @@ def main():
                                    "order as problem ids")
                                    
     # A stats command to print basic stats about given course
-    stats_parser = subparsers.add_parser('stats', help='Report commands')
+    stats_parser = report_subparsers.add_parser('stats', help='Report commands')
     stats_parser.add_argument('-c', '--csv', help='Print output to a csv report '
                                '(default: %(default)s)', action='store_true')
 
+    def get_subparsers(parser):
+        subparsers = set()
+        queue = []
+        for action in parser._actions:
+            if isinstance(action, argparse._SubParsersAction):
+                subparsers.update(action.choices.keys())
+                queue.extend(action.choices.values())
+                break
+        while queue:
+            _subparser = queue.pop(0)
+            for action in _subparser._actions:
+                if isinstance(action, argparse._SubParsersAction):
+                    queue.extend(action.choices.values())
+                    subparsers.update(action.choices.keys())
+        return subparsers
+
+    subparsers = get_subparsers(parser)
     args = parser.parse_args()
     attr = args.command
     cmd_func_name = ['cmd', attr]
@@ -67,6 +84,7 @@ def main():
             cmd_func_name.append(attr)
     except (AttributeError, TypeError):
         pass
+    cmd_func_name = '_'.join(cmd_func_name)
     cmd_func_name = '_'.join(cmd_func_name[:-1])
     commands.__dict__[cmd_func_name](args)
 
