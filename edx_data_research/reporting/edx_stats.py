@@ -7,6 +7,7 @@ class Stats(EdX):
 
     def __init__(self, args):
         super(self.__class__, self).__init__(args)
+        self.csv = args.csv
         self.number_of_students = 0
 
     def stats(self):
@@ -16,9 +17,11 @@ class Stats(EdX):
         age_stats = self._age()
         gender_stats = self._gender()
         certificate_stats = self._certificate()
-        print age_stats
-        print gender_stats
-	print certificate_stats
+        result = age_stats + gender_stats + certificate_stats
+        if self.csv:
+            report_name = self.report_name(self.db, 'stats')
+            headers = ['Name', 'Stat']
+            self.generate_csv(result, headers, report_name)
 
     def _age(self):
         age_breakdown = defaultdict(int)
