@@ -47,7 +47,8 @@ class Stats(EdX):
 	        age_breakdown['Age - None'] += 1
         order = ['Age - Under 20', 'Age - 20-29', 'Age - 30-39', 'Age - 40-49',
                  'Age - 50-69', 'Age - 70+', 'Age - None']
-        return [(key, age_breakdown[key]) for key in order]
+        return [(key, age_breakdown[key] * 100.0 / self.number_of_students)
+                for key in order]
 
     def _gender(self):
         gender_breakdown = defaultdict(int)
@@ -62,11 +63,10 @@ class Stats(EdX):
                 gender_breakdown['Gender - Other'] += 1
             else:
                 gender_breakdown['Gender - None'] += 1
-        gender_breakdown = {key: value * 100.0 / self.number_of_students
-                            for key, value in gender_breakdown.iteritems()}
         order = ['Gender - Male', 'Gender - Female', 'Gender - Other',
                  'Gender - None']
-        return [(key, gender_breakdown[key]) for key in order]
+        return [(key, gender_breakdown[key] * 100.0 / self.number_of_students)
+                for key in order]
 
     def _certificate(self):
         certificate_breakdown = defaultdict(int)
@@ -77,8 +77,7 @@ class Stats(EdX):
                 certificate_breakdown['Certificate - No'] += 1
             elif status == 'downloadable':
                 certificate_breakdown['Certificate - Yes'] += 1
-        certificate_breakdown = {key: value * 100.0 / self.number_of_students
-                                 for key, value in certificate_breakdown.iteritems()}
         order = ['Certificate - Yes', 'Certificate - No']
-        return [(key, certificate_breakdown[key]) for key in order]
+        return [(key, certificate_breakdown[key] * 100.0 / self.number_of_students)
+                for key in order]
 
