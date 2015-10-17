@@ -1,6 +1,8 @@
 from collections import defaultdict
 from datetime import date
 
+from prettytable import PrettyTable
+
 from edx_data_research.reporting.edx_base import EdX
 
 class Stats(EdX):
@@ -18,10 +20,17 @@ class Stats(EdX):
         gender_stats = self._gender()
         certificate_stats = self._certificate()
         result = age_stats + gender_stats + certificate_stats
+        headers = ['Name', 'Stat']
         if self.csv:
             report_name = self.report_name(self.db, 'stats')
-            headers = ['Name', 'Stat']
             self.generate_csv(result, headers, report_name)
+        else:
+	    table = PrettyTable(headers)
+            table.align[headers[0]] = 'l'
+            table.align[headers[1]] = 'c'
+            for row in result:
+                table.add_row(row)
+	    print table
 
     def _age(self):
         age_breakdown = defaultdict(int)
