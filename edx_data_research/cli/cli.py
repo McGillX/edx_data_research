@@ -1,5 +1,6 @@
 import Queue
 import argparse
+import collections
 import os
 import sys
 
@@ -71,9 +72,8 @@ def main():
 
     subparsers = get_subparsers(parser)
     args = parser.parse_args()
-    cmd_func_name = '_'.join(cmd_func_name[:-1])
     subparsers_list = [item.replace('-', '_') for item in vars(args).values()
-                       if isinstance(item, basestring) and item in subparsers]
+                       if isinstance(item, collections.Hashable) and item in subparsers]
     cmd_func_name = 'cmd_' + '_'.join(subparsers_list)
     commands.__dict__[cmd_func_name](args)
 
