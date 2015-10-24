@@ -14,13 +14,24 @@ def main():
 
     subparsers = parser.add_subparsers(help='commands', dest='command')
 
-    # A list command
-    list_parser = subparsers.add_parser('list', help='List commands')
-    list_parser.add_argument(list_parser.prog.split(' ')[-1], action='store', choices=['all', 'basic'],
-                              help='List anayltics commands based on choice')
+    # A parse command
+    parse_parser = subparsers.add_parser('parse',
+                                         help='Parse edX course data and '
+                                         'migrate to MongoDB database')
+    parse_parser.add_argument('db_name',
+                              help='Name of database where each database '
+                              'corresponds to a course offering')
+    parse_parser.add_argument('-u', '--uri', help='URI to MongoDB database '
+                              '(default: mongodb://localhost:27017)')
+    parse_parser.add_argument('-o', '--output', help='Path to directory to '
+                              'save CSV report (defaults to current directory: '
+                              '%(default)s)', default=os.getcwd(),
+                              dest='output_directory')
 
     # An report command to execute the analysis and/or generate CSV reports
-    report_parser = subparsers.add_parser('report', help='Report commands')
+    report_parser = subparsers.add_parser('report',
+                                          help='Report commands to execute the '
+                                          'analysis and/or generate CSV reports')
     report_parser.add_argument('db_name',
                                help='Name of database where each database '
                                'corresponds to a course offering')
