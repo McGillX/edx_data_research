@@ -12,7 +12,7 @@ def main():
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s 0.1.0')
 
-    subparsers = parser.add_subparsers(help='commands', dest='command')
+    subparsers = parser.add_subparsers(metavar='<command>', dest='command')
 
     # A parse command
     parse_parser = subparsers.add_parser('parse',
@@ -21,12 +21,15 @@ def main():
     parse_parser.add_argument('db_name',
                               help='Name of database where each database '
                               'corresponds to a course offering')
+    parse_parser.add_argument('collection',
+                              help='Name of collection where data is to be '
+                              'migrated')
     parse_parser.add_argument('-u', '--uri', help='URI to MongoDB database '
                               '(default: mongodb://localhost:27017)')
-    parse_parser.add_argument('-o', '--output', help='Path to directory to '
-                              'save CSV report (defaults to current directory: '
-                              '%(default)s)', default=os.getcwd(),
-                              dest='output_directory')
+    parse_subparsers = parse_parser.add_subparsers(metavar='<parse>', dest='parse')
+    sql_parser = parse_subparsers.add_parser('sql', help='Migrate SQL files')
+    sql_parser.add_argument('file', help='Path to SQL file to migrate')
+
 
     # An report command to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report',
@@ -47,7 +50,7 @@ def main():
     report_parser.add_argument('-a', '--anonymize', help='Only include hash id '
                                'of the students in output CSV report '
                                '(default: %(default)s)', action='store_true')
-    report_subparsers = report_parser.add_subparsers(help='report', dest='report')
+    report_subparsers = report_parser.add_subparsers(metavar='<report>', dest='report')
     basic_parser = report_subparsers.add_parser('basic', help='Run basic '
                                                 'report generation commands')
     basic_parser.add_argument('basic', help='Run analytics based on argument')
@@ -83,8 +86,9 @@ def main():
 
     subparsers = get_subparsers(parser)
     args = parser.parse_args()
-    subparsers_list = [item.replace('-', '_') for item in vars(args).values()
-                       if isinstance(item, collections.Hashable) and item in subparsers]
+    args_list = (getattr(args, item) for item in dir(args) if not item.startswith('_'))
+    subparsers_list = (item.replace('-', '_') for item in args_list
+                       if isinstance(item, collections.Hashable) and item in subparsers)
     cmd_func_name = 'cmd_' + '_'.join(subparsers_list)
     commands.__dict__[cmd_func_name](args)
 
