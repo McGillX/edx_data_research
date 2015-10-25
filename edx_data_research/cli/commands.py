@@ -27,3 +27,7 @@ def cmd_report_problem_ids(args):
 def cmd_report_stats(args):
     edx_obj = Stats(args)
     getattr(edx_obj, args.report.replace('-', '_'))()
+
+def cmd_parse_sql(args):
+    edx_obj = SQL(args)
+    edx_obj.migrate()
