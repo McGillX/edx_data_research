@@ -3,9 +3,9 @@ from datetime import date
 
 from prettytable import PrettyTable
 
-from edx_data_research.reporting.edx_base import EdX
+from edx_data_research.reporting.edx_base import EdXReport
 
-class Stats(EdX):
+class Stats(EdXReport):
 
     def __init__(self, args):
         super(self.__class__, self).__init__(args)
@@ -22,7 +22,7 @@ class Stats(EdX):
         result = age_stats + gender_stats + certificate_stats
         headers = ['Name', 'Stat']
         if self.csv:
-            report_name = self.report_name(self.db, 'stats')
+            report_name = self.report_name(self.db_name, 'stats')
             self.generate_csv(result, headers, report_name)
         else:
 	    table = PrettyTable(headers)

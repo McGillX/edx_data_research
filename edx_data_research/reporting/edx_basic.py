@@ -3,10 +3,10 @@ import os
 
 from collections import defaultdict, namedtuple
 
-from edx_data_research.reporting.edx_base import EdX
+from edx_data_research.reporting.edx_base import EdXReport
 from edx_data_research.reporting.lib import geoip
 
-class Basic(EdX):
+class Basic(EdXReport):
 
     def __init__(self, args):
         super(self.__class__, self).__init__(args)
@@ -39,7 +39,7 @@ class Basic(EdX):
         headers = self.anonymize_headers(['Name', 'Final Grade', 'Gender',
                                           'Year of Birth', 'Level of Education',
                                           'Country', 'City', 'Enrollment Date'])
-        report_name = self.report_name(self.db, self.basic_cmd)
+        report_name = self.report_name(self.db_name, self.basic_cmd)
         self.generate_csv(result, headers, report_name)
 
     def course_completers(self):
@@ -61,7 +61,7 @@ class Basic(EdX):
                                      [item['name'], item['grade']])
             result.append(row)
         headers = self.anonymize_headers(['Name', 'Grade'])
-        report_name = self.report_name(self.db, self.basic_cmd)
+        report_name = self.report_name(self.db_name, self.basic_cmd)
         self.generate_csv(result, headers, report_name)
 
     def forum(self):
@@ -79,7 +79,7 @@ class Basic(EdX):
             result.append(row)
         headers = self.anonymize_headers(['Type', 'Title', 'Body',
                                           'Created At Date'])
-        report_name = self.report_name(self.db, self.basic_cmd)
+        report_name = self.report_name(self.db_name, self.basic_cmd)
 	self.generate_csv(result, headers, report_name)
 
     def ip_to_country(self):
@@ -142,7 +142,7 @@ class Basic(EdX):
             result.append(row)
 	headers = self.anonymize_headers(['IP Address', 'Country Code',
                                           'Country'])
-        report_name = self.report_name(self.db, self.basic_cmd)
+        report_name = self.report_name(self.db_name, self.basic_cmd)
 	self.generate_csv(result, headers, report_name)
 
     def date_of_registration(self):
@@ -160,7 +160,7 @@ class Basic(EdX):
                                          [item['created'].split()[0]])
                 result.append(row)
         headers = self.anonymize_headers(['Date of Registration'])
-        report_name = self.report_name(self.db, self.basic_cmd)
+        report_name = self.report_name(self.db_name, self.basic_cmd)
         self.generate_csv(result, headers, report_name)
 
     def sequential_aggregation(self):
@@ -197,5 +197,5 @@ class Basic(EdX):
                    'Number of Verticals', 'Number of Videos', 'Number of HTMLs',
                    'Number of Problems' ,'Number of Discussions',
                    'Number of Poll Questions', 'Number of Word Clouds']
-        report_name = self.report_name(self.db, self.basic_cmd)
+        report_name = self.report_name(self.db_name, self.basic_cmd)
         self.generate_csv(result, headers, report_name)

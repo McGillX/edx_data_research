@@ -1,16 +1,13 @@
 import csv
 import os
 
-from pymongo import MongoClient
+from edx_data_research.edx_base import EdX
 
-
-class EdX(object):
+class EdXReport(EdX):
 
     def __init__(self, args):
-        self.uri = args.uri
         client = MongoClient(self.uri)
-        self._db = client[args.db_name]
-        self._collections = None
+        self.db = client[self.db_name]
         self.output_directory = args.output_directory
         self.row_limit = args.row_limit
         self.csv_data = None
@@ -55,19 +52,6 @@ class EdX(object):
                 writer.writerow(row)
 		row_count += 1
         return row_count
-
-    @property
-    def collections(self):
-    	return self._collections
-    	
-    @collections.setter
-    def collections(self, _collections):
-    	self._collections = {collection : self._db[collection]
-                             for collection in _collections}
-
-    @property
-    def db(self):
-        return self._db.name
 
     def report_name(self, *args):
         return '-'.join(item for item in args) + '.csv'
