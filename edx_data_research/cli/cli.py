@@ -28,7 +28,7 @@ def main():
                               '(default: mongodb://localhost:27017)')
     parse_subparsers = parse_parser.add_subparsers(metavar='<parse>', dest='parse')
     sql_parser = parse_subparsers.add_parser('sql', help='Migrate SQL files')
-    sql_parser.add_argument('file', help='Path to SQL file to migrate')
+    sql_parser.add_argument('sql_file', help='Path to SQL file to migrate')
 
 
     # An report command to execute the analysis and/or generate CSV reports
