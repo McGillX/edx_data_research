@@ -3,12 +3,12 @@ from datetime import date
 
 from prettytable import PrettyTable
 
-from edx_data_research.reporting.edx_base import EdXReport
+from edx_data_research.reporting.edx_report import EdXReport
 
 class Stats(EdXReport):
 
     def __init__(self, args):
-        super(self.__class__, self).__init__(args)
+        super(Stats, self).__init__(args)
         self.csv = args.csv
         self.number_of_students = 0
 

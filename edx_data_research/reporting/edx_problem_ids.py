@@ -5,13 +5,13 @@ will include information about how students fared with a given problem id
 '''
 from itertools import groupby, izip_longest
 
-from edx_data_research.reporting.edx_base import EdXReport
+from edx_data_research.reporting.edx_report import EdXReport
 
 
 class ProblemIds(EdXReport):
 
     def __init__(self, args):
-        super(self.__class__, self).__init__(args)
+        super(ProblemIds, self).__init__(args)
         self._ids = args.problem_ids
         self.final_attempt = args.final_attempt
         self.display_names = args.display_names or []

@@ -1,6 +1,3 @@
-from pymongo import MongoClient
-
-
 class EdX(object):
 
     def __init__(self, args):

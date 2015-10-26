@@ -3,13 +3,13 @@ import os
 
 from collections import defaultdict, namedtuple
 
-from edx_data_research.reporting.edx_base import EdXReport
+from edx_data_research.reporting.edx_report import EdXReport
 from edx_data_research.reporting.lib import geoip
 
 class Basic(EdXReport):
 
     def __init__(self, args):
-        super(self.__class__, self).__init__(args)
+        super(Basic, self).__init__(args)
         self.basic_cmd = args.basic.replace('-', '_')
 
     def user_info(self):

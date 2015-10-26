@@ -1,11 +1,14 @@
 import csv
 import os
 
+from pymongo import MongoClient
+
 from edx_data_research.edx_base import EdX
 
 class EdXReport(EdX):
 
     def __init__(self, args):
+        super(EdXReport, self).__init__(args)
         client = MongoClient(self.uri)
         self.db = client[self.db_name]
         self.output_directory = args.output_directory
