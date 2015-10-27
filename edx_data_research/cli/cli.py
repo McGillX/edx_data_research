@@ -26,9 +26,14 @@ def main():
                               'migrated')
     parse_parser.add_argument('-u', '--uri', help='URI to MongoDB database '
                               '(default: mongodb://localhost:27017)')
+
     parse_subparsers = parse_parser.add_subparsers(metavar='<parse>', dest='parse')
+
     sql_parser = parse_subparsers.add_parser('sql', help='Migrate SQL files')
     sql_parser.add_argument('sql_file', help='Path to SQL file to migrate')
+
+    forum_parser = parse_subparsers.add_parser('forum', help='Migrate Forum data')
+    forum_parser.add_argument('forum_file', help='Path to Forum data file to migrate')
 
 
     # An report command to execute the analysis and/or generate CSV reports
@@ -50,10 +55,13 @@ def main():
     report_parser.add_argument('-a', '--anonymize', help='Only include hash id '
                                'of the students in output CSV report '
                                '(default: %(default)s)', action='store_true')
+
     report_subparsers = report_parser.add_subparsers(metavar='<report>', dest='report')
+
     basic_parser = report_subparsers.add_parser('basic', help='Run basic '
                                                 'report generation commands')
     basic_parser.add_argument('basic', help='Run analytics based on argument')
+
     problem_ids_parser = report_subparsers.add_parser('problem-ids',
                                                      help='Generate CSV '
                                                      'reports for given problem ids')
