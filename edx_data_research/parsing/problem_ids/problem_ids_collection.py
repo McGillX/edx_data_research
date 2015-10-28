@@ -1,6 +1,6 @@
 from edx_data_research.parsing.edx_parse import EdXParse
 
-class ProblemIdsCollection(EdXParse):
+class ProblemIds(EdXParse):
 
     def __init__(self, args):
         super(ProblemIdsCollection, self).__init__(args)

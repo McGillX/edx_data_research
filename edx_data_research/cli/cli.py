@@ -25,7 +25,7 @@ def main():
                               'course_structure', 'forum', 'auth_user',
                               'student_courseenrollment', 'user_id_map',
 			      'courseware_studentmodule', 'auth_userprofile',
-                              'certificates_generatedcertificate']
+                              'certificates_generatedcertificate'],
                               help='Name of collection where data is to be '
                               'migrated')
     parse_parser.add_argument('-u', '--uri', help='URI to MongoDB database '

@@ -1,8 +1,6 @@
 import csv
 import os
 
-from pymongo import MongoClient
-
 from edx_data_research.edx_base import EdX
 
 class EdXReport(EdX):
