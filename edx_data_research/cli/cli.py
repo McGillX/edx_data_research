@@ -35,6 +35,14 @@ def main():
     forum_parser = parse_subparsers.add_parser('forum', help='Migrate Forum data')
     forum_parser.add_argument('forum_file', help='Path to Forum data file to migrate')
 
+    problem_ids_collection_parser = parse_subparsers.add_parser(
+					'problem-ids', help='Generate problem '
+					'ids collection from the tracking logs collection')
+    problem_ids_collection_parser.add_argument('tracking',
+					       help='Name of tracking logs collection')
+    problem_ids_collection_parser.add_argument('user-id-map',
+					       help='Name of user_id_map collection')
+
 
     # An report command to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report',
