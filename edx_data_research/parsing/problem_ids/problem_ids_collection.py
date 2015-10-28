@@ -4,9 +4,9 @@ class ProblemIdsCollection(EdXParse):
 
     def __init__(self, args):
         super(ProblemIdsCollection, self).__init__(args)
-        self.collections = ['problem_ids', 'tracking', 'user_id_map']
         
     def migrate(self):
+        self.collections = ['problem_ids', 'tracking', 'user_id_map']
         self.collections['problem_ids'].drop()
         tracking_cursor = (self.collections['tracking']
     			   .find({'event_type' : 'problem_check',

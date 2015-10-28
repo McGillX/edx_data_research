@@ -9,8 +9,6 @@ class EdXReport(EdX):
 
     def __init__(self, args):
         super(EdXReport, self).__init__(args)
-        client = MongoClient(self.uri)
-        self.db = client[self.db_name]
         self.output_directory = args.output_directory
         self.row_limit = args.row_limit
         self.csv_data = None

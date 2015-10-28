@@ -21,7 +21,11 @@ def main():
     parse_parser.add_argument('db_name',
                               help='Name of database where each database '
                               'corresponds to a course offering')
-    parse_parser.add_argument('collection',
+    parse_parser.add_argument('collection', choices=['tracking', 'problem_ids',
+                              'course_structure', 'forum', 'auth_user',
+                              'student_courseenrollment', 'user_id_map',
+			      'courseware_studentmodule', 'auth_userprofile',
+                              'certificates_generatedcertificate']
                               help='Name of collection where data is to be '
                               'migrated')
     parse_parser.add_argument('-u', '--uri', help='URI to MongoDB database '
@@ -38,11 +42,6 @@ def main():
     problem_ids_collection_parser = parse_subparsers.add_parser(
 					'problem-ids', help='Generate problem '
 					'ids collection from the tracking logs collection')
-    problem_ids_collection_parser.add_argument('tracking',
-					       help='Name of tracking logs collection')
-    problem_ids_collection_parser.add_argument('user-id-map',
-					       help='Name of user_id_map collection')
-
 
     # An report command to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report',
