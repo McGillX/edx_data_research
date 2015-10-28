@@ -3,7 +3,8 @@ class EdX(object):
     def __init__(self, args):
         self.uri = args.uri
         self.db_name = args.db_name
-        self.db = None
+        client = MongoClient(self.uri)
+        self.db = client[self.db_name]
         self._collections = None
 
     @property
