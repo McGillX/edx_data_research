@@ -1,8 +1,8 @@
 import subprocess
 
-from edx_data_research.parsing.edx_parse import EdXParse
+from edx_data_research.parsing.parse import Parse
 
-class Forum(EdXParse):
+class Forum(Parse):
 
     def __init__(self, args):
         super(Forum, self).__init__(args)

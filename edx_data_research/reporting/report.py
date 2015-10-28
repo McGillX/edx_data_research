@@ -1,12 +1,12 @@
 import csv
 import os
 
-from edx_data_research.edx_base import EdX
+from edx_data_research.base import Base
 
-class EdXReport(EdX):
+class Report(Base):
 
     def __init__(self, args):
-        super(EdXReport, self).__init__(args)
+        super(Report, self).__init__(args)
         self.output_directory = args.output_directory
         self.row_limit = args.row_limit
         self.csv_data = None

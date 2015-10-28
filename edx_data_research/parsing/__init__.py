@@ -1,3 +1,3 @@
-from forum.parse_forum import Forum
-from problem_ids.problem_ids_collection import ProblemIds
-from sql.parse_sql import SQL
+from parse_forum import Forum
+from parse_problem_ids import ProblemIds
+from parse_sql import SQL

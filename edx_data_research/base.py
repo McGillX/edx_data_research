@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 
-class EdX(object):
+class Base(object):
 
     def __init__(self, args):
         self.uri = args.uri

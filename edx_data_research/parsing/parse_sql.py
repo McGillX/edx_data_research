@@ -1,8 +1,8 @@
 import subprocess
 
-from edx_data_research.parsing.edx_parse import EdXParse
+from edx_data_research.parsing.parse import Parse
 
-class SQL(EdXParse):
+class SQL(Parse):
 
     def __init__(self, args):
         super(SQL, self).__init__(args)

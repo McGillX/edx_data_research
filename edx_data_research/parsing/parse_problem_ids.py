@@ -1,9 +1,9 @@
-from edx_data_research.parsing.edx_parse import EdXParse
+from edx_data_research.parsing.parse import Parse
 
-class ProblemIds(EdXParse):
+class ProblemIds(Parse):
 
     def __init__(self, args):
-        super(ProblemIdsCollection, self).__init__(args)
+        super(ProblemIds, self).__init__(args)
         
     def migrate(self):
         self.collections = ['problem_ids', 'tracking', 'user_id_map']

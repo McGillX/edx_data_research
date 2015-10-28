@@ -3,10 +3,10 @@ import os
 
 from collections import defaultdict, namedtuple
 
-from edx_data_research.reporting.edx_report import EdXReport
+from edx_data_research.reporting.report import Report
 from edx_data_research.reporting.lib import geoip
 
-class Basic(EdXReport):
+class Basic(Report):
 
     def __init__(self, args):
         super(Basic, self).__init__(args)

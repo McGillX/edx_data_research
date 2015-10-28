@@ -3,9 +3,9 @@ from datetime import date
 
 from prettytable import PrettyTable
 
-from edx_data_research.reporting.edx_report import EdXReport
+from edx_data_research.reporting.report import Report
 
-class Stats(EdXReport):
+class Stats(Report):
 
     def __init__(self, args):
         super(Stats, self).__init__(args)
