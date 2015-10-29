@@ -33,15 +33,21 @@ def main():
 
     parse_subparsers = parse_parser.add_subparsers(metavar='<parse>', dest='parse')
 
-    sql_parser = parse_subparsers.add_parser('sql', help='Migrate SQL files')
-    sql_parser.add_argument('sql_file', help='Path to SQL file to migrate')
+    parse_sql = parse_subparsers.add_parser('sql', help='Migrate SQL files')
+    parse_sql.add_argument('sql_file', help='Path to SQL file to migrate')
 
-    forum_parser = parse_subparsers.add_parser('forum', help='Migrate Forum data')
-    forum_parser.add_argument('forum_file', help='Path to Forum data file to migrate')
+    parse_form = parse_subparsers.add_parser('forum', help='Migrate Forum data')
+    parse_form.add_argument('forum_file', help='Path to Forum data file to migrate')
 
-    problem_ids_collection_parser = parse_subparsers.add_parser(
-					'problem-ids', help='Generate problem '
-					'ids collection from the tracking logs collection')
+    parse_problem_ids = parse_subparsers.add_parser('problem-ids',
+                                                    help='Generate problem ids '
+					            'collection from the tracking logs collection')
+
+    parse_course_structure = parse_subparsers.add_parser('course_structure',
+                                                         help='Migrate Course Structure data')
+    parse_course_structure.add_argument('course_structure_file',
+                                        help='Path to Course Structure data file to migrate')
+
 
     # An report command to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report',
@@ -65,25 +71,25 @@ def main():
 
     report_subparsers = report_parser.add_subparsers(metavar='<report>', dest='report')
 
-    basic_parser = report_subparsers.add_parser('basic', help='Run basic '
+    report_basic = report_subparsers.add_parser('basic', help='Run basic '
                                                 'report generation commands')
-    basic_parser.add_argument('basic', help='Run analytics based on argument')
+    report_basic.add_argument('basic', help='Run analytics based on argument')
 
-    problem_ids_parser = report_subparsers.add_parser('problem-ids',
-                                                     help='Generate CSV '
-                                                     'reports for given problem ids')
+    report_problem_ids = report_subparsers.add_parser('problem-ids',
+                                                      help='Generate CSV '
+                                                      'reports for given problem ids')
                                                      
-    problem_ids_parser.add_argument('problem_ids', nargs='+', help='Problem ID')
-    problem_ids_parser.add_argument('-f', '--final-attempt', action='store_true',
-                                   help="Only include students' final attempt "
-                                   "to the given problem ids")
-    problem_ids_parser.add_argument('-d', '--display-names', nargs='+',
-                                   help="Take list of display names in same  "
-                                   "order as problem ids")
+    report_problem_ids.add_argument('problem_ids', nargs='+', help='Problem ID')
+    report_problem_ids.add_argument('-f', '--final-attempt', action='store_true',
+                                    help='Only include students\' final attempt '
+                                    'to the given problem ids')
+    report_problem_ids.add_argument('-d', '--display-names', nargs='+',
+                                    help='Take list of display names in same  '
+                                    'order as problem ids')
                                    
     # A stats command to print basic stats about given course
-    stats_parser = report_subparsers.add_parser('stats', help='Report commands')
-    stats_parser.add_argument('-c', '--csv', help='Print output to a csv report '
+    report_stats = report_subparsers.add_parser('stats', help='Report commands')
+    report_stats.add_argument('-c', '--csv', help='Print output to a csv report '
                                '(default: %(default)s)', action='store_true')
 
     def get_subparsers(parser):

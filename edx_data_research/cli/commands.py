@@ -31,3 +31,7 @@ def cmd_parse_forum(args):
 def cmd_parse_problem_ids(args):
     edx_obj = parsing.ProblemIds(args)
     edx_obj.migrate()
+
+def cmd_parse_course_structure(args):
+    edx_obj = parsing.CourseStructure(args)
+    edx_obj.migrate()
