@@ -11,7 +11,7 @@ class ProblemIds(Parse):
         tracking_cursor = (self.collections['tracking']
     			   .find({'event_type' : 'problem_check',
                            'event_source' : 'server'}))
-        for item in cursor:
+        for item in tracking_cursor:
             document = {}
             username = document['username']
 	    try:
@@ -32,4 +32,3 @@ class ProblemIds(Parse):
             document['time'] = item['time'] 
             document['event'] = item['event']
 	    self.collections['problem_ids'].insert(document) 
-            

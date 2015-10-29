@@ -6,7 +6,7 @@ class Forum(Parse):
 
     def __init__(self, args):
         super(Forum, self).__init__(args)
-        self._collections = args.collection
+        self._collections = 'forum'
         self.forum_file = args.forum_file
 
     def migrate(self):

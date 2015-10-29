@@ -21,19 +21,18 @@ def main():
     parse_parser.add_argument('db_name',
                               help='Name of database where each database '
                               'corresponds to a course offering')
-    parse_parser.add_argument('collection', choices=['tracking', 'problem_ids',
-                              'course_structure', 'forum', 'auth_user',
-                              'student_courseenrollment', 'user_id_map',
-			      'courseware_studentmodule', 'auth_userprofile',
-                              'certificates_generatedcertificate'],
-                              help='Name of collection where data is to be '
-                              'migrated')
     parse_parser.add_argument('-u', '--uri', help='URI to MongoDB database '
                               '(default: mongodb://localhost:27017)')
 
     parse_subparsers = parse_parser.add_subparsers(metavar='<parse>', dest='parse')
 
     parse_sql = parse_subparsers.add_parser('sql', help='Migrate SQL files')
+    parse_parser.add_argument('collection', choices=['auth_user',
+                              'student_courseenrollment', 'user_id_map',
+            		      'courseware_studentmodule', 'auth_userprofile',
+                              'certificates_generatedcertificate'],
+                              help='Name of collection where data is to be '
+                              'migrated')
     parse_sql.add_argument('sql_file', help='Path to SQL file to migrate')
 
     parse_form = parse_subparsers.add_parser('forum', help='Migrate Forum data')
