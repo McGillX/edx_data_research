@@ -39,3 +39,7 @@ def cmd_parse_course_structure(args):
 def cmd_parse_tracking(args):
     edx_obj = parsing.Tracking(args)
     edx_obj.migrate()
+
+def cmd_parse_course_tracking(args):
+    edx_obj = parsing.CourseTracking(args)
+    edx_obj.migrate()
