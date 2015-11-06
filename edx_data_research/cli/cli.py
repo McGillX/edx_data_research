@@ -27,12 +27,12 @@ def main():
     parse_subparsers = parse_parser.add_subparsers(metavar='<parse>', dest='parse')
 
     parse_sql = parse_subparsers.add_parser('sql', help='Migrate SQL files')
-    parse_parser.add_argument('collection', choices=['auth_user',
-                              'student_courseenrollment', 'user_id_map',
-            		      'courseware_studentmodule', 'auth_userprofile',
-                              'certificates_generatedcertificate'],
-                              help='Name of collection where data is to be '
-                              'migrated')
+    parse_sql.add_argument('collection', choices=['auth_user',
+                           'student_courseenrollment', 'user_id_map',
+                           'courseware_studentmodule', 'auth_userprofile',
+                           'certificates_generatedcertificate'],
+                           help='Name of collection where data is to be '
+                           'migrated')
     parse_sql.add_argument('sql_file', help='Path to SQL file to migrate')
 
     parse_form = parse_subparsers.add_parser('forum', help='Migrate Forum data')
@@ -47,6 +47,11 @@ def main():
     parse_course_structure.add_argument('course_structure_file',
                                         help='Path to Course Structure data file to migrate')
 
+    parse_tracking = parse_subparsers.add_parser('tracking',
+                                                 help='Migrate tracking logs')
+    parse_tracking.add_argument('logs', nargs='+', help='Path to log files; '
+                                'these can be files or folders containing log '
+                                'files (files could also be zipped files)')
 
     # An report command to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report',

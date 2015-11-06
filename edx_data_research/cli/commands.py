@@ -35,3 +35,7 @@ def cmd_parse_problem_ids(args):
 def cmd_parse_course_structure(args):
     edx_obj = parsing.CourseStructure(args)
     edx_obj.migrate()
+
+def cmd_parse_tracking(args):
+    edx_obj = parsing.Tracking(args)
+    edx_obj.migrate()
