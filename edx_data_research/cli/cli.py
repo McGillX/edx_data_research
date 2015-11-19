@@ -52,6 +52,15 @@ def main():
     parse_tracking.add_argument('logs', nargs='+', help='Path to log files; '
                                 'these can be files or folders containing log '
                                 'files (files could also be zipped files)')
+    
+    parse_course_tracking = parse_subparsers.add_parser('course-tracking',
+                                                        help='Extract course'
+                                                        'specific tracking logs'
+                                                        'from tracking database'
+                                                        'to course database')
+    parse_course_tracking.add_argument('course_config_file', help='Config file'
+                                       'to load configurations about a course.'
+                                       'For example, pass example as argument')
 
     # An report command to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report',
