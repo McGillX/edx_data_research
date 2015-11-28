@@ -35,8 +35,8 @@ def main():
                            'migrated')
     parse_sql.add_argument('sql_file', help='Path to SQL file to migrate')
 
-    parse_form = parse_subparsers.add_parser('forum', help='Migrate Forum data')
-    parse_form.add_argument('forum_file', help='Path to Forum data file to migrate')
+    parse_forum = parse_subparsers.add_parser('forum', help='Migrate Forum data')
+    parse_forum.add_argument('forum_file', help='Path to Forum data file to migrate')
 
     parse_problem_ids = parse_subparsers.add_parser('problem-ids',
                                                     help='Generate problem ids '
