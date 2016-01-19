@@ -10,23 +10,23 @@ class CourseStructure(Parse):
         self.course_structure_file = args.course_structure_file
     
     def migrate(self):
-        json_data = _load_json_data(self.course_structure_file)
-        json_data = _parse_key_names(json_data)
-        json_data = _delete_category(json_data, 'conditional')
-        json_data = _delete_category(json_data, 'wrapper')
-        json_data = _build_parent_data(json_data)
-        json_data = _update_parent_data(json_data)
+        json_data = self._load_json_data(self.course_structure_file)
+        json_data = self._parse_key_names(json_data)
+        json_data = self._delete_category(json_data, 'conditional')
+        json_data = self._delete_category(json_data, 'wrapper')
+        json_data = self._build_parent_data(json_data)
+        json_data = self._update_parent_data(json_data)
         course_structure_collection = self.collections['course_structure']
         for key in json_data:
             course_structure_collection.insert(json_data[key])
     
-    def _load_json_data(file_name):
+    def _load_json_data(self, file_name):
         '''Retrieve data from the json file'''
         with open(file_name) as file_handler:
             json_data = json.load(file_handler)
         return json_data
     
-    def _parse_key_names(json_data):
+    def _parse_key_names(self, json_data):
         '''Parse key names'''
         new_json_data = {}
         for key in json_data:
@@ -38,7 +38,7 @@ class CourseStructure(Parse):
             new_json_data[new_key] = json_data[key]
         return new_json_data
     
-    def _delete_category(json_data, category):
+    def _delete_category(self, json_data, category):
         '''Delete data with given category from json_data '''
         for key in json_data.keys():
             if json_data[key]['category'] == category:
@@ -52,7 +52,7 @@ class CourseStructure(Parse):
                 del json_data[key]
         return json_data
     
-    def _build_parent_data(json_data):
+    def _build_parent_data(self, json_data):
         '''Build parent data'''
         error_count = 0
         for key in json_data:
@@ -73,7 +73,7 @@ class CourseStructure(Parse):
         print "Number of errors when building parent data: {0}".format(error_count)
         return json_data
     
-    def _update_parent_data(json_data):
+    def _update_parent_data(self, json_data):
         for key in json_data:
             if json_data[key]['category'] == 'sequential':
                 chapter_id = json_data[key]['parent_data']['chapter_id']

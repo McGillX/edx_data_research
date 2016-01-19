@@ -18,6 +18,7 @@ import datetime
 import gzip
 import json
 import os
+import pymongo
 import sys
 
 from collections import defaultdict
@@ -38,7 +39,7 @@ class Tracking(Parse):
         total_errors = 0
         log_files = self._get_tracking_logs(self.logs)
         for log in sorted(log_files):
-            if not log.endwith(ERROR_FILE_SUFFIX):
+            if not log.endswith(ERROR_FILE_SUFFIX):
                 log_file_name = self._log_file_name(log)
                 if self.collections['tracking_imported'].find_one({'_id': log_file_name}):
                     print 'Log file {0} already loaded'.format(log)
@@ -65,7 +66,7 @@ class Tracking(Parse):
         as files or directory
         """
         logs = []
-        for path in path_to_log:
+        for path in path_to_logs:
             if os.path.isfile(path):
                 logs.append(path)
             elif os.path.isdir(path):
@@ -146,19 +147,19 @@ class Tracking(Parse):
             try:
                 self.collections['tracking'].insert(data)
             except pymongo.errors.InvalidDocument as e:
-                errors.append("INVALID_DOC ({0}): {1}".format(e, str(data))
+                errors.append("INVALID_DOC ({0}): {1}".format(e, str(data)))
                 log_to_be_imported['error'] += 1
                 continue
             except Exception as e:
-                errors.append("ERROR ({0}): {1}".format(e, str(data))
+                errors.append("ERROR ({0}): {1}".format(e, str(data)))
                 log_to_be_imported['error'] += 1
                 continue
             log_to_be_imported['success'] += 1
 
         try:
-            self.collections['tracking_imported'].insert(log_to_be_imported)
+            self.collections['tracking_imported'].insert(log_to_be_imported, check_keys=False)
         except Exception as e:
-            errors.append("Error inserting into tracking_imported {0}: {1)".
+            errors.append("Error inserting into tracking_imported {0}: {1}".
                           format(e, str(log_to_be_imported)))
 
         return errors, log_to_be_imported['error'], log_to_be_imported['success']
