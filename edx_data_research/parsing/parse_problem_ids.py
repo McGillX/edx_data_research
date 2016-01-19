@@ -13,7 +13,7 @@ class ProblemIds(Parse):
                            'event_source' : 'server'}))
         for item in tracking_cursor:
             document = {}
-            username = document['username']
+            username = item['username']
 	    try:
                 username = int(username)
 	    except ValueError:
