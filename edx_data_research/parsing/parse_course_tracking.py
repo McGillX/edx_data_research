@@ -10,6 +10,7 @@ from datetime import datetime
 
 from edx_data_research.parsing.parse import Parse
 
+
 class CourseTracking(Parse):
 
     def __init__(self, args):
