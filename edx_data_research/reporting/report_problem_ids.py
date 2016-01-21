@@ -42,7 +42,8 @@ class ProblemIds(Report):
 
     def problem_ids(self):
         '''Retrieve information about how students fared for a given problem id'''
-        self.collections = ['problem_ids']
+        self.collections = (['problem_ids', 'auth_user'] if args.include_email
+                            else ['problem_ids'])
         for problem_id, display_name in izip_longest(self._ids,
                                                      self.display_names,
                                                      fillvalue=''):
@@ -60,9 +61,14 @@ class ProblemIds(Report):
                         answers.append(document['event']['submission'][key]['answer'])
                     except KeyError:
                         answers.append('')
+                if args.include_email:
+                    email = (self.collections['auth_user']
+                             .find_one({'user_id': document['user_id']})['email'])
+                else:
+                    email = []
                 row = self.anonymize_row([document['hash_id']],
                                          [document['user_id'],
-                                          document['username']],
+                                          document['username'] + email],
                                          [document['event']['attempts'],
                                           document['time'],
                                           document['event']['success'],

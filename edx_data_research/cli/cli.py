@@ -96,6 +96,8 @@ def main():
     report_problem_ids.add_argument('-f', '--final-attempt', action='store_true',
                                     help='Only include students\' final attempt '
                                     'to the given problem ids')
+    report_problem_ids.add_argument('-e', '--include-email', action='store_true',
+                                    help="Include students' email address in report")
     report_problem_ids.add_argument('-d', '--display-names', nargs='+',
                                     help='Take list of display names in same  '
                                     'order as problem ids')
@@ -121,8 +123,13 @@ def main():
     subparsers = get_subparsers(parser)
     args = parser.parse_args()
     args_list = (getattr(args, item) for item in dir(args) if not item.startswith('_'))
-    subparsers_list = (item.replace('-', '_') for item in args_list
-                       if isinstance(item, collections.Hashable) and item in subparsers)
+    subparsers_list = []
+    seen = set()
+    for item in args_list:
+        if (isinstance(item, collections.Hashable) and item in subparsers
+            and item not in seen):
+            subparsers_list.append(item.replace('-', '_'))
+            seen.add(item)
     cmd_func_name = 'cmd_' + '_'.join(subparsers_list)
     commands.__dict__[cmd_func_name](args)
 
