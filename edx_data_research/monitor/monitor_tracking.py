@@ -1,22 +1,22 @@
 import sys
 import time
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler 
+from watchdog.events import PatternMatchingEventHandler 
 
-class TrackingEventHandler(FileSystemEventHandler):
-    
+class TrackingLogHandler(PatternMatchingEventHandler):
+
     def on_created(self, event):
-        pass
+        print event.__repr__()
+        print event.event_type, event.is_directory, event.src_path
 
-    def on_moved(self, event):
-        pass
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        args = sys.argv[1]
+        path = sys.argv[1]
     else:
         raise ValueError('Missing path to directory to monitor!!!')
-    event_handler = TrackingEventHandler()
+    event_handler = TrackingLogHandler(['*.log'], ['*.log-errors'],
+                                       case_sensitive=True)
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
