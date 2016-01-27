@@ -35,6 +35,8 @@ class Tracking(Parse):
         self.logs = args.logs
 
     def migrate(self):
+        current_date = datetime.date.today().strftime('%Y-%m-%d')
+        result_per_log_file = []
         total_success = 0
         total_errors = 0
         log_files = self._get_tracking_logs(self.logs)
@@ -51,6 +53,9 @@ class Tracking(Parse):
                                                      self.collections['tracking'],
                                                      self.collections['tracking_imported'],
                                                      log_content, log_file_name)
+                result_per_log_file.append([current_date, log_file_name,
+                                            len(log_content), success_count,
+                                            error_count])
                 total_success += success_count
                 total_errors += error_count
                 with open(error_file_name, 'w') as file_handler:
@@ -59,6 +64,7 @@ class Tracking(Parse):
         print 'Total events read: {0}'.format((total_success + total_errors))
         print 'Inserted events: {0}'.format(total_success)
         print 'Not loaded: {0}'.format(total_errors)
+        return result_per_log_file
 
     def _get_tracking_logs(self, path_to_logs):
         """
@@ -131,7 +137,7 @@ class Tracking(Parse):
                 data = json.loads(record)
             except ValueError:
                 log_to_be_imported['error'] += 1
-                error.append('JSON LOAD: {0}'.format(record))
+                errors.append('JSON LOAD: {0}'.format(record))
             
             try:
                 log_to_be_imported['courses'][data['context']['course_id']] += 1
