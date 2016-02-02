@@ -16,7 +16,7 @@ class CourseTracking(Parse):
     def __init__(self, args):
         super(CourseTracking, self).__init__(args)
         self.collections = ['tracking', 'course_structure']
-        self.course_config_file = course_config_file
+        self.course_config_file = args.course_config_file
         # We need reference to the tracking collection from the main tracking
         # database
         self.tracking_tracking = self.client['tracking']['tracking']
@@ -44,13 +44,15 @@ class CourseTracking(Parse):
             raise ValueError('Incorrect data format, should be YYYY-MM-DD')
         return data['course_ids'], start_date.date(), end_date.date()
 
-    def _append_course_structure_data(course_structure_collection, _id, document):
+    def _append_course_structure_data(self, course_structure_collection, _id):
         '''
         Append parent_data and metadata (if exists) from course structure to 
         tracking log
         '''
         output = {}
-        data = course_structure_collection.find({"_id" : _id})[0]
+        data = course_structure_collection.find({"_id" : _id})
+        if data is None:
+            data = course_structure_collection.find({'_id': {'$regex': _id}})
         if 'parent_data' in data:
             output['parent_data'] = data['parent_data']
         if 'metadata' in data:
@@ -69,28 +71,29 @@ class CourseTracking(Parse):
                               .split('T')[0], "%Y-%m-%d").date() <= end_date):
                 # Bind parent_data and metadata from course_structure to
                 # tracking document
-                bound = False
-                if document['event']:
-                    if isinstance(document['event'], dict):
-                        if 'id' in document['event']:
-                            splitted = document['event']['id'].split('-')
-                            if len(splitted) > 3:
-                                document['event']['id'] = splitted[-1]
-                                if not bound:
-                                    document.update(
-                                        self._append_course_structure_data(
-                                        self.collections['course_structure'],
-                                        document['event']['id']))
-                                    bound = True
-                if document['page']:
-                    splitted = document['page'].split('/')
-                    if len(splitted) > 2:
-                        document['page'] = splitted[-2]
-                        if not bound:
-                            document.update(
-                                self._append_course_structure_data(
-                                self.collections['course_structure'],
-                                document['page']))
+                if document['event_type'] != 'page_close':
+                    bound = False
+                    if document['event']:
+                        if isinstance(document['event'], dict):
+                            if 'id' in document['event']:
+                                splitted = document['event']['id'].split('-')
+                                if len(splitted) > 3:
+                                    document['event']['id'] = splitted[-1]
+                                    if not bound:
+                                        document.update(
+                                            self._append_course_structure_data(
+                                            self.collections['course_structure'],
+                                            document['event']['id']))
+                                        bound = True
+                    if document['page']:
+                        splitted = document['page'].split('/')
+                        if len(splitted) > 2:
+                            document['page'] = splitted[-2]
+                            if not bound:
+                                document.update(
+                                    self._append_course_structure_data(
+                                    self.collections['course_structure'],
+                                    document['page']))
                 # End of binding, now insert document into collection
                 self.collections['tracking'].insert(document)
 
