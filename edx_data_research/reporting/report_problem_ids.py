@@ -15,13 +15,22 @@ class ProblemIds(Report):
         self._ids = args.problem_ids
         self.final_attempt = args.final_attempt
         self.display_names = args.display_names or []
+        self.include_email = args.include_email
     
     def report_name(self, *args):
         '''Generate name of csv output file from problem id'''
-        attempts_name = '-FinalAttempts' if args[2] else '-AllAttempts'
-        display_name = '-' + args[1].replace(':', '').replace(' ', '_')
-        return ('-'.join(arg.lower() for arg in args[0].split('/')[3:]) +
-                display_name + attempts_name + '.csv')
+        attempts_name = 'FinalAttempts' if args[2] else 'AllAttempts'
+        display_name = args[1].replace(':', '').replace(' ', '_')
+        problem_id = args[0]
+        # Check if new format of problem id
+        if '+' in problem_id:
+            blocks = problem_id.split('@')
+            _id = blocks[-1]
+            course = blocks[0].split('+')[1:3]
+            return '_'.join(course + [_id, display_name, attempts_name]) + '.csv'
+        else:
+            return ('-'.join(arg.lower() for arg in args[0].split('/')[3:]) +
+                    display_name + attempts_name + '.csv')
 
     @staticmethod
     def _problem_id_questions(answer_map):
@@ -42,7 +51,7 @@ class ProblemIds(Report):
 
     def problem_ids(self):
         '''Retrieve information about how students fared for a given problem id'''
-        self.collections = (['problem_ids', 'auth_user'] if args.include_email
+        self.collections = (['problem_ids', 'auth_user'] if self.include_email
                             else ['problem_ids'])
         for problem_id, display_name in izip_longest(self._ids,
                                                      self.display_names,
@@ -61,14 +70,14 @@ class ProblemIds(Report):
                         answers.append(document['event']['submission'][key]['answer'])
                     except KeyError:
                         answers.append('')
-                if args.include_email:
-                    email = (self.collections['auth_user']
-                             .find_one({'user_id': document['user_id']})['email'])
+                if self.include_email:
+                    email = [(self.collections['auth_user']
+                             .find_one({'user_id': document['user_id']})['email'])]
                 else:
                     email = []
                 row = self.anonymize_row([document['hash_id']],
                                          [document['user_id'],
-                                          document['username'] + email],
+                                          document['username']] + email,
                                          [document['event']['attempts'],
                                           document['time'],
                                           document['event']['success'],
