@@ -121,8 +121,8 @@ def main():
                             help='Email addresses to send to')
     task_email.add_argument('-b', '--body', help='Email body read from a file')
     task_email.add_argument('-s', '--subject', help='Email subject')
-    task_email.add_argument('-c', '--csv', nargs='+',
-                            help='CSV reports to attach')
+    task_email.add_argument('-a', '--attachments', nargs='+',
+                            help='Attachments to include in report')
     
 
     def get_subparsers(parser):
