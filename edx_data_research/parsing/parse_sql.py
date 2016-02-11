@@ -12,4 +12,4 @@ class SQL(Parse):
     def migrate(self):
         subprocess.check_call(['mongoimport', '-d', self.db_name, '-c',
                                self._collections, '--type', 'tsv', '--file',
-                               self.sql_file, '--headerline'])
+                               self.sql_file, '--headerline', '--drop'])
