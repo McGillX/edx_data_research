@@ -4,6 +4,7 @@ by the user and the analytics required by the user
 """
 from edx_data_research import parsing
 from edx_data_research import reporting
+from edx_data_research import tasks
 
 def cmd_report_basic(args):
     """
@@ -43,3 +44,7 @@ def cmd_parse_tracking(args):
 def cmd_parse_course_tracking(args):
     edx_obj = parsing.CourseTracking(args)
     edx_obj.migrate()
+
+def cmd_task_email(args):
+    edx_obj = tasks.Email(args)
+    edx_obj.do()

@@ -14,7 +14,7 @@ def main():
 
     subparsers = parser.add_subparsers(metavar='<command>', dest='command')
 
-    # A parse command
+    # A parser for parsing and migrating data to a database
     parse_parser = subparsers.add_parser('parse',
                                          help='Parse edX course data and '
                                          'migrate to MongoDB database')
@@ -62,7 +62,7 @@ def main():
                                        'to load configurations about a course.'
                                        'For example, pass example as argument')
 
-    # An report command to execute the analysis and/or generate CSV reports
+    # An report parser to execute the analysis and/or generate CSV reports
     report_parser = subparsers.add_parser('report',
                                           help='Report commands to execute the '
                                           'analysis and/or generate CSV reports')
@@ -106,6 +106,24 @@ def main():
     report_stats = report_subparsers.add_parser('stats', help='Report commands')
     report_stats.add_argument('-c', '--csv', help='Print output to a csv report '
                                '(default: %(default)s)', action='store_true')
+                               
+    # An task parser to run operational tasks
+    task_parser = subparsers.add_parser('task',
+                                          help='Task commands to run '
+                                          'operational tasks')
+    task_subparsers = task_parser.add_subparsers(metavar='<task>', dest='task')
+    
+    task_email = task_subparsers.add_parser('email', help='Send email')
+    task_email.add_argument('-f', '--from-address', help='Email address to send from')
+    task_email.add_argument('-n', '--from-name', help='Name of sender')
+    task_email.add_argument('-p', '--password', help='Password read from a read-only file')
+    task_email.add_argument('-t', '--to-address', nargs='+',
+                            help='Email addresses to send to')
+    task_email.add_argument('-b', '--body', help='Email body read from a file')
+    task_email.add_argument('-s', '--subject', help='Email subject')
+    task_email.add_argument('-a', '--attachments', nargs='+',
+                            help='Attachments to include in report')
+    
 
     def get_subparsers(parser):
         subparsers = set()
