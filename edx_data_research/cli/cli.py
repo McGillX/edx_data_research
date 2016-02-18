@@ -109,9 +109,10 @@ def main():
     report_problem_ids.add_argument('-d', '--display-names', nargs='+',
                                     help='Take list of display names in same  '
                                     'order as problem ids')
-    report_problem_ids.add_argument('-s', '--start-date', help='Start date',
+    group = report_problem_ids.add_argument_group('dates')
+    group.add_argument('-s', '--start-date', help='Start date',
                                     type=valid_date)
-    report_problem_ids.add_argument('-t', '--end-date', help='End date',
+    group.add_argument('-t', '--end-date', help='End date',
                                     type=valid_date)
                                    
     # A stats command to print basic stats about given course
