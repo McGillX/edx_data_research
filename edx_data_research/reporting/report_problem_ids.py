@@ -16,6 +16,11 @@ class ProblemIds(Report):
         self.final_attempt = args.final_attempt
         self.display_names = args.display_names or []
         self.include_email = args.include_email
+        if ((args.start_date and not args.end_date) or
+            (not args.start_date and args.end_date)):
+            raise ValueError('-s/--start-date and -t/--end-date must be given together')
+        self.start_date = args.start_date.isoformat()
+        self.end_date = args.end_date.isoformat()
     
     def report_name(self, *args):
         '''Generate name of csv output file from problem id'''
@@ -34,7 +39,7 @@ class ProblemIds(Report):
 
     @staticmethod
     def _problem_id_questions(answer_map):
-        problem_id_keys = sorted(answer_map.keys(),
+        problem_id_keys = sorted(answer_map['correct_map'].keys(),
                                  key=lambda x : int(x.split('_')[-2]))
         problem_id_questions = []
         for key in problem_id_keys:
@@ -49,6 +54,12 @@ class ProblemIds(Report):
                 problem_id_questions.append('{0}'.format(key))
         return problem_id_questions
 
+    def query(self, problem_id):
+        if self.start_date and self.end_date:
+            return {'event.problem_id' : problem_id, 'time':
+                    {'$gte': self.start_date, '$lte': self.end_date}}
+        return {'event.problem_id' : problem_id}
+
     def problem_ids(self):
         '''Retrieve information about how students fared for a given problem id'''
         self.collections = (['problem_ids', 'auth_user'] if self.include_email
@@ -56,10 +67,9 @@ class ProblemIds(Report):
         for problem_id, display_name in izip_longest(self._ids,
                                                      self.display_names,
                                                      fillvalue=''):
-            cursor = self.collections['problem_ids'].find({'event.problem_id' :
-                                                          problem_id})
+            cursor = self.collections['problem_ids'].find(self.query(problem_id))
             display_name = display_name or cursor[0]['module']['display_name']
-            one_record = cursor[0]['event']['correct_map']
+            one_record = cursor[0]['event']
             problem_id_questions = self.__class__._problem_id_questions(one_record)
             result = []
             for document in cursor:
