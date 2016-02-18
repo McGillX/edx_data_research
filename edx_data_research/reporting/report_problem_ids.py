@@ -82,7 +82,7 @@ class ProblemIds(Report):
                         answers.append('')
                 if self.include_email:
                     email = [(self.collections['auth_user']
-                             .find_one({'user_id': document['user_id']})['email'])]
+                             .find_one({'id': document['user_id']})['email'])]
                 else:
                     email = []
                 row = self.anonymize_row([document['hash_id']],
@@ -101,8 +101,9 @@ class ProblemIds(Report):
                           lambda x : x[0])]
             csv_report_name = self.report_name(problem_id, display_name,
                                                self.final_attempt)
-            headers = self.anonymize_headers(['Attempt Number', 'Time',
-                                              'Success', 'Grade Achieved',
-                                              'Max Grade'] + 
-                                              problem_id_questions)
+            headers = ['Attempt Number', 'Time', 'Success', 'Grade Achieved',
+                       'Max Grade'] + problem_id_questions
+            if self.include_email and not self.anonymize:
+                headers = ['Email'] + headers
+            headers = self.anonymize_headers(headers)
             self.generate_csv(result, headers, csv_report_name)
