@@ -3,8 +3,16 @@ import argparse
 import collections
 import os
 import sys
+from datetime import datetime
 
 from edx_data_research.cli import commands
+
+def valid_date(date):
+    try:
+        return datetime.strptime(date, "%Y-%m-%d")
+    except ValueError:
+        msg = "Not a valid date: '{0}'.".format(date)
+        raise argparse.ArgumentTypeError(msg)
 
 def main():
     parser = argparse.ArgumentParser(prog='moocx',
@@ -101,6 +109,10 @@ def main():
     report_problem_ids.add_argument('-d', '--display-names', nargs='+',
                                     help='Take list of display names in same  '
                                     'order as problem ids')
+    report_problem_ids.add_argument('-s', '--start-date', help='Start date',
+                                    type=valid_date)
+    report_problem_ids.add_argument('-t', '--end-date', help='End date',
+                                    type=valid_date)
                                    
     # A stats command to print basic stats about given course
     report_stats = report_subparsers.add_parser('stats', help='Report commands')
