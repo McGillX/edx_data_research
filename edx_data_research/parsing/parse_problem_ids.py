@@ -24,6 +24,7 @@ class ProblemIds(Parse):
             if not user_id_map:
 		print "Username {0} not found in collection user_id_map".format(username)
                 continue
+            document['_id'] = item['_id']
 	    document['user_id'] = user_id_map['id']
 	    document['hash_id'] = user_id_map['hash_id']
             document['problem_id'] = item['event']['problem_id'] 

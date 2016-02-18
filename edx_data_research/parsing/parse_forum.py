@@ -12,4 +12,4 @@ class Forum(Parse):
     def migrate(self):
         subprocess.check_call(['mongoimport', '-d', self.db_name, '-c',
                                self._collections, '--type', 'json', '--file',
-                               self.forum_file, '--headerline'])
+                               self.forum_file, '--headerline', '--drop'])
