@@ -1,8 +1,9 @@
+import datetime
 import os
 import sys
 from collections import namedtuple
 
-from edx_data_research import parsing
+from edx_data_research import parsing, reporting
 
 DIRECTORY = '/data/{0}'
 
@@ -59,6 +60,23 @@ def migrate_problem_ids(db):
     edx_obj.migrate()
 
 
+def generate_problem_ids_reports(db, output_dir=os.getcwd()):
+    Args = namedtuple('Args', ['db_name', 'uri', 'problem_ids', 'final_attempt',
+                               'include_email', 'start_date', 'end_date', 'output'])
+    problem_ids = ['block-v1:McGillX+Body101x+1T2016+type@problem+block@b89c2e954e36457fbe77047db34a601b',
+                   'block-v1:McGillX+Body101x+1T2016+type@problem+block@149365c1111646038182c8b1b726d1ac',
+                   'block-v1:McGillX+Body101x+1T2016+type@problem+block@07b2371ef7514c6b94a9f545e38a041c',
+                   'block-v1:McGillX+Body101x+1T2016+type@problem+block@7e23b88574354d8cabef0606e5c45534'
+                  ]
+    end_date = datetime.datetime.today().date()
+    start_date = end_date - datetime.timedelta(days=7)
+    args = Args(db, 'localhost', problem_ids, True, True, start_date, end_date,
+                output_dir)
+    print 'Generating report for problem ids'
+    edx_obj = reporting.ProblemIds(args)
+    edx_obj.problem_ids()
+
+
 def main():
     if len(sys.argv) != 3:
         raise ValueError('Must pass course database name and course config file')
@@ -69,6 +87,7 @@ def main():
     migrate_course_structure_data(db_name)
     migrate_course_tracking(db_name, config_file)
     migrate_problem_ids(db_name)
+    generate_problem_ids_reports(db_name)
 
 
 if __name__ == '__main__':
