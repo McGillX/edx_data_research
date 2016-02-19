@@ -17,11 +17,14 @@ class CourseTracking(Parse):
         super(CourseTracking, self).__init__(args)
         self.collections = ['tracking', 'course_structure']
         self.course_config_file = args.course_config_file
+        self.drop = args.drop
         # We need reference to the tracking collection from the main tracking
         # database
         self.tracking_tracking = self.client['tracking']['tracking']
 
     def migrate(self):
+        if self.drop:
+            self.collections['tracking'].drop()
         course_ids, start_date, end_date = self._load_config_file(
                                                self.course_config_file)
         self._extract_tracking_logs(course_ids, start_date, end_date)

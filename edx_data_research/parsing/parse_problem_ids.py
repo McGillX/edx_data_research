@@ -4,10 +4,12 @@ class ProblemIds(Parse):
 
     def __init__(self, args):
         super(ProblemIds, self).__init__(args)
+        self.drop = args.drop
         
     def migrate(self):
         self.collections = ['problem_ids', 'tracking', 'user_id_map']
-        self.collections['problem_ids'].drop()
+        if self.drop:
+            self.collections['problem_ids'].drop()
         tracking_cursor = (self.collections['tracking']
     			   .find({'event_type' : 'problem_check',
                            'event_source' : 'server'}))

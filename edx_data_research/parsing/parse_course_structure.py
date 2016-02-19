@@ -8,17 +8,19 @@ class CourseStructure(Parse):
         super(CourseStructure, self).__init__(args)
         self.collections = ['course_structure']
         self.course_structure_file = args.course_structure_file
+        self.drop = args.drop
     
     def migrate(self):
+        if self.drop:
+            self.collections['course_structure'].drop()
         json_data = self._load_json_data(self.course_structure_file)
         json_data = self._parse_key_names(json_data)
         json_data = self._delete_category(json_data, 'conditional')
         json_data = self._delete_category(json_data, 'wrapper')
         json_data = self._build_parent_data(json_data)
         json_data = self._update_parent_data(json_data)
-        course_structure_collection = self.collections['course_structure']
         for key in json_data:
-            course_structure_collection.insert(json_data[key])
+            self.collections['course_structure'].insert(json_data[key])
     
     def _load_json_data(self, file_name):
         '''Retrieve data from the json file'''
