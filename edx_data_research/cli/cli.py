@@ -135,7 +135,7 @@ def main():
     task_email = task_subparsers.add_parser('email', help='Send email')
     task_email.add_argument('-f', '--from-address', help='Email address to send from')
     task_email.add_argument('-n', '--from-name', help='Name of sender')
-    task_email.add_argument('-p', '--password', help='Password read from a read-only file')
+    task_email.add_argument('-p', '--password', help='Password')
     task_email.add_argument('-t', '--to-address', nargs='+',
                             help='Email addresses to send to')
     task_email.add_argument('-b', '--body', help='Email body read from a file')
