@@ -11,7 +11,7 @@ from edx_data_research.parsing.parse_tracking import Tracking
 
 Args = namedtuple('Args', ['db_name', 'uri', 'logs'])
 
-REPORT_NAME = 'tracking_logs_monitoring_report.csv'
+REPORT_NAME = '/data/tracking_logs_monitoring_report.csv'
 
 def update_report(result):
     path_to_report = os.path.join(os.path.expanduser('~'), REPORT_NAME)

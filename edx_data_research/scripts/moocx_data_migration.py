@@ -1,5 +1,6 @@
 import datetime
 import os
+import shutil
 import sys
 import tempfile
 from collections import namedtuple
@@ -8,7 +9,7 @@ from edx_data_research import parsing, reporting, tasks
 
 DIRECTORY = '/data/{0}'
 LOG_FILE = '/data/{0}_logs.txt'
-TRACKING_LOGS_REPORT = 'tracking_logs_monitoring_report.csv'
+TRACKING_LOGS_REPORT = '/data/tracking_logs_monitoring_report.csv'
 
 
 def migrate_sql_data(db):
@@ -65,16 +66,19 @@ def migrate_problem_ids(db):
 
 def generate_problem_ids_reports(db, output_dir=os.getcwd()):
     Args = namedtuple('Args', ['db_name', 'uri', 'problem_ids', 'final_attempt',
-                               'include_email', 'start_date', 'end_date', 'output'])
+                               'include_email', 'start_date', 'end_date',
+                               'output_directory', 'row_limit', 'anonymize',
+                               'display_names'])
     problem_ids = ['block-v1:McGillX+Body101x+1T2016+type@problem+block@b89c2e954e36457fbe77047db34a601b',
                    'block-v1:McGillX+Body101x+1T2016+type@problem+block@149365c1111646038182c8b1b726d1ac',
                    'block-v1:McGillX+Body101x+1T2016+type@problem+block@07b2371ef7514c6b94a9f545e38a041c',
                    'block-v1:McGillX+Body101x+1T2016+type@problem+block@7e23b88574354d8cabef0606e5c45534'
                   ]
-    end_date = datetime.datetime.today().date()
+    # end_date = datetime.datetime.today().date()
+    end_date = datetime.date(2016, 2, 14)
     start_date = end_date - datetime.timedelta(days=7)
     args = Args(db, 'localhost', problem_ids, True, True, start_date, end_date,
-                output_dir)
+                output_dir, 100000, False, None)
     print 'Generating report for problem ids'
     edx_obj = reporting.ProblemIds(args)
     edx_obj.problem_ids()
@@ -85,7 +89,7 @@ def send_email_report(db, attachments_dir=os.getcwd()):
                                'to_address', 'body', 'subject', 'attachments'])
     attachments = [os.path.join(attachments_dir, _file)
                    for _file in os.listdir(attachments_dir)]
-    attachments.extend(_attach_additional_files(db))
+    attachments.extend([LOG_FILE.format(db), TRACKING_LOGS_REPORT])
     from_address = os.environ['FROM_EMAIL_ADDRESS']
     password = os.environ['FROM_EMAIL_PASSWORD']
     to_address = os.environ['TO_EMAIL_ADDRESS']
@@ -97,14 +101,6 @@ def send_email_report(db, attachments_dir=os.getcwd()):
     print 'Sending email of report to {0}'.format(to_address)
     email = tasks.Email(args)
     email.do()
-
-
-def _attach_additional_files(db):
-    files = [LOG_FILE.format(db)]
-    home_directory = os.path.expanduser('~')
-    tracking_logs_report = os.path.join(home_directory, TRACKING_LOGS_REPORT)
-    files.append(tracking_logs_report)
-    return files
 
 
 def main():
@@ -122,7 +118,7 @@ def main():
         generate_problem_ids_reports(db_name, temp_dir)
         send_email_report(db_name, temp_dir)
     finally:
-        os.removedirs(temp_dir)
+        shutil.rmtree(temp_dir)
 
 
 if __name__ == '__main__':

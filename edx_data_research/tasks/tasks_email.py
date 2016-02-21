@@ -11,7 +11,7 @@ from edx_data_research.tasks.tasks import Tasks
 class Email(Tasks):
 
     def __init__(self, args):
-        super(Email, self).__init__(args)
+        super(Email, self).__init__()
         self.from_address = args.from_address
         self.from_name = args.from_name
         self.password = args.password
@@ -22,7 +22,8 @@ class Email(Tasks):
 
     def do(self):
         message = self.init_email()
-        message.attach(self.body)
+        if self.body:
+            message.attach(self.body)
         for attachment in self.attachments:
             message.attach(self.upload_attachment(attachment))
         self.send_email(message)
@@ -42,21 +43,20 @@ class Email(Tasks):
     def upload_attachment(self, attachment):
         name = Email.file_name(attachment)
         with open(attachment, 'rb') as fp:
-            file_attachment = MIMEApplication(fp.read())
+            file_attachment = MIMEText(fp.read())
             file_attachment.add_header('Content-Disposition', 'attachment',
                                         filename=name)
         return file_attachment
 
     def compose_email(self):
         self.message = self.init_email()
-        self.message.attach(self.email_body())
         for attachment in self.attachments:
             self.message.attach(self.upload_attachment(attachment))
         return self.message
 
     def send_email(self, composed_email):
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
-            server.login(self.from_address, self.password)
-            server.sendmail(self.from_address, self.to_address,
-                            composed_email.as_string())
+        server = smtplib.SMTP('smtp.mcgill.ca', 587)
+        server.starttls()
+        server.login(self.from_address, self.password)
+        server.sendmail(self.from_address, self.to_address,
+                        composed_email.as_string())
