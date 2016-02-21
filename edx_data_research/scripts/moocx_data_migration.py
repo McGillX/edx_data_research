@@ -85,7 +85,7 @@ def send_email_report(db, attachments_dir=os.getcwd()):
                                'to_address', 'body', 'subject', 'attachments'])
     attachments = [os.path.join(attachments_dir, _file)
                    for _file in os.listdir(attachments_dir)]
-    attachments.extend(_attach_additional_files())
+    attachments.extend(_attach_additional_files(db))
     from_address = os.environ['FROM_EMAIL_ADDRESS']
     password = os.environ['FROM_EMAIL_PASSWORD']
     to_address = os.environ['TO_EMAIL_ADDRESS']
@@ -99,8 +99,8 @@ def send_email_report(db, attachments_dir=os.getcwd()):
     email.do()
 
 
-def _attach_additional_files():
-    files = ['LOG_FILE']
+def _attach_additional_files(db):
+    files = [LOG_FILE.format(db)]
     home_directory = os.path.expanduser('~')
     tracking_logs_report = os.path.join(home_directory, TRACKING_LOGS_REPORT)
     files.append(tracking_logs_report)
