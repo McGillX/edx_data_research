@@ -29,7 +29,7 @@ class Email(Tasks):
 
     def init_email(self):
         message = MIMEMultipart()
-        message['From'] = self.from_name if self.from_name else self.from_address
+        message['From'] = self.from_name or self.from_address
         message['To'] = self.to_address
         message['Subject'] = self.subject
         return message

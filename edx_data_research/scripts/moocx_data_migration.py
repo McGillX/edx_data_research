@@ -1,11 +1,14 @@
 import datetime
 import os
 import sys
+import tempfile
 from collections import namedtuple
 
-from edx_data_research import parsing, reporting
+from edx_data_research import parsing, reporting, tasks
 
 DIRECTORY = '/data/{0}'
+LOG_FILE = '/data/{0}_logs.txt'
+TRACKING_LOGS_REPORT = 'tracking_logs_monitoring_report.csv'
 
 
 def migrate_sql_data(db):
@@ -77,6 +80,33 @@ def generate_problem_ids_reports(db, output_dir=os.getcwd()):
     edx_obj.problem_ids()
 
 
+def send_email_report(db, attachments_dir=os.getcwd()):
+    Args = namedtuple('Args', ['from_address', 'from_name', 'password',
+                               'to_address', 'body', 'subject', 'attachments'])
+    attachments = [os.path.join(attachments_dir, _file)
+                   for _file in os.listdir(attachments_dir)]
+    attachments.extend(_attach_additional_files())
+    from_address = os.environ['FROM_EMAIL_ADDRESS']
+    password = os.environ['FROM_EMAIL_PASSWORD']
+    to_address = os.environ['TO_EMAIL_ADDRESS']
+    subject = 'Weekly Report for {0} - {1}'.format(db.capitalize(),
+                                                   datetime.datetime.today()
+                                                   .date())
+    args = Args(from_address, None, password, to_address, None, subject,
+                attachments)
+    print 'Sending email of report to {0}'.format(to_address)
+    email = tasks.Email(args)
+    email.do()
+
+
+def _attach_additional_files():
+    files = ['LOG_FILE']
+    home_directory = os.path.expanduser('~')
+    tracking_logs_report = os.path.join(home_directory, TRACKING_LOGS_REPORT)
+    files.append(tracking_logs_report)
+    return files
+
+
 def main():
     if len(sys.argv) != 3:
         raise ValueError('Must pass course database name and course config file')
@@ -87,7 +117,12 @@ def main():
     migrate_course_structure_data(db_name)
     migrate_course_tracking(db_name, config_file)
     migrate_problem_ids(db_name)
-    generate_problem_ids_reports(db_name)
+    try:
+        temp_dir = tempfile.mkdtemp()
+        generate_problem_ids_reports(db_name, temp_dir)
+        send_email_report(db_name, temp_dir)
+    finally:
+        os.removedirs(temp_dir)
 
 
 if __name__ == '__main__':
