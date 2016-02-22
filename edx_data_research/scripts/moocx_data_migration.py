@@ -50,7 +50,7 @@ def migrate_course_structure_data(db):
 
 def migrate_course_tracking(db, course_config_file):
     Args = namedtuple('Args', ['db_name', 'uri', 'course_config_file', 'drop'])
-    args = Args(db, 'localhost', course_config_file, True)
+    args = Args(db, 'localhost', course_config_file, False)
     print 'Migrating course specific tracking data to collection tracking'
     edx_obj = parsing.CourseTracking(args)
     edx_obj.migrate()
@@ -58,7 +58,7 @@ def migrate_course_tracking(db, course_config_file):
 
 def migrate_problem_ids(db):
     Args = namedtuple('Args', ['db_name', 'uri', 'drop'])
-    args = Args(db, 'localhost', True)
+    args = Args(db, 'localhost', False)
     print 'Migrating problem ids data to collection problem_ids'
     edx_obj = parsing.ProblemIds(args)
     edx_obj.migrate()

@@ -49,14 +49,14 @@ def main():
     parse_problem_ids = parse_subparsers.add_parser('problem-ids',
                                                     help='Generate problem ids '
 					            'collection from the tracking logs collection')
-    parse_course_structure.add_argument('-d', '--drop', action=store_true,
+    parse_problem_ids.add_argument('-d', '--drop', action='store_true',
                                         help='Drop collection')
 
-    parse_course_structure = parse_subparsers.add_parser('course_structure',
+    parse_course_structure = parse_subparsers.add_parser('course-structure',
                                                          help='Migrate Course Structure data')
     parse_course_structure.add_argument('course_structure_file',
                                         help='Path to Course Structure data file to migrate')
-    parse_course_structure.add_argument('-d', '--drop', action=store_true,
+    parse_course_structure.add_argument('-d', '--drop', action='store_true',
                                         help='Drop collection')
 
     parse_tracking = parse_subparsers.add_parser('tracking',
@@ -73,7 +73,7 @@ def main():
     parse_course_tracking.add_argument('course_config_file', help='Config file'
                                        'to load configurations about a course.'
                                        'For example, pass example as argument')
-    parse_course_tracking.add_argument('-d', '--drop', action=store_true,
+    parse_course_tracking.add_argument('-d', '--drop', action='store_true',
                                        help='Drop collection')
 
     # An report parser to execute the analysis and/or generate CSV reports

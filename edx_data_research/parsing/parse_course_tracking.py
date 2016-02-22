@@ -67,11 +67,15 @@ class CourseTracking(Parse):
         Return all trackings logs that contain given ids and that contain dates
         within the given range
         '''
-        documents = self.tracking_tracking.find({'course_id' : {'$in' :
-                                                                course_ids}})
+        start_date = start_date.isoformat()
+        end_date = end_date.isoformat()
+        query = {'course_id' : {'$in' : course_ids}, 'time':
+                 {'$gte': start_date, '$lte': end_date}}
+        documents = self.tracking_tracking.find(query)
         for document in documents:
-            if (start_date <= datetime.strptime(document['time']
-                              .split('T')[0], "%Y-%m-%d").date() <= end_date):
+            exists = (self.collections['tracking'].find({'_id': document['_id']})
+                      .limit(1))
+            if not exists.count(True):
                 # Bind parent_data and metadata from course_structure to
                 # tracking document
                 if document['event_type'] != 'page_close':
@@ -99,4 +103,3 @@ class CourseTracking(Parse):
                                     document['page']))
                 # End of binding, now insert document into collection
                 self.collections['tracking'].insert(document)
-
