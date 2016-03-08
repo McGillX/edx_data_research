@@ -58,5 +58,5 @@ class Email(Tasks):
         server = smtplib.SMTP('smtp.mcgill.ca', 587)
         server.starttls()
         server.login(self.from_address, self.password)
-        server.sendmail(self.from_address, self.to_address,
+        server.sendmail(self.from_address, self.to_address.split(','),
                         composed_email.as_string())
