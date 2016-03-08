@@ -74,9 +74,8 @@ def generate_problem_ids_reports(db, output_dir=os.getcwd()):
                    'block-v1:McGillX+Body101x+1T2016+type@problem+block@07b2371ef7514c6b94a9f545e38a041c',
                    'block-v1:McGillX+Body101x+1T2016+type@problem+block@7e23b88574354d8cabef0606e5c45534'
                   ]
-    # end_date = datetime.datetime.today().date()
-    end_date = datetime.date(2016, 2, 14)
-    start_date = end_date - datetime.timedelta(days=7)
+    end_date = datetime.datetime.today().date() - datetime.timedelta(days=1)
+    start_date = end_date - datetime.timedelta(days=6)
     args = Args(db, 'localhost', problem_ids, True, True, start_date, end_date,
                 output_dir, 100000, False, None)
     print 'Generating report for problem ids'

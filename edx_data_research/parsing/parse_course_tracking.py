@@ -78,28 +78,28 @@ class CourseTracking(Parse):
             if not exists.count(True):
                 # Bind parent_data and metadata from course_structure to
                 # tracking document
-                if document['event_type'] != 'page_close':
-                    bound = False
-                    if document['event']:
-                        if isinstance(document['event'], dict):
-                            if 'id' in document['event']:
-                                splitted = document['event']['id'].split('-')
-                                if len(splitted) > 3:
-                                    document['event']['id'] = splitted[-1]
-                                    if not bound:
-                                        document.update(
-                                            self._append_course_structure_data(
-                                            self.collections['course_structure'],
-                                            document['event']['id']))
-                                        bound = True
-                    if document['page']:
-                        splitted = document['page'].split('/')
-                        if len(splitted) > 2:
-                            document['page'] = splitted[-2]
-                            if not bound:
-                                document.update(
-                                    self._append_course_structure_data(
-                                    self.collections['course_structure'],
-                                    document['page']))
+                #if document['event_type'] != 'page_close':
+                #    bound = False
+                #    if document['event']:
+                #        if isinstance(document['event'], dict):
+                #            if 'id' in document['event']:
+                #                splitted = document['event']['id'].split('-')
+                #                if len(splitted) > 3:
+                #                    document['event']['id'] = splitted[-1]
+                #                    if not bound:
+                #                        document.update(
+                #                            self._append_course_structure_data(
+                #                            self.collections['course_structure'],
+                #                            document['event']['id']))
+                #                        bound = True
+                #    if document['page']:
+                #        splitted = document['page'].split('/')
+                #        if len(splitted) > 2:
+                #            document['page'] = splitted[-2]
+                #            if not bound:
+                #                document.update(
+                #                    self._append_course_structure_data(
+                #                    self.collections['course_structure'],
+                #                    document['page']))
                 # End of binding, now insert document into collection
                 self.collections['tracking'].insert(document)
