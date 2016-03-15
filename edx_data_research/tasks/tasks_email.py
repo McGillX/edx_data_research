@@ -31,7 +31,7 @@ class Email(Tasks):
     def init_email(self):
         message = MIMEMultipart()
         message['From'] = self.from_name or self.from_address
-        message['To'] = self.to_address
+        message['To'] = ','.join(self.to_address)
         message['Subject'] = self.subject
         return message
 
@@ -58,5 +58,5 @@ class Email(Tasks):
         server = smtplib.SMTP('smtp.mcgill.ca', 587)
         server.starttls()
         server.login(self.from_address, self.password)
-        server.sendmail(self.from_address, self.to_address.split(','),
+        server.sendmail(self.from_address, self.to_address,
                         composed_email.as_string())
