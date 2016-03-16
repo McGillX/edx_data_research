@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask.ext.mail import Mail
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.security import MongoEngineUserDatastore, Security
@@ -18,3 +18,8 @@ from edx_data_research.web_app.models import User, Role
 # Setup Flask-Security
 user_datastore = MongoEngineUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
