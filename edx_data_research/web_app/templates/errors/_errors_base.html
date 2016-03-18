@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron" style="padding-left:60px;padding-right:60px;text-align:center;">
+        <h1>
+        McGillX
+        </h1>
+        <h1>
+        {% block msg %}
+        {% endblock msg %}
+        </h1>
+        <br>
+        <br>
+        <p><a class="btn btn-lg btn-primary" href="#" role="button">Return to Home Page</a></p>
+    </div>
+</div>
+{% endblock content %}
