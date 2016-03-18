@@ -13,11 +13,12 @@ mail = Mail(app)
 # Create database connection object
 db = MongoEngine(app)
 
+from edx_data_research.web_app.auth.forms import ExtendedRegisterForm
 from edx_data_research.web_app.models import User, Role
 
 # Setup Flask-Security
 user_datastore = MongoEngineUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
+security = Security(app, user_datastore, register_form=ExtendedRegisterForm)
 
 
 @app.route('/')
