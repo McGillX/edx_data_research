@@ -31,7 +31,7 @@ def register_flask_security(app):
     security = Security(app, user_datastore, register_form=ExtendedRegisterForm)
 
 
-def register_blueprint(app):
+def register_blueprints(app):
     """Register blueprints"""
     app.register_blueprint(public)
 
