@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 
 from edx_data_research.web_app.extension import db, mail, security
+from edx_data_research.web_app.public import public
 
 
 def create_app(config_object='config'):
@@ -32,7 +33,7 @@ def register_flask_security(app):
 
 def register_blueprint(app):
     """Register blueprints"""
-    pass
+    app.register_blueprint(public)
 
 
 def register_errorhandlers(app):
@@ -43,8 +44,3 @@ def register_errorhandlers(app):
         return render_template('errors/{0}.html'.format(error_code)), error_code
     for error_code in [404, 500]:
         app.errorhandler(errorcode)(render_error)
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
