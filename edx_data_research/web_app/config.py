@@ -13,6 +13,7 @@ MAIL_PASSWORD = os.environ.get('MCGILLX_MAIL_PASSWORD')
 
 # Flas-Security Configuration
 SECURITY_BLUEPRINT_NAME = 'auth'
+SECURITY_EMAIL_SENDER = 'McGillX Team <{0}>'.format(os.environ.get('MCGILLX_MAIL_USERNAME'))
 SECURITY_PASSWORD_HASH = 'pbkdf2_sha512'
 SECURITY_PASSWORD_SALT = os.environ.get('MCGILLX_PASSWORD_SALT')
 SECURITY_URL_PREFIX = '/auth'
