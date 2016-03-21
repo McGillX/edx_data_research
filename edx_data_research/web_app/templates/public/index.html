@@ -1,1 +1,17 @@
 {% extends "base.html" %}
+{% block navbar  %}
+{% include '_navbar.html' %}
+{% endblock navbar %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron" style="padding-left:60px;padding-right:60px;text-align:center;">
+        <h1>
+        Welcome to McGillX
+        </h1>
+        <br>
+        <br>
+        <a class="btn btn-lg btn-primary" href="{{ url_for('auth.register') }}" role="button">Sign Up</a>
+        <a class="btn btn-lg btn-primary" href="{{ url_for('auth.login') }}" role="button">Sign In</a>
+    </div>
+</div>
+{% endblock content %}
