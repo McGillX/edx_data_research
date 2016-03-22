@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 
-from edx_data_research.web_app.extension import db, mail, security
+from edx_data_research.web_app.extensions import db, mail, security
 from edx_data_research.web_app.public import public
 
 
@@ -28,7 +28,7 @@ def register_flask_security(app):
     from edx_data_research.web_app.models import User, Role
 
     user_datastore = MongoEngineUserDatastore(db, User, Role)
-    security = Security(app, user_datastore, register_form=ExtendedRegisterForm)
+    security.init_app(app, user_datastore, register_form=ExtendedRegisterForm)
 
 
 def register_blueprints(app):
@@ -43,4 +43,4 @@ def register_errorhandlers(app):
         error_code = getattr(error, 'code', 500)
         return render_template('errors/{0}.html'.format(error_code)), error_code
     for error_code in [404, 500]:
-        app.errorhandler(errorcode)(render_error)
+        app.errorhandler(error_code)(render_error)

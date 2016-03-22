@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from flask.ext.script import Manager, Server, Shell
+from flask.ext.script.commands import Clean, ShowUrls
 
 from edx_data_research.web_app import create_app
 from edx_data_research.web_app.models import User, Role
