@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from edx_data_research.web_app.extensions import db, mail, security
 from edx_data_research.web_app.parse import parse
 from edx_data_research.web_app.public import public
+from edx_data_research.web_app.report import report 
 
 
 def create_app(config_object='config'):
@@ -36,6 +37,7 @@ def register_blueprints(app):
     """Register blueprints"""
     app.register_blueprint(parse)
     app.register_blueprint(public)
+    app.register_blueprint(report)
 
 
 def register_errorhandlers(app):
