@@ -11,7 +11,7 @@ MAIL_USE_TLS = True
 MAIL_USERNAME = os.environ.get('MCGILLX_MAIL_USERNAME')
 MAIL_PASSWORD = os.environ.get('MCGILLX_MAIL_PASSWORD')
 
-# Flas-Security Configuration
+# Flask-Security Configuration
 SECURITY_BLUEPRINT_NAME = 'auth'
 SECURITY_CHANGEABLE = True
 SECURITY_EMAIL_SENDER = 'McGillX Team <{0}>'.format(os.environ.get('MCGILLX_MAIL_USERNAME'))
@@ -21,3 +21,6 @@ SECURITY_POST_LOGIN_VIEW = '/home'
 SECURITY_RECOVERABLE = True
 SECURITY_REGISTERABLE = True
 SECURITY_URL_PREFIX = '/auth'
+
+# MongoDB Configuration
+#MONGODB_SETTINGS = {'db': 'users', 'alias': 'default'}
