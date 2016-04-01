@@ -4,7 +4,7 @@ from flask.ext.security import current_user, login_required
 from . import users
 
 
-@users.route('/users/<username>')
+@users.route('/home')
 @login_required
-def users(username):
+def home():
     pass
