@@ -23,4 +23,4 @@ SECURITY_REGISTERABLE = True
 SECURITY_URL_PREFIX = '/auth'
 
 # MongoDB Configuration
-#MONGODB_SETTINGS = {'db': 'users', 'alias': 'default'}
+MONGODB_SETTINGS = {'db': 'mcgillx'}

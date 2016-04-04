@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ url_for('public.index') }}">McGillX</a>
+          <a class="navbar-brand" href={% if current_user.is_authenticated  %}"{{ url_for('users.home') }}"{% else %}"{{ url_for('public.index') }}"{% endif %}>McGillX</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">

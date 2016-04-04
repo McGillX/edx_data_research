@@ -7,4 +7,4 @@ from . import users
 @users.route('/home')
 @login_required
 def home():
-    pass
+    return render_template('users/home.html')
