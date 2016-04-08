@@ -18,9 +18,7 @@
                     {{ form.hidden_tag() }}
                     {{ wtf.form_errors(form) }}
                     {{ wtf.form_field(form.course) }}
-                    {{ wtf.form_field(form.problem_ids) }}
-                    {{ wtf.form_field(form.final_attempt) }}
-                    {{ wtf.form_field(form.include_email) }}
+                    {{ wtf.form_field(form.report) }}
                     {{ wtf.form_field(form.anonymize) }}
                     {{ wtf.form_field(form.submit, button_map={"submit": "primary"}) }}
                 </form>
