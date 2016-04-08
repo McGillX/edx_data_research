@@ -1,0 +1,36 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block navbar  %}
+{% include '_navbar.html' %}
+{% endblock navbar %}
+{% block content  %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-8 well" style="background-color: #ffffff">
+            <div class="row">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8">
+                <h1>Generate Report for Problem IDs</h1>
+                <form action="{{ url_for('report.report_problem_ids') }}" method="POST" name="report_problem_ids_form">
+                    {{ form.hidden_tag() }}
+                    {{ wtf.form_errors(form) }}
+                    {{ wtf.form_field(form.course) }}
+                    {{ wtf.form_field(form.problem_ids) }}
+                    {{ wtf.form_field(form.final_attempt) }}
+                    {{ wtf.form_field(form.include_email) }}
+                    {{ wtf.form_field(form.submit, button_map={"submit": "primary"}) }}
+                </form>
+                <br>
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+        </div>
+    </div>
+</div>
+{% endblock content  %}
