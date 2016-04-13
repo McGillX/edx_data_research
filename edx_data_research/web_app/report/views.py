@@ -9,6 +9,7 @@ from flask.ext.security import login_required, current_user
 from . import report
 from .forms import BasicReportForm, ProblemIdsReportForm
 from ..args import BasicReport, ProblemIdsReport, SendEmail
+from ..utils import send_email, temp_dir_context
 from edx_data_research import reporting, tasks
 
 
@@ -23,8 +24,7 @@ def index():
 def report_problem_ids():
     form = ProblemIdsReportForm()
     if form.validate_on_submit():
-        try:
-            temp_dir = tempfile.mkdtemp()
+        with temp_dir_context() as temp_dir:
             course = form.course.data
             anonymize = form.anonymize.data
             problem_ids = form.problem_ids.data
@@ -42,18 +42,10 @@ def report_problem_ids():
             
             attachments = [os.path.join(temp_dir, _file)
                            for _file in os.listdir(temp_dir)]
-            from_address = os.environ['FROM_EMAIL_ADDRESS']
-            password = os.environ['FROM_EMAIL_PASSWORD']
-            to_address = [current_user.email]
-            subject = 'Weekly Report for {0} - {1}'.format(course.capitalize(),
-                                                           datetime.datetime.today()
-                                                           .date())
-            args = SendEmail(from_address, None, password, to_address, None,
-                             subject, attachments)
-            email = tasks.Email(args)
-            email.do()
-        finally:
-            shutil.rmtree(temp_dir)
+            subject = 'ProblemIds Report for {0} - {1}'.format(course.capitalize(),
+                                                               datetime.datetime.today()
+                                                               .date())
+            send_email(current_user.email, subject, attachments)
         return redirect(url_for('report.report_problem_ids'))
     return render_template('report/problem_ids.html', form=form)
 
@@ -63,8 +55,7 @@ def report_problem_ids():
 def report_basic():
     form = BasicReportForm()
     if form.validate_on_submit():
-        try:
-            temp_dir = tempfile.mkdtemp()
+        with temp_dir_context() as temp_dir:
             course = form.course.data
             report_name = form.report.data
             anonymize = form.anonymize.data
@@ -75,17 +66,10 @@ def report_basic():
 
             attachments = [os.path.join(temp_dir, _file)
                            for _file in os.listdir(temp_dir)]
-            from_address = os.environ['FROM_EMAIL_ADDRESS']
-            password = os.environ['FROM_EMAIL_PASSWORD']
-            to_address = [current_user.email]
-            subject = 'Weekly Report for {0} - {1}'.format(course.capitalize(),
-                                                           datetime.datetime.today()
-                                                           .date())
-            args = SendEmail(from_address, None, password, to_address, None,
-                             subject, attachments)
-            email = tasks.Email(args)
-            email.do()
-        finally:
-            shutil.rmtree(temp_dir)
+            subject = '{0} Report for {1} - {2}'.format(report_name.capitalize(),
+                                                        course.capitalize(),
+                                                        datetime.datetime.today()
+                                                        .date())
+            send_email(current_user.email, subject, attachments)
         return redirect(url_for('report.report_basic'))
     return render_template('report/basic.html', form=form)
