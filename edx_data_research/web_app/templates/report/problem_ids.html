@@ -22,7 +22,7 @@
                     {{ wtf.form_field(form.final_attempt) }}
                     {{ wtf.form_field(form.include_email) }}
                     {{ wtf.form_field(form.anonymize) }}
-                    {{ wtf.form_field(form.submit, button_map={"submit": "primary"}) }}
+                    <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Submit" data-toggle="modal" data-target="#myModal">
                 </form>
                 <br>
                 </div>
@@ -34,4 +34,5 @@
         </div>
     </div>
 </div>
+{% include 'report/_modal.html' %}
 {% endblock content  %}
