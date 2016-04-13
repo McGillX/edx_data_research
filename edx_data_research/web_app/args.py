@@ -9,3 +9,6 @@ ProblemIdsReport = namedtuple('ProblemIdsReport', ['db_name', 'uri', 'problem_id
 
 SendEmail = namedtuple('SendEmail', ['from_address', 'from_name', 'password',
                                      'to_address', 'body', 'subject', 'attachments'])
+
+BasicReport = namedtuple('BasicReport', ['db_name', 'uri', 'basic', 'anonymize',
+                                         'output_directory', 'row_limit'])

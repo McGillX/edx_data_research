@@ -22,7 +22,7 @@ class ProblemIdsReportForm(ReportForm):
 
 class BasicReportForm(ReportForm):
     report = SelectField('Report', validators=[Required()],
-                         choices=[('course', 'course_completers'),
+                         choices=[('course_completers', 'Course Completers'),
                                   ('date_of_registration', 'Date of Registration'),
                                   ('forum', 'Forum'), ('ip_to_country', 'IP to Country'),
                                   ('sequential_aggregation', 'Sequential Aggregation'),

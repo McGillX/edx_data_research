@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-sm-8">
                 <h1>Generate Report for Problem IDs</h1>
-                <form action="{{ url_for('report.report_problem_ids') }}" method="POST" name="report_problem_ids_form">
+                <form action="{{ url_for('report.report_basic') }}" method="POST" name="report_basic_form">
                     {{ form.hidden_tag() }}
                     {{ wtf.form_errors(form) }}
                     {{ wtf.form_field(form.course) }}
