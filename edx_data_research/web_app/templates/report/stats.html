@@ -13,12 +13,11 @@
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-8">
-                <h2>Generate Basic Reports</h2>
-                <form action="{{ url_for('report.report_basic') }}" method="POST" name="report_basic_form">
+                <h2>Generate Report for General Stats</h2>
+                <form action="{{ url_for('report.report_stats') }}" method="POST" name="report_stats">
                     {{ form.hidden_tag() }}
                     {{ wtf.form_errors(form) }}
                     {{ wtf.form_field(form.course) }}
-                    {{ wtf.form_field(form.report) }}
                     {{ wtf.form_field(form.anonymize) }}
                     <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Submit" data-toggle="modal" data-target="#myModal">
                 </form>

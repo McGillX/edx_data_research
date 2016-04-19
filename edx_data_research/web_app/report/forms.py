@@ -27,3 +27,7 @@ class BasicReportForm(ReportForm):
                                   ('forum', 'Forum'), ('ip_to_country', 'IP to Country'),
                                   ('sequential_aggregation', 'Sequential Aggregation'),
                                   ('user_info', 'User Info')])
+
+
+class GeneralStatsForm(ReportForm):
+    pass

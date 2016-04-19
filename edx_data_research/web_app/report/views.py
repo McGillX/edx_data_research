@@ -7,8 +7,8 @@ from flask import render_template, redirect, url_for
 from flask.ext.security import login_required, current_user
 
 from . import report
-from .forms import BasicReportForm, ProblemIdsReportForm
-from ..args import BasicReport, ProblemIdsReport, SendEmail
+from .forms import BasicReportForm, GeneralStatsForm, ProblemIdsReportForm
+from ..args import BasicReport, GeneralStats, ProblemIdsReport
 from ..utils import send_email, temp_dir_context
 from edx_data_research import reporting, tasks
 
@@ -43,8 +43,7 @@ def report_problem_ids():
             attachments = [os.path.join(temp_dir, _file)
                            for _file in os.listdir(temp_dir)]
             subject = 'ProblemIds Report for {0} - {1}'.format(course.capitalize(),
-                                                               datetime.datetime.today()
-                                                               .date())
+                                                               datetime.datetime.today().date())
             send_email(current_user.email, subject, attachments)
         return redirect(url_for('report.report_problem_ids'))
     return render_template('report/problem_ids.html', form=form)
@@ -68,8 +67,28 @@ def report_basic():
                            for _file in os.listdir(temp_dir)]
             subject = '{0} Report for {1} - {2}'.format(report_name.capitalize(),
                                                         course.capitalize(),
-                                                        datetime.datetime.today()
-                                                        .date())
+                                                        datetime.datetime.today().date())
             send_email(current_user.email, subject, attachments)
         return redirect(url_for('report.report_basic'))
     return render_template('report/basic.html', form=form)
+
+@report.route('/stats', methods=['GET', 'POST'])
+@login_required
+def report_stats():
+    form = GeneralStatsForm()
+    if form.validate_on_submit():
+        with temp_dir_context() as temp_dir:
+            course = form.course.data
+            anonymize = form.anonymize.data
+            args = GeneralStats(course, 'localhost', True, anonymize,
+                                temp_dir, 10000)
+            edx_obj = reporting.Stats(args)
+            edx_obj.stats()
+
+            attachments = [os.path.join(temp_dir, _file)
+                           for _file in os.listdir(temp_dir)]
+            subject = 'General Stats Report for {0} - {1}'.format(course.capitalize(),
+                                                                  datetime.datetime.today().date())
+            send_email(current_user.email, subject, attachments)
+        return redirect(url_for('report.report_stats'))
+    return render_template('report/stats.html', form=form)
