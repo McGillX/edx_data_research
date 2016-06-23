@@ -21,8 +21,19 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td class="col-md-8"><a href="{{ url_for('parse.parse_sql') }}">SQL</a></td>
                             </tr>
                             <tr>
+                                <td class="col-md-8"><a href="{{ url_for('parse.parse_forum') }}">Forum</a></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-8"><a href="{{ url_for('parse.parse_problem_ids') }}">Problem Ids</a></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-8"><a href="{{ url_for('parse.parse_course_structure') }}">Course Structure</a></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-8"><a href="{{ url_for('parse.parse_course_tracking') }}">Course Tracking</a></td>
                             </tr>
                         </tbody>  
                     </table>
