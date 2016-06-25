@@ -19,3 +19,5 @@ SendEmail = namedtuple('SendEmail', ['from_address', 'from_name', 'password',
 SQL = namedtuple('SQL', ['db_name', 'uri', 'collection', 'sql_file'])
 
 Forum = namedtuple('Forum', ['db_name', 'uri', 'forum_file'])
+
+CourseStructure = namedtuple('CourseStructure', ['db', 'uri', 'course_structure_file', 'drop'])

@@ -28,3 +28,8 @@ class SQLForm(ParseForm):
                                       ('certificates_generatedcertificate', 'Generated Certificates')])
 
     sql_file = FileField('SQL file', validators=[FileRequired()])
+
+
+class CourseStructureForm(ParseForm):
+    course_structure_file = FileField('Course Structure file',
+                                      validators=[FileRequired()])
