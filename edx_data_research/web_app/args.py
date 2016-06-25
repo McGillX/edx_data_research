@@ -23,3 +23,5 @@ Forum = namedtuple('Forum', ['db_name', 'uri', 'forum_file'])
 CourseStructure = namedtuple('CourseStructure', ['db', 'uri', 'course_structure_file', 'drop'])
 
 CourseTracking = namedtuple('CourseTracking', ['db', 'uri', 'course_config_file', 'drop'])
+
+ProblemIdsParse = namedtuple('ProblemIdsParse', ['db', 'uri', 'drop'])

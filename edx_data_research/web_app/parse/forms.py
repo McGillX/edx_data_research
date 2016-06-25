@@ -40,3 +40,7 @@ class CourseTrackingForm(ParseForm):
     course_ids = TextAreaField('Course Ids', validators=[Required()])
     date_of_course_enrollment = DateField('Date of Course Enrollment (YYYY-MM-DD)', validators=[Required()])
     date_of_course_completion = DateField('Date of Course Completion (YYYY-MM-DD)', validators=[Required()])
+
+
+class ProblemIdsForm(ParseForm):
+    pass

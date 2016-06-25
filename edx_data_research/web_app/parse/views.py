@@ -7,8 +7,9 @@ from flask.ext.security import login_required, current_user
 from werkzeug import secure_filename
 
 from . import parse
-from .forms import SQLForm, ForumForm, CourseStructureForm, CourseTrackingForm
-from ..args import SQL, Forum, CourseStructure, CourseTracking
+from .forms import (SQLForm, ForumForm, CourseStructureForm, CourseTrackingForm,
+                    ProblemIdsForm)
+from ..args import SQL, Forum, CourseStructure, CourseTracking, ProblemIdsParse
 from ..utils import temp_dir_context
 from edx_data_research import parsing
 
@@ -73,7 +74,14 @@ def parse_course_structure():
 @parse.route('/problemids', methods=['GET', 'POST'])
 @login_required
 def parse_problem_ids():
-    return render_template('parse/index.html')
+    form = ProblemIdsForm()
+    if form.validate_on_submit():
+        course = form.course.data
+        args = ProblemIdsParse(course, 'localhost', True)
+        edx_obj = parsing.ProblemIds(args)
+        edx_obj.migrate()
+        return redirect(url_for('parse.parse_problem_ids'))
+    return render_template('parse/problem_ids.html', form=form)
 
 
 @parse.route('/coursetracking', methods=['GET', 'POST'])
