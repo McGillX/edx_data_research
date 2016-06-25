@@ -1,13 +1,14 @@
+import json
 import os
+from tempfile import NamedTemporaryFile
 
 from flask import render_template, redirect, url_for
 from flask.ext.security import login_required, current_user
 from werkzeug import secure_filename
 
 from . import parse
-from .forms import SQLForm, ForumForm, CourseStructureForm
-from ..args import SQL, Forum, CourseStructure
-from .forms import ForumForm
+from .forms import SQLForm, ForumForm, CourseStructureForm, CourseTrackingForm
+from ..args import SQL, Forum, CourseStructure, CourseTracking
 from ..utils import temp_dir_context
 from edx_data_research import parsing
 
@@ -62,7 +63,7 @@ def parse_course_structure():
             file_path = os.path.join(temp_dir, filename)
             form.course_structure_file.data.save(file_path)
             course = form.course.data
-            args = CourseStructure(course, 'localhost', file_path)
+            args = CourseStructure(course, 'localhost', file_path, True)
             edx_obj = parsing.CourseStructure(args)
             edx_obj.migrate()
         return redirect(url_for('parse.parse_course_structure'))
@@ -78,4 +79,20 @@ def parse_problem_ids():
 @parse.route('/coursetracking', methods=['GET', 'POST'])
 @login_required
 def parse_course_tracking():
-    return render_template('parse/index.html')
+    form = CourseTrackingForm()
+    if form.validate_on_submit():
+        with NamedTemporaryFile() as temp_file:
+            course = form.course.data
+            course_ids = form.course_ids.data
+            course_ids = [course_id.strip() for course_id in course_ids.split(',')]
+            date_of_course_enrollment = form.date_of_course_enrollment.data.strftime('%Y-%m-%d')
+            date_of_course_completion = form.date_of_course_completion.data.strftime('%Y-%m-%d')
+            json.dump({'course_ids': course_ids,
+                       'date_of_course_enrollment': date_of_course_enrollment,
+                       'date_of_course_completion': date_of_course_completion},
+                      temp_file)
+            args = CourseTracking(course, 'localhost', temp_file.name, True)
+            edx_obj = parsing.CourseTracking(args)
+            edx_obj.migrate()
+        return redirect(url_for('parse.parse_course_tracking'))
+    return render_template('parse/course_tracking.html', form=form)

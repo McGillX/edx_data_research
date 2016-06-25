@@ -1,6 +1,7 @@
 from flask_wtf import Form
 from flask_wtf.file import FileField, FileRequired
 from wtforms import SubmitField, SelectField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import Required
 
 
@@ -33,3 +34,9 @@ class SQLForm(ParseForm):
 class CourseStructureForm(ParseForm):
     course_structure_file = FileField('Course Structure file',
                                       validators=[FileRequired()])
+
+
+class CourseTrackingForm(ParseForm):
+    course_ids = TextAreaField('Course Ids', validators=[Required()])
+    date_of_course_enrollment = DateField('Date of Course Enrollment (YYYY-MM-DD)', validators=[Required()])
+    date_of_course_completion = DateField('Date of Course Completion (YYYY-MM-DD)', validators=[Required()])
